@@ -305,7 +305,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-21 10:23:51" itemprop="dateModified" datetime="2020-10-21T10:23:51+08:00">2020-10-21</time>
+        <time title="修改时间：2020-10-21 20:55:57" itemprop="dateModified" datetime="2020-10-21T20:55:57+08:00">2020-10-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -328,246 +328,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h3><p>正则表达式（Regular Expression），我一直觉得将regular译成“正则”是一件很荒唐的是，不仅体现在正则表达式，包括初接触神经网络时的概念<strong>正则化</strong>也是如此，其实就是标准化。regular expression就是标准表达式，目的就是提出一套标准规则，用来匹配字符串，以达到提取或过滤某种特定形式的字符串的作用。</p>
-<hr>
-<h3 id="正则表达式的作用"><a href="#正则表达式的作用" class="headerlink" title="正则表达式的作用"></a>正则表达式的作用</h3><p>正则表达式十分强大，可以匹配任意的字符串。可以应用在各个方面，例如想提取一大段话中的邮箱地址，提取IP地址，提取电话号码，提取年月日等等，换言之，这些具有一定规律的字符串格式都可以用正则表达式来批量化提取。</p>
-<ul>
-<li>邮箱地址</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">email1 = <span class="string">&#x27;eric6465@163.com&#x27;</span></span><br><span class="line">email2 = <span class="string">&#x27;1135310887@qq.com&#x27;</span></span><br><span class="line">email3 = <span class="string">&#x27;frontop137@gmail.com&#x27;</span></span><br><span class="line">email4 = <span class="string">&#x27;201730055081@scut.edu.cn&#x27;</span></span><br><span class="line"></span><br><span class="line">email__pattern = <span class="string">r&#x27;[a-zA-Z0-9_\-\.]+@[a-zA-Z0-9\-\.]+\.[a-z]+&#x27;</span></span><br><span class="line"></span><br><span class="line">print(re.match(email__pattern, email1))</span><br><span class="line">print(re.match(email__pattern, email2))</span><br><span class="line">print(re.match(email__pattern, email3))</span><br><span class="line">print(re.match(email__pattern, email4))</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行结果</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">16</span>), match=<span class="string">&#x27;eric6465@163.com&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">17</span>), match=<span class="string">&#x27;1135310887@qq.com&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">20</span>), match=<span class="string">&#x27;frontop137@gmail.com&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">24</span>), match=<span class="string">&#x27;201730055081@scut.edu.cn&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>以上是我的四个邮箱，全部匹配正确。匹配的邮箱的关键在于@和顶级域名。</p>
-<ul>
-<li>IP地址</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">ip_pattern = <span class="string">r&#x27;^((\d|[1-9]\d|1[0-9]&#123;2&#125;|2[0-4]\d|25[0-5])\.)&#123;3&#125;(\d|[1-9]\d|1[0-9]&#123;2&#125;|2[0-4]\d|25[0-5])$&#x27;</span></span><br><span class="line"></span><br><span class="line">ip1 = <span class="string">&#x27;192.168.0.1&#x27;</span></span><br><span class="line">ip2 = <span class="string">&#x27;255.255.255.0&#x27;</span></span><br><span class="line">ip3 = <span class="string">&#x27;1.1.1.256&#x27;</span></span><br><span class="line">ip4 = <span class="string">&#x27;1.1.1.01&#x27;</span></span><br><span class="line">ip5 = <span class="string">&#x27;1.1.1.00&#x27;</span></span><br><span class="line">ip6 = <span class="string">&#x27;1.1.1.1111&#x27;</span></span><br><span class="line">print(re.match(ip_pattern, ip1))</span><br><span class="line">print(re.match(ip_pattern, ip2))</span><br><span class="line">print(re.match(ip_pattern, ip3))</span><br><span class="line">print(re.match(ip_pattern, ip4))</span><br><span class="line">print(re.match(ip_pattern, ip5))</span><br><span class="line">print(re.match(ip_pattern, ip6))</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行结果</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">11</span>), match=<span class="string">&#x27;192.168.0.1&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">13</span>), match=<span class="string">&#x27;255.255.255.0&#x27;</span>&gt;</span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="literal">None</span></span><br></pre></td></tr></table></figure>
-
-<p>前两个都是我们常见的合法的IP地址，后四个分别出现了一些错误，全部无法匹配。匹配IP地址的关键在于，IP地址由4个8位二进制码组成，其间用‘.’隔开，转换为十进制后，范围在0-255。若是1位，则0-9均可；若2位，则十位不能为0，个位任意；若3位，则百位为1-2，当百位为1时，剩余两位任意，当百位为2时，后两位最大值为55，即十位为0-4时个位任意，十位为5时个位只能为0-5。</p>
-<ul>
-<li>电话号码</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">phone_pattern = <span class="string">r&#x27;^[0-9]&#123;3,4&#125;\-[0-9]&#123;7,8&#125;$&#x27;</span></span><br><span class="line"></span><br><span class="line">ph1 = <span class="string">&#x27;020-87114442&#x27;</span></span><br><span class="line">ph2 = <span class="string">&#x27;0351-1234567&#x27;</span></span><br><span class="line">ph3 = <span class="string">&#x27;6666666&#x27;</span></span><br><span class="line"></span><br><span class="line">print(re.match(phone_pattern, ph1))</span><br><span class="line">print(re.match(phone_pattern, ph2))</span><br><span class="line">print(re.match(phone_pattern, ph3))</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行结果</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span&#x3D;(0, 12), match&#x3D;&#39;020-87114442&#39;&gt;</span><br><span class="line">&lt;re.Match object; span&#x3D;(0, 12), match&#x3D;&#39;0351-1234567&#39;&gt;</span><br><span class="line">None</span><br></pre></td></tr></table></figure>
-
-<p>匹配电话号码相对简单，只要注意是否有连字符‘-’，并且两边各有几位数字即可。</p>
-<ul>
-<li>日期</li>
-</ul>
-<p>这里我们尝试抓取某个网页内的日期信息</p>
-<p>网页链接: <a target="_blank" rel="noopener" href="http://jw.scut.edu.cn/zhinan/cms/article/view.do?type=posts&id=ff8080817443bcba0174bf0232b500ec">关于2020-2021学年度第一学期部分通选课停开的通知</a></p>
-<p>网页截图：</p>
-<p><img src="https://hbimg.huabanimg.com/d1e7b8746fe33e23cc300dfd346f8d62caa1db7a155dac-tsd4qB_fw658/format/webp"></p>
-<p>代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://jw.scut.edu.cn/zhinan/cms/article/view.do?type=posts&amp;id=ff8080817443bcba0174bf0232b500ec&#x27;</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (&#x27;</span></span><br><span class="line">                         <span class="string">&#x27;KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">response = requests.get(url, headers=headers)</span><br><span class="line">response.encoding = response.apparent_encoding</span><br><span class="line"><span class="comment"># content为此静态网页的代码</span></span><br><span class="line">content = response.text</span><br><span class="line">date_pattern = <span class="string">r&#x27;((19|20)\d&#123;2&#125;\-)(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])&#x27;</span></span><br><span class="line">print(re.search(date_pattern, content))</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行结果</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span=(<span class="number">7049</span>, <span class="number">7059</span>), match=<span class="string">&#x27;2020-09-24&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>由于是从网页中提取日期，而非判断是否是合法日期，所以我们只需要匹配“yyyy-mm-dd”即可，而不需要判断是否是闰年，是大月还是小月。</p>
-</br>
-
-<p>通过上述四个例子，想必我们已经知道了正则表达式的最大的作用，即可以<strong>提取我们所需的特定格式的字符串</strong>。下面我们来具体说说正则表达式的语法。</p>
-<hr>
-<h3 id="正则表达式的语法"><a href="#正则表达式的语法" class="headerlink" title="正则表达式的语法"></a>正则表达式的语法</h3><ul>
-<li><strong>普通字符</strong></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>字符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[ABC]</td>
-<td>匹配包含ABC任意一个的单个字符</td>
-</tr>
-<tr>
-<td>[^ABC]</td>
-<td>匹配任意不包含ABC的单个字符</td>
-</tr>
-<tr>
-<td>[A-Za-z0-9]</td>
-<td>匹配A-Z，a-z，0-9中任意一个的单个字符</td>
-</tr>
-<tr>
-<td>\w</td>
-<td>匹配A-Z，a-z，0-9和下划线中任意一个的单个字符</td>
-</tr>
-<tr>
-<td></br></td>
-<td></td>
-</tr>
-</tbody></table>
-<ul>
-<li><strong>非打印字符（常用）</strong></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>字符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\n</td>
-<td>匹配一个换行符</td>
-</tr>
-<tr>
-<td>\t</td>
-<td>匹配一个制表符</td>
-</tr>
-<tr>
-<td>\s</td>
-<td>匹配任意空格字符</td>
-</tr>
-</tbody></table>
-</br>
-
-<ul>
-<li><strong>特殊字符</strong></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>字符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$</td>
-<td>匹配结尾</td>
-</tr>
-<tr>
-<td>()</td>
-<td>分部分匹配</td>
-</tr>
-<tr>
-<td>.</td>
-<td>匹配除换行符外任意字符</td>
-</tr>
-<tr>
-<td>\</td>
-<td>转义符号</td>
-</tr>
-<tr>
-<td>^</td>
-<td>匹配开始，若放在[]中使用则代表非运算</td>
-</tr>
-</tbody></table>
-</br>
-
-<ul>
-<li><strong>限定符</strong></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>字符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>*</td>
-<td>匹配前一个字符0次或无穷次，等价于{0,}</td>
-</tr>
-<tr>
-<td>+</td>
-<td>匹配前一个字符1次或无穷次，等价于{1,}</td>
-</tr>
-<tr>
-<td>?</td>
-<td>匹配前一个字符0次或1次，等价于{0,1}</td>
-</tr>
-<tr>
-<td>{}</td>
-<td>{n,m}代表匹配前一个字符不少于n次，不多于m次</td>
-</tr>
-</tbody></table>
-<p><strong>注意</strong>：*和+都是贪婪的，?是非贪婪的。通过在*和+后添加?，达到最小长度匹配的效果。*?表示匹配前面的字符任意次，但是越少越好；+?表示匹配前面的字符1次或1次以上，但是越少越好。</p>
-<hr>
-<h3 id="Python中的re模块"><a href="#Python中的re模块" class="headerlink" title="Python中的re模块"></a>Python中的re模块</h3><p>许多编程语言都支持用正则表达式的操作，以Python为例，其中的re模块功能十分强大，为Python语言提供了正则表达式的全部功能。下面着重介绍几个比较常用的函数。</p>
-<ul>
-<li><strong>search()</strong></li>
-</ul>
-<p>用法：</p>
-<p>尝试搜索整个字符串，直到找到第一个符合的匹配，停止匹配。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.search(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个匹配的对象，否则返回None</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>match()</strong></li>
-</ul>
-<p>用法：</p>
-<p>尝试从字符串的起始位置匹配。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.match(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个匹配的对象，否则返回None</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>findall()</strong></li>
-</ul>
-<p>用法：</p>
-<p>在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.findall(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个包含所有匹配到的字符串的列表，否则返回空列表</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>finditer()</strong></li>
-</ul>
-<p>用法：</p>
-<p>和findall() 类似，在字符串中找到正则表达式所匹配的所有子串，并把它们作为一个迭代器返回。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.finditer(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个包含所有匹配到的字符串的迭代器</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>group() &amp; groups()</strong></li>
-</ul>
-<p>用法：</p>
-<p>是<strong>匹配对象</strong>的函数，用于获取匹配到的表达式</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>group()</td>
-<td>匹配的整个表达式的字符串，group() 可以一次输入多个组号，在这种情况下它将返回一个包含那些组所对应值的元组</td>
-</tr>
-<tr>
-<td>groups()</td>
-<td>返回一个包含所有小组字符串的元组，从 1 到 所含的小组号</td>
-</tr>
-</tbody></table>
-<ul>
-<li><strong>compile()</strong></li>
-</ul>
-<p>用法：</p>
-<p>用于编译正则表达式，当我们要重复多次匹配某一固定的正则表达式的时候，我们可以在一开始就进行re.compile()的操作，然后直接对返回结果应用search()，match()，findall()等方法，这样可以省略调用这些函数时重复编译正则表达式的时间。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">re.compile(pattern[, flags])</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># flag: 匹配模式</span></span><br></pre></td></tr></table></figure>
-
-</br>
-
-<p>其实掌握了最基本的正则表达式语法，就可以很轻松的应用到不同的编程语言中，具体的针对不同语言的函数可以在做的时候再去查找。</p>
-<hr>
-<h3 id="关于爬虫"><a href="#关于爬虫" class="headerlink" title="关于爬虫"></a>关于爬虫</h3><p>众所周知，最基本的网络爬虫就是从网络页面中爬取信息，同样以Python语言为例，我们常用的解析网页的工具有BeautifulSoup模块和lxml模块中的xpath()。这些的原理都是解析网页中的html标签。我比较常用xpath去解析，所以就拿xpath来举个例子：当网页源代码和浏览器渲染出来的代码不一样的时候，我们可能无法直接在浏览器定位我们要查找的标签或者直接copy xpath，同时由于没有缩进，我们也很难直接从源代码中看出某个标签的具体索引，这时我们就可以采用简单粗暴的正则表达式，直接去匹配。另一种情况，就是动态网页加载出来的页面的内容，可能不是完全的json格式，前面可能附带着一段参数，这时我们无法采用json.loads()去编译，我们去要将其中的json格式的数据抓取出来，这时我们也可以用正则表达式直接去抓取。</p>
-<p>用正则表达式爬虫可能不是一种很好的选择，主要是因为过于繁琐，但是遇到解决不了的问题，遇到无法解析的标签，正则表达式可以100%保证顺利爬取下来。</p>
-<hr>
-<h3 id="推荐在线编译工具"><a href="#推荐在线编译工具" class="headerlink" title="推荐在线编译工具"></a>推荐在线编译工具</h3><p>初次遇到正则表达式，可能会觉得像是火星文一样复杂，但是无非就是一些规则和语法，只要多加练习就可以掌握。下面推荐两个在线的正则表达式测试网站：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://tool.oschina.net/regex/">https://tool.oschina.net/regex/</a></li>
-<li><a target="_blank" rel="noopener" href="https://regex101.com/">https://regex101.com/</a></li>
-</ul>
-<hr>
-<h3 id="本文参考"><a href="#本文参考" class="headerlink" title="本文参考"></a>本文参考</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-syntax.html">菜鸟教程-正则表达式语法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-reg-expressions.html">菜鸟教程-python正则表达式</a></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/20/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -623,7 +391,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-18 12:33:27" itemprop="dateModified" datetime="2020-10-18T12:33:27+08:00">2020-10-18</time>
+        <time title="修改时间：2020-10-21 20:55:28" itemprop="dateModified" datetime="2020-10-21T20:55:28+08:00">2020-10-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -649,55 +417,14 @@
 <p>没有激动，没有紧张，没有兴奋，也没有疲倦，看了一眼广州凌晨3点的太阳😂（逃），我又坐回书桌前，继续着带着劳拉去古墓里瞎转悠（最近在收集古墓丽影崛起的成就）。</p>
 <hr>
 <p>说说保研历程吧~</p>
-<h3 id="最开始"><a href="#最开始" class="headerlink" title="最开始"></a>最开始</h3><hr>
-<p>我从大二就知道自己能保研。这么说可能有些招黑，但是确实是这样。</p>
-<p>其实刚上大学，我对保研一无所知，对考研也一无所知，我并没有对未来有明确的规划，我只知道我会按照我的家族给我的安排，继续读书，具体是在国内还是国外，是以什么方式，什么时间节点该准备什么，我一无所知，也没有知道的欲望。我只是来到一个新的城市，开始一段新的生活，觉得有点兴奋，所以只想着继续过好每一天。甚至到第一次高数月考，我考了72（应该没记错），班里中等水平，我都没什么压力，来到一所985，考班里中等，太正常了。紧接着过了刚上大学的阵痛期，习惯了大学的生活，到高数期末考试考前的模拟，我考了98，全年级前三（一个100，两个98，全年级一共140个人），班里第一，我才意识到自己可能确实比较强…</p>
-<p>大一我读的是车辆工程，在机械学院，这是一个传统的不能再传统的行业，第一次工业革命可能是他的颠峰，但是如今的衰落有目共睹，不仅仅是相比于计算机那低的可怜的工资，还有恶劣的工作环境。当然，是否真的是这样，我从不知道，我相信不是真正从事过这个行业的人都不知道，都是道听途说罢了，但在互联网如此发达的今天，以知乎为例，生化环材+传统工科被全部看衰，越来越多的学生受到网络上此类信息的冲击，变得有“主见”，这从大批转行，转专业的学生就能看出来。</p>
-<p>我也不例外，大一结束，转了专业，但我转专业的原因，与其说是对机械行业的不看好，不如说是确实学不会其中的某些课程（比如机械制图），所以对自己的兴趣做了重新评估，我以3/138的成绩转入了电信学院的信息工程专业。</p>
-<p>转专业之后，过了一个学期，学分认定结束，看了一下，自己9/228（隐约是这个）的排名，感觉如果就这么学下去，应该保研是稳得。紧接着就是在电信院的摸爬滚打。一转眼，到了大三下学期，这个不寻常的在家隔离的学期，此时我的排名还是9/228，只剩一门必修课，保研已经是板上钉钉的事情了。</p>
-<h3 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h3><hr>
-<p>保研是一场拉锯战持久战，但我是一个既佛系又没什么决心的人，虽然我成绩还不错，师兄师姐都建议冲一波华五甚至清北，但我给自己的定位就是比华工高一点就可以了，所以我的目标院校是北航北邮东南哈工深之类的学校，这类学校整体还行，而且通信专业属于强势。同时我还通过上一届师兄的保研去向了解到了中科院在上海的新学校<strong>上海科技大学</strong>（划重点）。大概6月份，我开始了夏令营申请的投递。这段时间，在家比较悠闲，说是复习基础课、专业课，准备面试，实际效率很低，现在想来确实如果当时努力准备一下面试去个<del>清北</del>top5不成问题。</p>
-<h3 id="信心受挫"><a href="#信心受挫" class="headerlink" title="信心受挫"></a>信心受挫</h3><hr>
-<p>其实在我心里，我上述说的几所学校我还是比较稳的，但是临近哈工深的夏令营开营时间，还没有收到入营通知，也没有显示被拒绝，心里就比较奇怪。结果等啊等，等到了专业前我一名的同班同学（第8名）的入营，我（第9名）和同班同学（第12名）则被拒绝，当时我心态都是崩了的，倒不是因为我十分想去哈工深这所学校，而是我第一次对自己产生了怀疑。因为哈工深本身就是和华工一档的学校，我做为华南理工电信院专业前5%，连夏令营都进不去，我十分不能理解。比起自卑与遗憾，我更多的是不解和愤怒。</p>
-<p>后来了解到了哈工深历年都是这个操作，因为学校很小，所以夏令营是全校统一名额，分到每个学院的名额很少，这也就导致了外校的同学可能一个学校只收一个到两个。我心里才好受一些，这可能也是后来我鸽掉他们预推免面试的原因之一（捂嘴笑）。</p>
-<h3 id="夏令营经历"><a href="#夏令营经历" class="headerlink" title="夏令营经历"></a>夏令营经历</h3><hr>
-<p>我一共参加了4所学校的夏令营面试：</p>
-<ul>
-<li><strong>上科大</strong></li>
-</ul>
-<p>上科大夏令营是最早的，7月初，在面试前还花一小时做了心理测试题，很有趣。线上夏令营办的很周到，由中科院大牛和信院不同中心的教授来做讲座。上科大信院有三个专业，计算机，通信和电子，方向主要是机器学习、计算机视觉、物联网、边缘计算、通信决策、集成电路、机器人等，可以看出全部是最前沿最新的方向。面试在第二天，双方都可见，问的问题不算难，主要以概率论和线性代数为主，同时还问了一些关于通信原理和信号与系统的问题。最终拿到<strong>优秀营员</strong>。</p>
-<ul>
-<li><strong>北理工</strong></li>
-</ul>
-<p>之所以报北理工，主要是因为北航不举办夏令营，我就是来试试水，就算过了也不打算去。院士毛二可做了关于雷达的讲座，毛院士应该已经80多岁了，还在为了学校而不辞劳苦，致敬！北理的信电学院相比上科大的方向就传统了许多，主要集中在雷达目标检测、通信系统以及网络对抗。面试在下午，老师不开摄像头，这点我很不爽，感觉地位不平等。面试全程问的是通信原理和信号与系统的问题，最终拿了<strong>优秀营员</strong>。</p>
-<ul>
-<li><strong>华工</strong></li>
-</ul>
-<p>本校还是心疼我们的，对本校的学生，问的问题都是“喜不喜欢音乐，为什么不学一门乐器”（英语），这里因为我只是走个过场，就不细说了。</p>
-<ul>
-<li><strong>西安交大</strong></li>
-</ul>
-<p>西交本身的学科评估也是B+，和华工一样，报西安交大的主要原因是因为他的创新港校区（逃），这条件可以说冠决全国了。然而离谱的是，西交开夏令营的那天，正好是我受邀参观上科大校园并和导师见面的那天，所以我全程没有参加，最后的面试还是跟老师商量调到最后一个，并且飞奔回宾馆才赶上的。面试过程同样对方没有开摄像头。自我介绍完之后，一个老师就开始问我问题，全程只有他在问（其实我可以感觉到有很多老师在面试），他先问了一些项目经验，又问了我爬虫相关的知识，没有问课内基础，我答的还不错，能听出他也比较满意，但是还没有答完时间就到了，被面试助理终止。我长舒一口气，想着夏令营到此结束，坐在了马桶上，这时，一个陕西西安的电话打了过来，是刚刚面试我的钱学明老师，他把刚才没有面试完的内容进行完，说他比较欣赏我，并问我喜欢什么方向，是否愿意去西安。而在几小时前，杨旸老师告我他赶飞机回上海要晚上和我见一面，这相当于短短几小时，有两个导师主动选择了要我，我顿时受宠若惊，这感觉妙不可言。</p>
-<ul>
-<li><strong>其他</strong></li>
-</ul>
-<p>东南大学和哈工深的预推免都在8月底9月初，这时我已经基本订了最终的去向，所以虽然都获得了面试资格但没有去参加面试。</p>
-<h3 id="决定"><a href="#决定" class="headerlink" title="决定"></a>决定</h3><hr>
-<p>其实我的选择也不多，无非就在西交和上科大之间，碰巧，知乎有一个热议的问题： </p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/318441608">上海科技大学有地区优势，西安交通大学是老牌名校，上哪个更好一些？</a></p>
-</blockquote>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/318441608/answer/1385619221">我的回答</a></p>
-</blockquote>
-<p>这里我就不细说了，大家可以点进去看我的详细回答。</p>
-<p>最终，我加入了上海科技大学信息与科学技术学院智能网络中心IEEE Fellow杨旸教授的团队。</p>
-<p><img src="https://hbimg.huabanimg.com/998025fc10ef42fcae3caca5e12aa5f69b5c74957cff8-4ptRgj_fw658/format/webp" alt="上海科技大学" title="上海科技大学"></p>
-<center style="font-size:14px;color:#C0C0C0">上海科技大学</center>
-
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><hr>
-<p>现在说有遗憾，也有，但我更多的是以一颗感恩的心来面对新的起点和生活，希望师弟师妹们保研之旅顺利，希望能和上科大共同进步！</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/13/%E4%BF%9D%E7%A0%94%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -753,7 +480,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-17 17:11:54" itemprop="dateModified" datetime="2020-10-17T17:11:54+08:00">2020-10-17</time>
+        <time title="修改时间：2020-10-21 20:56:28" itemprop="dateModified" datetime="2020-10-21T20:56:28+08:00">2020-10-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -780,173 +507,14 @@
 <p><em>全部照片由一部iPhone7拍摄，用了苹果自带滤镜（这个滤镜是真的好用）</em></p>
 <p><strong>7月29日—8月16日，三周，麦吉尔，蒙特利尔，加拿大。</strong></p>
 <p>不是第一次出国，所以没有什么特别的感受，但是由于是第一次踏上美洲大陆，所以，我惊奇的发现…还是没什么特别的感受。[捂脸]。因为蒙特利尔是一座法语城市，而且据说是仅次于巴黎的第二大法语区，所以走在街上的感觉，除了没有巴黎那般繁华之外，其他也差不了多少，就是那种欧洲城市的感觉，街上大多是拿着咖啡提着包匆匆行走的人，路边的咖啡店也坐着休息的人，感觉很包容，既有忙碌，也有悠闲。总之就是那种欧洲城市的感觉，没有我想象的美洲的样子。</p>
-<p><img src="https://pic4.zhimg.com/80/v2-64c65a9f1d5df5ea1923a2ddd24fd43d_720w.jpg"></p>
-<center>
-    <font size=2>
-        蒙市唐人街
-    </font>
-</center>
-
-
-
-<p><img src="https://pic2.zhimg.com/80/v2-566dae786d00dd24b378b098cdbe7c53_720w.jpg"></p>
-<center>
-    <font size=2>
-        街边一隅
-    </font>
-</center>
-
-<p><img src="https://pic3.zhimg.com/80/v2-3603421761d4efa18269f0bcd9885c2a_720w.jpg"></p>
-<center>
-    <font size=2>
-        上学路上
-    </font>
-</center>
-
-<p><img src="https://pic3.zhimg.com/80/v2-95e7a27e6dfecad38e3d6c31fed62419_720w.jpg"></p>
-<center>
-    <font size=2>
-        街边一隅
-    </font>
-</center>
-
-<p><img src="https://pic4.zhimg.com/80/v2-97d8c94aa52e7c947a072d6fd47f7173_720w.jpg"></p>
-<center>
-    <font size=2>
-        通往教堂的路
-    </font>
-</center>
-
-<p><img src="https://pic2.zhimg.com/80/v2-243d3be621add242987d13b65712f9cd_720w.jpg"></p>
-<center>
-    <font size=2>
-        城市全景
-    </font>
-</center>
-
-<p><img src="https://pic3.zhimg.com/80/v2-5e45f7c73b5ef6b22ff1f215a9b19642_720w.jpg"></p>
-<center>
-    <font size=2>
-        校园里的湖和草
-    </font>
-</center>
-
-<p><img src="https://pic1.zhimg.com/80/v2-feeae94063f85ae404f740ed7d9e7ab3_720w.jpg"></p>
-<center>
-    <font size=2>
-        校园里的湖和草
-    </font>
-</center>
-
-<p><img src="https://pic2.zhimg.com/80/v2-92f2b3abc4feb1e71df61a681054a1a1_720w.jpg"></p>
-<center>
-    <font size=2>
-        教堂
-    </font>
-</center>
-
-
-
-<p>天气很好，温差挺大的，空气不干不湿，中午阳光很足，而且不像广州一样烈、一样闷，感觉晒起来很舒服。很不理解周围的同学一点阳光粘不了的吸血鬼体制，等红绿灯都要躲在交通灯的阴凉里。至于空气好到什么程度呢，我不会说国外的空气都是香的，但是回到北京后，一出航站楼就疯狂打喷嚏，鼻子难受，真事。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-3d46901d4f5914aab8f393bd6678509a_720w.jpg"></p>
-<center>
-    <font size=2>
-        抓拍
-    </font>
-</center>
-
-<h3 id="下面是一些城市美图"><a href="#下面是一些城市美图" class="headerlink" title="下面是一些城市美图"></a>下面是一些城市美图</h3><p><img src="https://pic4.zhimg.com/80/v2-f96a15c57007d8ea6624670a359c7b58_720w.jpg"></p>
-<center>
-    <font size=2>
-        这是一座普通公寓
-    </font>
-</center>
-
-<p><img src="https://picb.zhimg.com/80/v2-8d9a1ab34134eb50bc68c076c781819f_720w.jpg"></p>
-<center>
-    <font size=2>
-        满意的作品
-    </font>
-</center>
-
-<p><img src="https://pic3.zhimg.com/80/v2-5de0aa9f8d065ece4d32378df149e612_720w.jpg"></p>
-<center>
-    <font size=2>
-        外形像极了巴黎圣母院
-    </font>
-</center>
-
-<p><img src="https://pic3.zhimg.com/80/v2-f03cf4b173192d38b04392120c65752d_720w.jpg"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-33513573b7a4cf2e1234e8aff56cbf6d_720w.jpg"></p>
-<center>
-    <font size=2>
-        每个城市都有一座标志的摩天轮
-    </font>
-</center>
-
-<p><img src="https://pic4.zhimg.com/80/v2-79ade5a69866e93bb45a3aeb61a9721e_720w.jpg"></p>
-<p><img src="https://picb.zhimg.com/80/v2-8f437526abd141fd3289c904f48b5e81_720w.jpg"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-88428c68f2cf63a6666162b18df117b2_720w.jpg"></p>
-<p><img src="https://picb.zhimg.com/80/v2-d6bdd7282820f50bba35ef9204fc253c_720w.jpg"></p>
-<hr>
-<h3 id="关于吃的"><a href="#关于吃的" class="headerlink" title="关于吃的"></a>关于吃的</h3><p>吃的呢，怎么说，因为是法语城市，吃的也是有法餐这一西餐扛把子。但是由于太贵，我们一顿也没吃…所以说也白说，你说好我也没感受过，没办法评价。对于这三周的饮食，我除了单调没有什么能说的。小时候因为爱吃肉，被家人戏称将来去了国外肯定没有问题，没问题是没问题，但是对中餐的想念依然是不可抵御的，想吃一顿热的蔬菜想到疯，三周吃的最好的是涮羊肉（吃自助吃到伤这事就不提了），其他就是牛排披萨汉堡的轮换，真的是单调，自己又懒得做，所以只好这样将就。好吃是好吃，一直吃也一直爽，但是总觉得差中餐一些。而且肉吃到放屁贼臭，是真的臭…就很尴尬。还有就是没有鸡肉吃，这点我是很不爽的，作为一个吃KFC长大的人，作为一个吃可乐鸡翅长大的人，作为一个从小啃鸡爪长大的人，窝尼玛我点个鸡肉套餐你跟我说<em>“chicken is for vegetarian”</em>？？？我真的一脸懵逼！于是刚回北京机场我就吃了个鸡腿堡，香啊，真的是“妈妈的味道”。至于在蒙村排了一个小时队的施瓦兹的熏肉，我也没觉得很好吃，跟平遥牛肉没啥区别。还有EVO酒店26楼的牛排套餐是真的好吃实惠，加税14cad，T骨牛排猪排，真的很好吃，（也可以不给小费），3周大概吃了6-7次吧，现在回了国内也甚是想念。原谅我是个吃货，我还要说说酸奶，这酸奶是真好喝，除了樱桃味，樱桃味的一切都是魔鬼。</p>
-<p><img src="https://pic2.zhimg.com/80/v2-94b784b3c9f7c0516b4956b324b41853_720w.jpg"></p>
-<p><img src="https://pic2.zhimg.com/80/v2-415273cae34f0d7c9641c76cc516451a_720w.jpg"></p>
-<p><img src="https://pic1.zhimg.com/80/v2-bef47521cf4078b713c1657d5ef96eb0_720w.jpg"></p>
-<p><img src="https://picb.zhimg.com/80/v2-582d09a0876e2ebd69cbf46179cb6061_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-746442f0aa8c1fe8394162aa77e30f5a_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-d1c02ab6b496fadfe788a26024ea1f20_720w.jpg"></p>
-<center>
-    <font size=2>
-        five guys,永远的神
-    </font>
-</center>
-
-<p><img src="https://picb.zhimg.com/80/v2-ca7d656efbb8975d92208fbbda32bba0_720w.jpg"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-af1b45865d4c921e858a6b14ee56899a_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-7149834d4fda8776c23e2fc5d72b59ee_720w.jpg"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-9263a77874fd345d9093104d8dbffa16_720w.jpg"></p>
-<p><img src="https://pic1.zhimg.com/80/v2-3241f90998b88f54909928f2a966d48e_720w.jpg"></p>
-<hr>
-<h3 id="日本节"><a href="#日本节" class="headerlink" title="日本节"></a>日本节</h3><p>跟着师兄去了一次日本节，见识到了日本文化的强势输出，金发碧眼cos日漫人物、和服老外，数不胜数。很佩服这种文化输出，但是没啥感觉…</p>
-<p><img src="https://picb.zhimg.com/80/v2-f30314aa506a97215690bc769cfd9c0f_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-5afaf6baf52a5eafb5b9f6b2e4080aaa_720w.jpg"></p>
-<p><img src="https://pic1.zhimg.com/80/v2-e63c4fcb4607de1412be816fd6ac824e_720w.jpg"></p>
-<p><img src="https://picb.zhimg.com/80/v2-29b666a9722b2255051d93fdfadd96d3_720w.jpg"></p>
-<hr>
-<h3 id="关于课程"><a href="#关于课程" class="headerlink" title="关于课程"></a>关于课程</h3><p>说说课程吧，课程设置很好，由浅入深，从搜索算法开始，最后由强化学习到机器学习概念的涉及，而且这种立刻讲立刻打代码的授课方式很好，国内教学偏重于理论，而这里能得到更多练习。收获很多，老师很负责，很帅，很壮，（尤其是看了他在大学时期的摔角视频，爱了）。可能是英语不够好，老师上课只能凑合听，听懂听不懂6-4开吧。麦吉尔用的这套雅典娜系统很好，课件直接在系统上下载，作业直接在系统上发布提交，老师的判分和对作业的批改也直接通过系统反馈给了学生，这不仅很好的针对了个人，也很好的保护了个人隐私，而且十分方便、快捷、高效。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-fe1f937683e6d71f0648a1c6ae504d96_720w.jpg"></p>
-<center>
-    <font size=2>
-        四个憨批
-    </font>
-</center>
-
-<p><img src="https://pic1.zhimg.com/80/v2-aedd5dd4b7d7e1ff8084e74a84d99511_720w.jpg"></p>
-<hr>
-<h3 id="关于同学"><a href="#关于同学" class="headerlink" title="关于同学"></a>关于同学</h3><p><img src="https://pic4.zhimg.com/80/v2-cc9ab1987c3497389bff24b70e72dc74_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-903697a9dd42518091ab9f1e2d46adb8_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-36b68e1234f9ff6f64a7814fb21b78de_720w.jpg"></p>
-<p><img src="https://pic1.zhimg.com/80/v2-57ed7df0d530724fff40faf0f6952508_720w.jpg"></p>
-<p><img src="https://pic1.zhimg.com/80/v2-cbd810da2a08c4b3411bc86f577621b0_720w.jpg"></p>
-<p><img src="https://pic2.zhimg.com/80/v2-b86a9b9e6e8fcaf11ba1dace23b544ad_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-ddd016ce50a3df07a47d8abea2b7f85d_720w.jpg"></p>
-<p><img src="https://pic2.zhimg.com/80/v2-e691caac0799a1d3379131221a21ec22_720w.jpg"></p>
-<p><img src="https://pic2.zhimg.com/80/v2-baca9d8198807fdb8088fea6238930cc_720w.jpg"></p>
-<p>不仅是和自己的同学，这次访学也认识了很多新憨批，自动化的逗逼们，计算机的逗逼们等等，还有大胸姐、钢琴哥、真哥、鑫哥等等。</p>
-<p><img src="https://pic1.zhimg.com/80/v2-2c265b19b9feaac978eec2056bcd3248_720w.jpg"></p>
-<p><img src="https://pic4.zhimg.com/80/v2-e64dfd631fe2598b1c63add69acd5e24_720w.jpg"></p>
-<p><img src="https://picb.zhimg.com/80/v2-fe59560b7bb156236fb8c70c18493eb7_720w.jpg"></p>
-<hr>
-<p>之前说要去的p站和育碧都没去，可惜。朝圣之旅就这么错过了。</p>
-<p>这篇访学报告要求1500字，我实在写不下去了，就到这里。</p>
-<p>周方同 2019.8.31 ddl前一天</p>
-<p>于华南理工北三</p>
-<p><strong>最后上一只芒果臂：</strong></p>
-<p><img src="https://pic4.zhimg.com/80/v2-bd6a3bebe179c36599899a008082e534_720w.jpg"></p>
-<hr>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/80636819">原文链接点击这里</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/21/%E9%BA%A6%E5%90%89%E5%B0%94%E8%AE%BF%E5%AD%A6%E6%8A%A5%E5%91%8A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
