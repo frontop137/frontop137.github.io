@@ -22,27 +22,25 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="这一篇重点介绍多接入边缘计算（MEC）。  应用案例我们首先看一个用户获取内容的应用场景，以此来初步认识MEC：">
+  <meta name="description" content="这一篇重点介绍云接入网（C-RAN）。  C-RAN概念在传统无线接入网中，每个基站连接固定数量的扇区天线，并覆盖一片区域，每个基站只能处理本小区的收发信号；系统的容量是干扰受限的，各个基站独立工作，难以提升效率；另外，基站多提供“垂直解决方法”，可扩展性受限。基于上述三点缺陷，我们需要采用新的网络架构，接入网的云化势在必行。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="边缘计算架构（一）">
-<meta property="og:url" content="http://frontop137.github.io/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:title" content="边缘计算架构（四）">
+<meta property="og:url" content="http://frontop137.github.io/2020/11/27/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="这一篇重点介绍多接入边缘计算（MEC）。  应用案例我们首先看一个用户获取内容的应用场景，以此来初步认识MEC：">
+<meta property="og:description" content="这一篇重点介绍云接入网（C-RAN）。  C-RAN概念在传统无线接入网中，每个基站连接固定数量的扇区天线，并覆盖一片区域，每个基站只能处理本小区的收发信号；系统的容量是干扰受限的，各个基站独立工作，难以提升效率；另外，基站多提供“垂直解决方法”，可扩展性受限。基于上述三点缺陷，我们需要采用新的网络架构，接入网的云化势在必行。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/11/24/eAbBrnuoTfIqmVS.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/11/24/PX5x2g9q7ebhizY.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/11/24/FvcL1VQ6tyCBOxn.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/11/24/cfgsUPVmM27Se6K.jpg">
-<meta property="article:published_time" content="2020-11-24T12:38:14.000Z">
-<meta property="article:modified_time" content="2020-11-25T01:46:46.434Z">
+<meta property="og:image" content="https://i.loli.net/2020/11/27/hYaKz7XlQogiVAN.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/11/27/Js8mYRD5dGLpfhK.jpg">
+<meta property="article:published_time" content="2020-11-27T01:18:45.000Z">
+<meta property="article:modified_time" content="2020-11-27T01:18:45.110Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="边缘计算">
 <meta property="article:tag" content="物联网">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/24/eAbBrnuoTfIqmVS.jpg">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/27/hYaKz7XlQogiVAN.jpg">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/">
+<link rel="canonical" href="http://frontop137.github.io/2020/11/27/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E5%9B%9B%EF%BC%89/">
 
 
 <script class="page-configurations">
@@ -55,7 +53,7 @@
   };
 </script>
 
-  <title>边缘计算架构（一） | frontop137's blog</title>
+  <title>边缘计算架构（四） | frontop137's blog</title>
   
 
 
@@ -188,7 +186,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">应用案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEC%E5%B9%B3%E5%8F%B03%E5%B1%82%E9%80%BB%E8%BE%91%E5%AE%9E%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">MEC平台3层逻辑实体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEC%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">MEC基本框架</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-RAN%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">C-RAN概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F-RAN"><span class="nav-number">2.</span> <span class="nav-text">F-RAN</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -280,7 +278,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/27/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E5%9B%9B%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -296,7 +294,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          边缘计算架构（一）
+          边缘计算架构（四）
         </h1>
 
         <div class="post-meta-container">
@@ -307,15 +305,8 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-11-24 20:38:14" itemprop="dateCreated datePublished" datetime="2020-11-24T20:38:14+08:00">2020-11-24</time>
+      <time title="创建时间：2020-11-27 09:18:45" itemprop="dateCreated datePublished" datetime="2020-11-27T09:18:45+08:00">2020-11-27</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-25 09:46:46" itemprop="dateModified" datetime="2020-11-25T09:46:46+08:00">2020-11-25</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -336,47 +327,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这一篇重点介绍<strong>多接入边缘计算（MEC）</strong>。</p>
+        <p>这一篇重点介绍<strong>云接入网（C-RAN）。</strong></p>
 <hr>
-<h3 id="应用案例"><a href="#应用案例" class="headerlink" title="应用案例"></a>应用案例</h3><p>我们首先看一个用户获取内容的应用场景，以此来初步认识MEC：</p>
-<p><img src="https://i.loli.net/2020/11/24/eAbBrnuoTfIqmVS.jpg" alt="1.jpg"></p>
+<h3 id="C-RAN概念"><a href="#C-RAN概念" class="headerlink" title="C-RAN概念"></a>C-RAN概念</h3><p>在传统无线接入网中，每个基站连接固定数量的扇区天线，并覆盖一片区域，每个基站只能处理本小区的收发信号；系统的容量是干扰受限的，各个基站独立工作，难以提升效率；另外，基站多提供“垂直解决方法”，可扩展性受限。基于上述三点缺陷，我们需要采用新的网络架构，接入网的云化势在必行。</p>
 <a id="more"></a>
 
-<p>上图中，在不使用MEC的传统组网中，每个用户终端（UE）在发起内容请求时，首先要先通过基站（eNodeB）接入核心网（CN），然后通过核心网连接到所寻找的内容，然后再逐层回传至用户终端。该基站下每个用户发起请求都要经历这个过程，一方面会浪费网络资源，另一方面长距离的传输也加大了时延。在引入了MEC解决方案后，在基站侧部署MEC服务器，可以将从核心网请求下来的内容缓存在MEC服务器上，使用户能够直接从MEC服务器获取内容（有点类似于代理服务器）。<br>MEC的概念反映到具体的工程部署中就是图中“MEC节点”（也称MEC平台）。</p>
+<p>中国移动率先提出了C-RAN的概念，C-RAN是一个将集中处理、协作式无线电和实时云型基础设施融合于一身的解决传统接入网僵化问题的新型绿色网络框架。</p>
+<p><img src="https://i.loli.net/2020/11/27/hYaKz7XlQogiVAN.jpg" alt="1.jpg"></p>
+<p>C-RAN架构主要由分布式协作无线网络、光传输网络和集中式基带处理池3部分组成。<br>在C-RAN架构下，每个远端无线射频单元上发送或接收信号的处理都是在一个虚拟的基带基站（处理能力由实时虚拟技术分配基带池中的处理器构成）上完成的，因此每个射频单元不再属于任何一个基带处理单元实体，使应用实时虚拟技术达到物理资源的全局最优利用成为可能。采用C-RAN架构后，运营商只需要部署一些新的远端无线射频单元并连接到集中式的基带处理池，就可以便捷地实现网络覆盖的扩展和网络容量的增加，若网络负载增加，运营商只需要在基带池中增加新的通用处理器即可。</p>
+<p>总结来看，C-RAN带来的优势主要有以下几点：</p>
+<ul>
+<li>极大地减少了基站机房数量以及配套设备的部署。</li>
+<li>射频单元可以基于高密度配置的发射以缩小到用户的距离，从而降低网络侧和用户侧的发射功率。</li>
+<li>基带池中的处理资源为所有需您基站共享，是整个网络容量增加，其动态调用方式更适应移动通信系统中的潮汐效应，从而使资源利用达到最优。</li>
+</ul>
 <hr>
-<h3 id="MEC平台3层逻辑实体"><a href="#MEC平台3层逻辑实体" class="headerlink" title="MEC平台3层逻辑实体"></a>MEC平台3层逻辑实体</h3><p>下图是MEC平台的逻辑组成，包含了<strong>MEC基础设施管理系统、MEC应用平台管理系统、应用管理系统</strong>3层逻辑结构。</p>
-<p><img src="https://i.loli.net/2020/11/24/PX5x2g9q7ebhizY.jpg" alt="1.jpg"></p>
-<ul>
-<li>MEC基础设施管理系统：</li>
-</ul>
-<p>包含硬件资源和基于网络功能虚拟化的虚拟层。</p>
-<ul>
-<li>MEC应用平台管理系统：</li>
-</ul>
-<p>承载业务的对外接口适配功能，通过API完成与NodeB及上层应用层之间的接口协议封装，提供通信服务、服务注册、无线网络信息服务和流量卸载功能等能力。</p>
-<ul>
-<li>应用管理系统（应用层）：</li>
-</ul>
-<p>基于网络功能虚拟化，将MEC应用平台组件层封装的基础功能进一步组合形成诸如无限缓存、本地内容转发、增强现实、业务优化等虚拟的应用程序。并通过标准的API和第三方应用实现对接。</p>
-<hr>
-<h3 id="MEC基本框架"><a href="#MEC基本框架" class="headerlink" title="MEC基本框架"></a>MEC基本框架</h3><p>从一个更加宏观的角度来看，我们将MEC平台的不同功能实体分为了3个层级，如下图：</p>
-<p><img src="https://i.loli.net/2020/11/24/FvcL1VQ6tyCBOxn.jpg" alt="1.jpg"></p>
-<ul>
-<li>网络层</li>
-</ul>
-<p>包含各种不同的网络外部实体。</p>
-<ul>
-<li>移动边缘主机层</li>
-</ul>
-<p>包含移动边缘主机和相应的主机管理实体。</p>
-<ul>
-<li>移动边缘系统层</li>
-</ul>
-<p>负责对MEC系统进行全局掌控。</p>
-<p>移动边缘主机由<strong>移动边缘平台、移动边缘应用、虚拟化基础设施</strong>组成。虚拟化基础设施可以为移动边缘应用提供计算、储存和网络资源；移动边缘平台从移动边缘平台管理器或移动边缘应用处接受流量转发规则，基于规则向虚拟化基础设施的转发平面下发指令；移动边缘应用是运行在移动边缘虚拟化基础设施上的虚拟机实例，这些应用可以和移动边缘平台相互通信。<br>移动边缘平台管理器具有移动边缘平台管理、移动边缘应用生命周期管理以及移动边缘应用规则和需求管理等功能。<br>移动边缘应用生命周期管理包括移动边缘应用程序的创建和终止，并且为<strong>移动边缘编排器</strong>（Mobile Edge Orchestrator，MEO）提供应用相关事件的指示消息。<br>MEO是移动边缘框架中的核心功能，负责宏观掌握移动边缘网络的资源和容量。</p>
-<p><img src="https://i.loli.net/2020/11/24/cfgsUPVmM27Se6K.jpg" alt="1.png"></p>
-<hr>
-<p>MEC凭借其突出的优势，正在迎来温暖的春天。</p>
+<h3 id="F-RAN"><a href="#F-RAN" class="headerlink" title="F-RAN"></a>F-RAN</h3><p>雾无线接入网（F-RAN）是C-RAN与边缘计算结合的典型实实践，在F-RAN的架构下，从边缘计算的角度来讲，每个边缘节点都与云处理器相连，以增加其计算处理能力；从C-RAN的角度来讲，节点都部署在网络边缘，并配备本地缓存功能，由此实现C-RAN与边缘计算的深独融合。</p>
+<p>下图为Fog-RAN的实现架构：</p>
+<p><img src="https://i.loli.net/2020/11/27/Js8mYRD5dGLpfhK.jpg" alt="1.jpg"></p>
 
     </div>
 
@@ -412,14 +380,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/11/22/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%A6%82%E8%BF%B0/" rel="prev" title="边缘计算概述">
-                  <i class="fa fa-chevron-left"></i> 边缘计算概述
+                <a href="/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="边缘计算架构（三）">
+                  <i class="fa fa-chevron-left"></i> 边缘计算架构（三）
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="边缘计算架构（二）">
-                  边缘计算架构（二） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

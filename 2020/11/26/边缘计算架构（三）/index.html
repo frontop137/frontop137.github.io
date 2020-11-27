@@ -22,17 +22,17 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="这一篇重点介绍雾计算（Fog Computing）  概念简介雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
+  <meta name="description" content="这一篇重点介绍雾计算（Fog Computing）。  概念简介雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="边缘计算架构（三）">
 <meta property="og:url" content="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="这一篇重点介绍雾计算（Fog Computing）  概念简介雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
+<meta property="og:description" content="这一篇重点介绍雾计算（Fog Computing）。  概念简介雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg">
 <meta property="og:image" content="https://pic3.zhimg.com/80/336207aa25ea512b68132f30440d5a8e_720w.jpg">
 <meta property="article:published_time" content="2020-11-26T06:58:07.000Z">
-<meta property="article:modified_time" content="2020-11-26T07:01:24.348Z">
+<meta property="article:modified_time" content="2020-11-27T00:23:42.900Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="边缘计算">
 <meta property="article:tag" content="物联网">
@@ -202,7 +202,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -304,10 +304,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-11-26 14:58:07 / 修改时间：15:01:24" itemprop="dateCreated datePublished" datetime="2020-11-26T14:58:07+08:00">2020-11-26</time>
+      <time title="创建时间：2020-11-26 14:58:07" itemprop="dateCreated datePublished" datetime="2020-11-26T14:58:07+08:00">2020-11-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-27 08:23:42" itemprop="dateModified" datetime="2020-11-27T08:23:42+08:00">2020-11-27</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -328,7 +334,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这一篇重点介绍<strong>雾计算（Fog Computing）</strong></p>
+        <p>这一篇重点介绍<strong>雾计算（Fog Computing）。</strong></p>
 <hr>
 <h3 id="概念简介"><a href="#概念简介" class="headerlink" title="概念简介"></a>概念简介</h3><p>雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将<strong>计算、通信、控制和存储资源与服务</strong>分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。</p>
 <p>下图是思科对雾计算最初的定义：</p>
@@ -404,6 +410,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2020/11/27/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="next" title="边缘计算架构（四）">
+                  边缘计算架构（四） <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
