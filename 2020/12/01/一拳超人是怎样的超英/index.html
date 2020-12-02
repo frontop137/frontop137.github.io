@@ -22,25 +22,26 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="这一篇重点介绍雾计算（Fog Computing）。  雾计算概念雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
+  <meta name="description" content="每天一百个俯卧撑，一百个仰卧起坐，一百个深蹲，十公里跑，练三年，你就会变强！——埼玉  提起超级英雄的影视剧，大家应该是再熟悉不过的了。从学前时期痴迷的《奥特曼》，到小学追的《龙珠》、《数码宝贝》，再到初中入坑的《火影忍者》，以及后来接触的漫威、DC系列，想必大家也和我一样，成长过程中都是伴随着一个个超级英雄，这些超英后期可能霹雳无敌帅炸天，但是前期都是一步一步摸爬滚打，甚至是从吊车尾开始，就算是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="边缘计算架构（三）">
-<meta property="og:url" content="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:title" content="一拳超人是怎样的超级英雄？">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/01/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E8%B6%85%E8%8B%B1/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="这一篇重点介绍雾计算（Fog Computing）。  雾计算概念雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
+<meta property="og:description" content="每天一百个俯卧撑，一百个仰卧起坐，一百个深蹲，十公里跑，练三年，你就会变强！——埼玉  提起超级英雄的影视剧，大家应该是再熟悉不过的了。从学前时期痴迷的《奥特曼》，到小学追的《龙珠》、《数码宝贝》，再到初中入坑的《火影忍者》，以及后来接触的漫威、DC系列，想必大家也和我一样，成长过程中都是伴随着一个个超级英雄，这些超英后期可能霹雳无敌帅炸天，但是前期都是一步一步摸爬滚打，甚至是从吊车尾开始，就算是">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg">
-<meta property="og:image" content="https://pic3.zhimg.com/80/336207aa25ea512b68132f30440d5a8e_720w.jpg">
-<meta property="article:published_time" content="2020-11-26T06:58:07.000Z">
-<meta property="article:modified_time" content="2020-11-27T01:21:21.559Z">
+<meta property="og:image" content="https://img9.doubanio.com/view/photo/l/public/p2468786054.webp">
+<meta property="og:image" content="https://img2.doubanio.com/view/photo/l/public/p2284903812.webp">
+<meta property="og:image" content="https://img1.doubanio.com/view/photo/l/public/p2317912278.webp">
+<meta property="article:published_time" content="2020-12-01T07:46:59.000Z">
+<meta property="article:modified_time" content="2020-12-02T11:32:26.976Z">
 <meta property="article:author" content="Fangtong Zhou">
-<meta property="article:tag" content="边缘计算">
-<meta property="article:tag" content="物联网">
+<meta property="article:tag" content="动漫">
+<meta property="article:tag" content="观后感">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg">
+<meta name="twitter:image" content="https://img9.doubanio.com/view/photo/l/public/p2468786054.webp">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/">
+<link rel="canonical" href="http://frontop137.github.io/2020/12/01/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E8%B6%85%E8%8B%B1/">
 
 
 <script class="page-configurations">
@@ -53,7 +54,7 @@
   };
 </script>
 
-  <title>边缘计算架构（三） | frontop137's blog</title>
+  <title>一拳超人是怎样的超级英雄？ | frontop137's blog</title>
   
 
 
@@ -174,7 +175,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -186,7 +187,6 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%BE%E8%AE%A1%E7%AE%97%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">雾计算概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">实例说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%BE%E8%8A%82%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">雾节点</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -278,7 +278,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/01/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E8%B6%85%E8%8B%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -294,7 +294,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          边缘计算架构（三）
+          一拳超人是怎样的超级英雄？
         </h1>
 
         <div class="post-meta-container">
@@ -305,14 +305,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-11-26 14:58:07" itemprop="dateCreated datePublished" datetime="2020-11-26T14:58:07+08:00">2020-11-26</time>
+      <time title="创建时间：2020-12-01 15:46:59" itemprop="dateCreated datePublished" datetime="2020-12-01T15:46:59+08:00">2020-12-01</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-27 09:21:21" itemprop="dateModified" datetime="2020-11-27T09:21:21+08:00">2020-11-27</time>
+        <time title="修改时间：2020-12-02 19:32:26" itemprop="dateModified" datetime="2020-12-02T19:32:26+08:00">2020-12-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -320,7 +320,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
+          <a href="/categories/%E5%89%A7%E8%AF%84%E5%BD%B1%E8%AF%84/" itemprop="url" rel="index"><span itemprop="name">剧评影评</span></a>
         </span>
     </span>
 
@@ -334,42 +334,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这一篇重点介绍<strong>雾计算（Fog Computing）。</strong></p>
+        <p>每天一百个俯卧撑，一百个仰卧起坐，一百个深蹲，十公里跑，练三年，你就会变强！——埼玉</p>
 <hr>
-<h3 id="雾计算概念"><a href="#雾计算概念" class="headerlink" title="雾计算概念"></a>雾计算概念</h3><p>雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将<strong>计算、通信、控制和存储资源与服务</strong>分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。</p>
-<p>下图是思科对雾计算最初的定义：</p>
-<p><img src="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg" alt="1.jpg"></p>
-<a id="more"></a>
-
-<p>雾是由虚拟化组件组成，分布在网络边缘的一组资源池，能够为诸如大规模传感器网络和智能网络环境等场景提供高度分布式的资源来存储和处理数据。雾主要由边缘网络中的设备构成，这些设备可以是现有的设备（交换机、路由器、网关等），也可以是为专门不熟而新增的服务器。虽然这两类设备的计算和资源能力都远小于一般意义上的数据中心，但是其庞大的数量可以弥补单一设备资源的不足。这些设备配合设备内的管理系统构成了一个个雾节点，大量庞大的雾节点组成了雾网络。明显的，这些雾节点不受地理位置的限制，相比于大型的数据中心，其分布变得更加分散。</p>
-<p>雾计算只是云计算的补充，用于网络边缘、靠近用户的初步计算，例如过滤、聚合用户消息，做出实时决策等，然后将数据量较大的部分交给云计算来完成。相比于云计算，雾计算的出现能够考虑到服务延时、功耗、网络流量、资本和运营开支、内容发布等多种因素，从而更加高效，更好地满足了物联网的应用需求。</p>
+<p>提起超级英雄的影视剧，大家应该是再熟悉不过的了。从学前时期痴迷的《奥特曼》，到小学追的《龙珠》、《数码宝贝》，再到初中入坑的《火影忍者》，以及后来接触的漫威、DC系列，想必大家也和我一样，成长过程中都是伴随着一个个超级英雄，这些超英后期可能霹雳无敌帅炸天，但是前期都是一步一步摸爬滚打，甚至是从吊车尾开始，就算是达到了实力顶峰，也和最终的boss打的有来有回，最终惊险取胜，happy ending！<br>总而言之，这符合一般观众的观影心理，要有落差才能抓住眼球，要主角被吊起来暴捶，才能引起共鸣，才能在最终的战胜时让观众有扬眉吐气的感觉，让观众们顿时联想到自己就算在生活中处处碰壁，想必也能完成这生活的大逆转吧。<br>如果我告诉你，有一部动漫，从第一集开始，主角就无敌，一直无敌到最后一集，你觉得你会看吗？估计大部分人是不感兴趣的，可能会贴上“无脑”,“幼稚”的标签。然而，正是这样一部“无脑”与“幼稚”的动漫，横扫了亚洲乃至世界市场，豆瓣9.4分，IMDB同样排名前列，他就是《一拳超人》。更加魔性的是，在《一拳超人》的男主角埼玉老师和反派的战斗中，弹幕尽然清一色的在为反派“加油打气”（尤其是第一季BOSS波罗斯），甚至动漫的ost仿佛都是为了反派而配的，不为什么，只是反派在经过了长期氛围的烘托后依然被一拳打死太过悲凉…</p>
+<p><img src="https://img9.doubanio.com/view/photo/l/public/p2468786054.webp" alt=""></p>
 <hr>
-<h3 id="实例说明"><a href="#实例说明" class="headerlink" title="实例说明"></a>实例说明</h3><p><img src="https://pic3.zhimg.com/80/336207aa25ea512b68132f30440d5a8e_720w.jpg"></p>
-<p>在目前的交通系统中，摄像头作为传感器采集道路数据并传递给本地的中心机房，本地机房做出决策后再向作为执行器的交通信号灯发送指令进行显示。从摄像头到交通信号灯，这之间的通信跳数在3~4跳甚至更高，若在数据量庞大的时候要做出实施决策，会面临网络延迟的挑战。这时我们引入雾节点，一方面在雾节点上缓存传感器采集的若干帧数据，压缩后再送至机房，从而缓解雾节点到机房之间的带宽压力；另一方面雾节点可以判断采集到的数据是否有紧急情况发生（例如大型车祸、警车追击、消防车、救护车等），以便做出实时决策。</p>
-<p>通过上述实例，我们总结雾计算的几大特性：</p>
+<p>那么问题来了，《一拳超人》到底是怎么火的？难道仅仅是因为他优秀的打斗分镜？不可能的。如果只有优秀的动画制作，不可能达到豆瓣9.4分的高分，更何况，剧情方面，《一拳超人》着实也不能放到台面上来和《死亡笔记》、《钢炼FA》、《进击的巨人》这类豆瓣同样拿到9分+的作品来比较。</p>
+<p>在我看来，埼玉的个人魅力太大了，直接影响到了每一个观众。<br>这里说的个人魅力，当然不是他的外貌，作为一个光头男，琦玉老师应该从没有被放入到帅哥的讨论行列。我认为的埼玉的个人魅力，主要有以下几点：</p>
 <ul>
-<li>位于网络边缘，位置感知和低时延：雾节点距离数据源和数据消费者更近，从而有更小的网络延迟，利用雾计算可以在网络边缘直接提供有针对性地解决方案，同时可以缓存和预处理一部分数据，稍后再送至云中心来处理。这样削减了核心网的压力。</li>
-<li>地理分布广：雾节点以分布式的方式分散在更大的地理区域。</li>
-<li>分布式计算和存储资源</li>
-<li>雾节点数量众多</li>
-<li>移动性支持：雾架构下的应用和服务应该与通信机制实现解耦，以免用户移动造成通信中断。</li>
-<li>实时交互：雾节点靠近数据源和数据消费源。</li>
-<li>无线接入占据主导地位</li>
-<li>异构性：处于核心网和用户之间，需要对多种不同的通信提供支持。</li>
-<li>互操作性：雾节点之间需要相互通信以交换信息，实现负载均衡和资源编排。</li>
+<li>想当英雄，但不为了拯救地球：埼玉是一个“梦想就是当英雄的人“，他甚至辞掉了工作，专职当英雄，这个设定在所有超英影视剧里独一无二。他是钢铁侠吗？不是，钢铁侠家财万贯，认为自己对世界和人类负有责任，才选择挺身而出；他是蜘蛛侠吗？不是，蜘蛛侠机缘巧合具有了超能力，白天有自己的职业和工作，晚上才出来利用自己的能力行侠仗义。埼玉就是一个普通人，他关心着每周六超市的蔬菜打折，他当英雄的目的，仅仅是因为他想当英雄…就算他自己常说”地球由我来保护！“，但我以为，那也仅是他对于英雄的认知，认为做为英雄自然要保护世界，可当他真正击碎了陨石，真真正正地保护了地球后，他也没有丝毫的成就感，只是像往常一样，仿佛又击败了一个普通的坏人。所以保护地球并不是他的动力所在，要说他的动力，仅仅他喜欢当英雄。</li>
+<li>心如止水，平淡地面对一切：要说动漫里唯一能激怒埼玉的，大概也只有那死活也打不到的蚊子了吧。埼玉面对生活和敌人都是同样的心态，他不愤怒，他只是像完成工作一样，静静地听着别人装逼，然后一拳击败他们。动漫中十分触动人心的一场，在击碎陨石拯救了地球后，有人煽动群众说正是因为埼玉没有那么强，没有早点来才导致被击碎的陨石散落到了城市，虽然拯救了地球，导致城市大规模受到破坏。这时埼玉依旧没有愤怒：<br><img src="https://img2.doubanio.com/view/photo/l/public/p2284903812.webp" alt="">在被评为C级英雄时，而远不如自己的弟子杰诺斯却被破格评级为S时，埼玉没有认为自己被亏待被低估从而恼羞成怒抑或一蹶不振，反之，他接受了这个结果，并且每天都为了升级而努力着。他热爱看电视剧，热爱打电子游戏（虽然操作稀烂，只会操作一个按键），在他看来，英雄就是他的职业，就像厨师老师快递员一样的职业，而非什么高于 一切的理想。</li>
+<li>有血有肉，而且并不是圣母：琦玉老师讨厌蚊子；琦玉老师为了省钱住在价格低廉的公寓；琦玉老师每周都去抢超市的特价菜；琦玉老师热爱打电动并且也会为自己的电动打不过别人而苦恼；琦玉老师也会希望有自己的粉丝后援会，也会希望收到感谢贺卡。琦玉老师不会去讲什么大道理，只是不断贯彻着自己的本心，贯彻着自己对于英雄的理解。</li>
 </ul>
+<p>埼玉老师有他自己的境界，有他自己的世界。</p>
 <hr>
-<h3 id="雾节点"><a href="#雾节点" class="headerlink" title="雾节点"></a>雾节点</h3><p>雾节点主要涵盖了以下几点功能：</p>
-<ul>
-<li>节点安全：多数情况下，雾节点可以作为安全网关来验证传感器和执行器的合法性。</li>
-<li>节点管理：雾节点需要支持管理接口以便被更高层级的管理实体进行统一管理和控制。</li>
-<li>网络：很多雾应用都是时延敏感的，因此雾节点需要通过网络实现通信。</li>
-<li>加速器：在某些时延和功率优先的应用场景下，雾应用需要利用加速器来加速完成任务。</li>
-<li>计算：雾节点具有一般的计算能力。</li>
-<li>存储：雾节点具备一定的存储能力，以便进行数据的缓存。</li>
-<li>传感器、执行器和控制：每个雾节点可以直接连接成百上千个传感器和执行器等装置。</li>
-<li>协议抽象层：使市面上很多传感器和执行器在逻辑上支持和雾节点的连接。</li>
-</ul>
+<p>像开头说的一样，琦玉老师亲自承认，自己变强的秘诀不是别的，就是日复一日的训练，训练内容也不过是普通的俯卧撑仰卧起坐深蹲跑步等等，练了三年，变秃了，也变强了。听了这个之后，无数的网友争先恐后去训练，说来简单，但是能日复一日坚持下来的，却寥寥无几，网上真的有大神坚持了下来，虽然没有练成开天辟地的神力，但是减肥成功，变成性感型男的大有人在，这无疑是琦玉老师带给人们的正面影响之一，这也无疑是观众们喜欢琦玉老师的铁证。</p>
+<p><img src="https://img1.doubanio.com/view/photo/l/public/p2317912278.webp" alt=""></p>
+<p>没错，埼玉没有天生神力，没有什么乱七八糟的封印，没有显赫的家族背景，没有任何异于常人的特性，他就是你周围的每一个普通人，他只是突然有一天想当英雄，然后去训练，变强，然后就成为了英雄，他所做的一切仿佛我们都能做到。虽然这部热血番有太多的不真实不合理，但却又是这么的真实和合理：<strong>热爱一件事情，并付诸于努利，就能成功</strong>。这句话再普通不过，甚至你都不想费笔墨把他摘抄下来，但这确实就是琦玉老师成功的原因。</p>
+<hr>
+<p>有人说《一拳超人》中的真英雄有三个：无证骑士，埼玉和King。无证骑士代表着英雄的格局和英雄的信念，受限于天赋，不是所有人都能成为英雄，但是每个人都可以有一颗英雄的心；King代表着英雄的形象和英雄的担当，King胆小如鼠，因为莫名其妙的原因成为了S级英雄，但他身材魁梧并且十分有气势，受到众人的崇拜和推崇。胆小如他，在面对蜈蚣长老依然为了救人而挺身而出，充当诱饵（召唤埼玉），展现出了英雄的气魄；而埼玉则代表了英雄的能力，这三个人共同构成了one老师对英雄的理解。</p>
+<p>最后，用无证骑士的一段话来结束这篇博文，这段话不仅感人，而且也升华了整部动画的水平：</p>
+<p><strong>我知道，没有人指望我，我比谁都明白….C级英雄根本排不上用场，我不能在B级有所作为，我了解自己有多弱小，没有人比我更清楚…我赢不了你！ 可是，我只能这么做，这不是赢不赢的了的问题，而是我必须挡在你前面！  因为我是英雄，我有责任保护大家！</strong></p>
 
     </div>
 
@@ -397,22 +382,19 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" rel="tag"># 边缘计算</a>
-              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" rel="tag"># 物联网</a>
+              <a href="/tags/%E5%8A%A8%E6%BC%AB/" rel="tag"># 动漫</a>
+              <a href="/tags/%E8%A7%82%E5%90%8E%E6%84%9F/" rel="tag"># 观后感</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="边缘计算架构（二）">
-                  <i class="fa fa-chevron-left"></i> 边缘计算架构（二）
+                <a href="/2020/11/28/EM%E7%AE%97%E6%B3%95/" rel="prev" title="EM算法">
+                  <i class="fa fa-chevron-left"></i> EM算法
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/11/27/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="next" title="边缘计算架构（四）">
-                  边缘计算架构（四） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
