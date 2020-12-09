@@ -113,7 +113,7 @@
       <h1 class="site-title">frontop137's blog</h1>
       <i class="logo-line"></i>
     </a>
-      <p class="site-subtitle" itemprop="description">记录生活琐碎</p>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
   </div>
 
   <div class="site-nav-right">
@@ -195,7 +195,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -266,6 +266,93 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Sweet but Psycho">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">边缘计算资源管理技术（一）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-08 16:04:46" itemprop="dateCreated datePublished" datetime="2020-12-08T16:04:46+08:00">2020-12-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-09 14:38:05" itemprop="dateModified" datetime="2020-12-09T14:38:05+08:00">2020-12-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>随着移动互联网和物联网技术的快速发展，网络数据流量呈现爆炸性的增长趋势，尤其是视频流量给网络造成了巨大挑战要求当前的网络具有体哦国内更高数据传输速率和更低的网络延迟的能力。<br>另外，随着边缘计算的发展以及大规模的部署，边缘计算的能量消耗成为了边缘计算服务提供商的重要成本，降低能耗成为了新兴的研究课题。2015年全球通信耗电量达到了世界总发电量的10%，相当于德国和日本两个工业大国的用电量相加，所使用的能源比航空业还多出了50%。今年来5G的各种业务（物联网、AR/VR、无人驾驶等等）兴起，2016-2021五年间，移动数据流量将会增长7倍，随着能耗成本的迅速增长，能量效率已经成为了未来5G性能的重要衡量指标。<br>相较于传统的云计算，边缘计算需要大量的部署，因此，加强不同边缘节点之间以及边缘计算节点与云节点之间的协作具有重要意义。所以面向协作机制的边缘计算资源管理是一个重要的研究方向。</p>
+<p><strong>资源管理技术</strong>是边缘计算的关键技术之一，主要解决边缘计算系统中计算、存储和网络资源管理的优化问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1010,95 +1097,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Fangtong Zhou">
-      <meta itemprop="description" content="Sweet but Psycho">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="frontop137's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">边缘计算架构（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-11-24 20:38:14" itemprop="dateCreated datePublished" datetime="2020-11-24T20:38:14+08:00">2020-11-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-25 09:46:46" itemprop="dateModified" datetime="2020-11-25T09:46:46+08:00">2020-11-25</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这一篇重点介绍<strong>多接入边缘计算（MEC）</strong>。</p>
-<hr>
-<h3 id="应用案例"><a href="#应用案例" class="headerlink" title="应用案例"></a>应用案例</h3><p>我们首先看一个用户获取内容的应用场景，以此来初步认识MEC：</p>
-<p><img src="https://i.loli.net/2020/11/24/eAbBrnuoTfIqmVS.jpg" alt="1.jpg"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

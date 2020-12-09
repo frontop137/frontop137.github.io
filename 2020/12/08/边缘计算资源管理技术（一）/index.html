@@ -22,25 +22,22 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="这一篇重点介绍雾计算（Fog Computing）。  雾计算概念雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
+  <meta name="description" content="概述随着移动互联网和物联网技术的快速发展，网络数据流量呈现爆炸性的增长趋势，尤其是视频流量给网络造成了巨大挑战要求当前的网络具有体哦国内更高数据传输速率和更低的网络延迟的能力。另外，随着边缘计算的发展以及大规模的部署，边缘计算的能量消耗成为了边缘计算服务提供商的重要成本，降低能耗成为了新兴的研究课题。2015年全球通信耗电量达到了世界总发电量的10%，相当于德国和日本两个工业大国的用电量相加，所使">
 <meta property="og:type" content="article">
-<meta property="og:title" content="边缘计算架构（三）">
-<meta property="og:url" content="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:title" content="边缘计算资源管理技术（一）">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="这一篇重点介绍雾计算（Fog Computing）。  雾计算概念雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将计算、通信、控制和存储资源与服务分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。 下图是思科对雾计算最初的定义：">
+<meta property="og:description" content="概述随着移动互联网和物联网技术的快速发展，网络数据流量呈现爆炸性的增长趋势，尤其是视频流量给网络造成了巨大挑战要求当前的网络具有体哦国内更高数据传输速率和更低的网络延迟的能力。另外，随着边缘计算的发展以及大规模的部署，边缘计算的能量消耗成为了边缘计算服务提供商的重要成本，降低能耗成为了新兴的研究课题。2015年全球通信耗电量达到了世界总发电量的10%，相当于德国和日本两个工业大国的用电量相加，所使">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg">
-<meta property="og:image" content="https://pic3.zhimg.com/80/336207aa25ea512b68132f30440d5a8e_720w.jpg">
-<meta property="article:published_time" content="2020-11-26T06:58:07.000Z">
-<meta property="article:modified_time" content="2020-11-27T01:21:21.559Z">
+<meta property="article:published_time" content="2020-12-08T08:04:46.000Z">
+<meta property="article:modified_time" content="2020-12-09T06:38:05.057Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="边缘计算">
 <meta property="article:tag" content="物联网">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/">
+<link rel="canonical" href="http://frontop137.github.io/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
 <script class="page-configurations">
@@ -53,7 +50,7 @@
   };
 </script>
 
-  <title>边缘计算架构（三） | frontop137's blog</title>
+  <title>边缘计算资源管理技术（一） | frontop137's blog</title>
   
 
 
@@ -186,7 +183,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%BE%E8%AE%A1%E7%AE%97%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">雾计算概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">实例说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%BE%E8%8A%82%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">雾节点</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">2.</span> <span class="nav-text">关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91QoE%E4%BC%98%E5%8C%96%E7%9A%84%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">面向QoE优化的资源管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E8%83%BD%E6%95%88%E4%BC%98%E5%8C%96%E7%9A%84%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">面向能效优化的资源管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6%E7%9A%84%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">面向协作机制的资源管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">主要挑战</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -278,7 +275,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -294,7 +291,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          边缘计算架构（三）
+          边缘计算资源管理技术（一）
         </h1>
 
         <div class="post-meta-container">
@@ -305,14 +302,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-11-26 14:58:07" itemprop="dateCreated datePublished" datetime="2020-11-26T14:58:07+08:00">2020-11-26</time>
+      <time title="创建时间：2020-12-08 16:04:46" itemprop="dateCreated datePublished" datetime="2020-12-08T16:04:46+08:00">2020-12-08</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-27 09:21:21" itemprop="dateModified" datetime="2020-11-27T09:21:21+08:00">2020-11-27</time>
+        <time title="修改时间：2020-12-09 14:38:05" itemprop="dateModified" datetime="2020-12-09T14:38:05+08:00">2020-12-09</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -334,41 +331,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这一篇重点介绍<strong>雾计算（Fog Computing）。</strong></p>
-<hr>
-<h3 id="雾计算概念"><a href="#雾计算概念" class="headerlink" title="雾计算概念"></a>雾计算概念</h3><p>雾计算是一种新型的边缘计算网络架构，这一概念在2012年由思科正式提出。雾计算将<strong>计算、通信、控制和存储资源与服务</strong>分配给用户或分布在靠近用户的设备与系统上，从而将云计算模式扩展到网络边缘上。相比于MEC和微云，雾计算更加侧重于在物联网上的应用。</p>
-<p>下图是思科对雾计算最初的定义：</p>
-<p><img src="https://pic2.zhimg.com/80/deb1e59ba82a5570751cffd1a4d74d11_720w.jpg" alt="1.jpg"></p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>随着移动互联网和物联网技术的快速发展，网络数据流量呈现爆炸性的增长趋势，尤其是视频流量给网络造成了巨大挑战要求当前的网络具有体哦国内更高数据传输速率和更低的网络延迟的能力。<br>另外，随着边缘计算的发展以及大规模的部署，边缘计算的能量消耗成为了边缘计算服务提供商的重要成本，降低能耗成为了新兴的研究课题。2015年全球通信耗电量达到了世界总发电量的10%，相当于德国和日本两个工业大国的用电量相加，所使用的能源比航空业还多出了50%。今年来5G的各种业务（物联网、AR/VR、无人驾驶等等）兴起，2016-2021五年间，移动数据流量将会增长7倍，随着能耗成本的迅速增长，能量效率已经成为了未来5G性能的重要衡量指标。<br>相较于传统的云计算，边缘计算需要大量的部署，因此，加强不同边缘节点之间以及边缘计算节点与云节点之间的协作具有重要意义。所以面向协作机制的边缘计算资源管理是一个重要的研究方向。</p>
+<p><strong>资源管理技术</strong>是边缘计算的关键技术之一，主要解决边缘计算系统中计算、存储和网络资源管理的优化问题。</p>
 <a id="more"></a>
-
-<p>雾是由虚拟化组件组成，分布在网络边缘的一组资源池，能够为诸如大规模传感器网络和智能网络环境等场景提供高度分布式的资源来存储和处理数据。雾主要由边缘网络中的设备构成，这些设备可以是现有的设备（交换机、路由器、网关等），也可以是为专门不熟而新增的服务器。虽然这两类设备的计算和资源能力都远小于一般意义上的数据中心，但是其庞大的数量可以弥补单一设备资源的不足。这些设备配合设备内的管理系统构成了一个个雾节点，大量庞大的雾节点组成了雾网络。明显的，这些雾节点不受地理位置的限制，相比于大型的数据中心，其分布变得更加分散。</p>
-<p>雾计算只是云计算的补充，用于网络边缘、靠近用户的初步计算，例如过滤、聚合用户消息，做出实时决策等，然后将数据量较大的部分交给云计算来完成。相比于云计算，雾计算的出现能够考虑到服务延时、功耗、网络流量、资本和运营开支、内容发布等多种因素，从而更加高效，更好地满足了物联网的应用需求。</p>
 <hr>
-<h3 id="实例说明"><a href="#实例说明" class="headerlink" title="实例说明"></a>实例说明</h3><p><img src="https://pic3.zhimg.com/80/336207aa25ea512b68132f30440d5a8e_720w.jpg"></p>
-<p>在目前的交通系统中，摄像头作为传感器采集道路数据并传递给本地的中心机房，本地机房做出决策后再向作为执行器的交通信号灯发送指令进行显示。从摄像头到交通信号灯，这之间的通信跳数在3~4跳甚至更高，若在数据量庞大的时候要做出实施决策，会面临网络延迟的挑战。这时我们引入雾节点，一方面在雾节点上缓存传感器采集的若干帧数据，压缩后再送至机房，从而缓解雾节点到机房之间的带宽压力；另一方面雾节点可以判断采集到的数据是否有紧急情况发生（例如大型车祸、警车追击、消防车、救护车等），以便做出实时决策。</p>
-<p>通过上述实例，我们总结雾计算的几大特性：</p>
+<h3 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h3><h4 id="面向QoE优化的资源管理"><a href="#面向QoE优化的资源管理" class="headerlink" title="面向QoE优化的资源管理"></a>面向QoE优化的资源管理</h4><p>为了应对新型业务带来的网络挑战（以视频业务为例），业界主要提出了两种方法：<br>（1）在移动网络中采用自适应比特流（Adaptive Bit Rate，ABR）传输技术进行视频分发，即在移动网络中对视频资源编码为多种比特率版本，每个版本的视频文件都被切分成多个视频块，并根据用户设备的能力、网络连接状况和特定情况，为用户动态选择传送的视频块比特率版本，从而减少视频卡顿和重新缓冲率。<br>（2）MEC在移动网络边缘向内容提供商和应用开发者提供云计算能力和IT服务环境，可以为终端用户提供超低时延和高带宽服务。</p>
+<p>自ABR和MEC技术提出以后，利用MEC实现自适应视频流的缓存、转码与自适应分发受到了业界的广泛关注。在面向视频流的业务时，MEC的存储计算资源以及网络感知能力可以有效支持ABR技术。一方面，MEC的分布式边缘存储资源可以对视频资源进行缓存，并对视频请求进行本地卸载，从而既缩短用户到视频内容的距离，降低传输时延，又减少视频内容的冗余传输；另一方面，在ABR中，用户请求的视频比特率可基于网络条件、设备功能和用户偏好自适应调整，往往需要对视频块进行多个比特率版本的缓存，这样会造成较大的缓存成本，因此可以选择在MEC中缓存一部分较高比特率视频，对于缓存未命中的请求，利用MEC的计算能力和视频转码技术将缓存的视频版本转码为请求的比特率版本。除此之外，MEC还可以利用其网络感知能力 ，实时感知网络数据，从而进行链路感知自适应，极大地改善用户的服务体验质量。总之，自适应视频流业务中利用MEC缓存流行视频块，并在不同比特率版本之间进行转码，实现在网络边缘对用户请求进行响应，已经被认为是解决ABR中视频内容分发的一个重要趋势。<br>在传统视频流分发系统中，缓存和转码都在云端完成，带来较高的传输时延，且增加回传网和核心网的带宽压力。利用MEC可以有效提高网络整体性能，并显著改善用户体验，但在MEC资源容量有限的前提下，缓存转码资源的滥用会造成MEC负载过重，降低资源效率，影响用户体验，因此需要对不同视频业务的需求和特点进行分析，在各项资源之间进行权衡和分配。使视频缓存转码的效率最优。除此之外，可以利用MEC分布式部署的特点，利用临近MEC服务器的缓存转码资源，协作处理视频请求，优化整个网络的视频分发质量和资源效率。</p>
+<h4 id="面向能效优化的资源管理"><a href="#面向能效优化的资源管理" class="headerlink" title="面向能效优化的资源管理"></a>面向能效优化的资源管理</h4><p>从能耗角度可将传统的移动网络划分为<strong>终端、无线接入网、核心网和源服务器</strong>4个部分，用户从向源服务器发出数据请求，到收到从源服务器发送回来的响应数据，整个传输过程需要经过用户终端到基站之间的无线链路以及基站与源服务器之间的回传链路。从网络角度看，用户的每次数据请求理论上都需要经过上述流程才能被响应，但实际上，某一用户往往会对同一内容进行多次访问，不同用户也会对同一内容进行多次访问，这是很普遍的现象。对同一内容进行多次重复的传输，无疑是一种能耗的浪费。<br><strong>缓存</strong>技术的发展为节省网络能耗贡献了重要的力量，<strong>缓存的本质体现了一种牺牲存储资源获取带宽资源的思想</strong>，即在靠近用户侧的地方部署缓存服务器，将流行度较高的内容缓存下来。<br>缓存方案在极大地改善传输能耗和传输时延的同时，也存在一些力所不能及之处，如数据的计算处理和网络感知等方面。这时边缘计算这一让网络更加智能地新技术开始大放异彩，并形成了新兴的移动网络架构。边缘计算将移动计算、网络控制和存储下沉到网络边缘，在靠近用户地网络边缘提供计算、缓存和网络感知能力。在基于边缘计算的移动网络中，边缘计算服务器可以同时充当缓存服务器、计算服务器、控制节点等多重身份。</p>
+<p>在基于边缘计算地移动网络中，网络的能耗主要包括<strong>数据传输能耗、任务计算能耗和缓存能耗</strong>3个方面。</p>
 <ul>
-<li>位于网络边缘，位置感知和低时延：雾节点距离数据源和数据消费者更近，从而有更小的网络延迟，利用雾计算可以在网络边缘直接提供有针对性地解决方案，同时可以缓存和预处理一部分数据，稍后再送至云中心来处理。这样削减了核心网的压力。</li>
-<li>地理分布广：雾节点以分布式的方式分散在更大的地理区域。</li>
-<li>分布式计算和存储资源</li>
-<li>雾节点数量众多</li>
-<li>移动性支持：雾架构下的应用和服务应该与通信机制实现解耦，以免用户移动造成通信中断。</li>
-<li>实时交互：雾节点靠近数据源和数据消费源。</li>
-<li>无线接入占据主导地位</li>
-<li>异构性：处于核心网和用户之间，需要对多种不同的通信提供支持。</li>
-<li>互操作性：雾节点之间需要相互通信以交换信息，实现负载均衡和资源编排。</li>
+<li>数据传输能耗：主要包括从边缘计算服务器到用户之间的无线传输能耗和从源服务器到边缘计算服务器之间的回传能耗。</li>
+<li>任务计算能耗：主要是由边缘计算服务器执行计算任务而产生的能耗。</li>
+<li>缓存能耗：主要由服务器缓存内容而造成的能耗。缓存能耗包括将数据储存进缓存空间过程中消耗的能量、维持缓存所消耗的能量和从缓存中读取数据所消耗的能量。</li>
+</ul>
+<h4 id="面向协作机制的资源管理"><a href="#面向协作机制的资源管理" class="headerlink" title="面向协作机制的资源管理"></a>面向协作机制的资源管理</h4><p>边缘计算主要采用分布式的方式部署，而且每个MEC节点具有一点的计算、储存能力，为连接到该节点地终端提供相应的的服务。而当某个节点数据和计算量突然增大时，会出现节点超载等问题，或者流量、计算分布不均匀，某一节点有较大的处理压力和相邻节点大量计算存储资源闲置。因此，基于MEC分布式的部署方式，加强边缘计算节点之间的协作显得非常重要，相邻的MEC服务器之间可以协作进行缓存和计算，当本地MEC服务器没有相应的缓存内容或计算资源紧张时，可以调用其他空闲的MEC服务器。故，不同的MEC服务器之间如何协作共享资源（计算和缓存）成为重要的研究问题。</p>
+<p>加强边缘计算节点之间的资源协作需要实现如下几个目标：</p>
+<ul>
+<li>高效自动化：系统自动完成各项服务功能以及资源调度、故障检测与处理等功能。</li>
+<li>分布式资源优化：通过多种资源调度策略对系统资源进行统筹安排</li>
+<li>简洁高效管理</li>
+<li>虚拟资源与物理资源整合：虚拟资源是在物理资源上实施虚拟化技术后产生的，虚拟化技术能够令一台服务器主机同时运行若干操作系统而其承载的应用不互相干扰。</li>
 </ul>
 <hr>
-<h3 id="雾节点"><a href="#雾节点" class="headerlink" title="雾节点"></a>雾节点</h3><p>雾节点主要涵盖了以下几点功能：</p>
-<ul>
-<li>节点安全：多数情况下，雾节点可以作为安全网关来验证传感器和执行器的合法性。</li>
-<li>节点管理：雾节点需要支持管理接口以便被更高层级的管理实体进行统一管理和控制。</li>
-<li>网络：很多雾应用都是时延敏感的，因此雾节点需要通过网络实现通信。</li>
-<li>加速器：在某些时延和功率优先的应用场景下，雾应用需要利用加速器来加速完成任务。</li>
-<li>计算：雾节点具有一般的计算能力。</li>
-<li>存储：雾节点具备一定的存储能力，以便进行数据的缓存。</li>
-<li>传感器、执行器和控制：每个雾节点可以直接连接成百上千个传感器和执行器等装置。</li>
-<li>协议抽象层：使市面上很多传感器和执行器在逻辑上支持和雾节点的连接。</li>
+<h3 id="主要挑战"><a href="#主要挑战" class="headerlink" title="主要挑战"></a>主要挑战</h3><ul>
+<li>缓存转码带宽资源优化与QoE优化的均衡问题</li>
+<li>缓存转码带宽资源的能量效率优化问题</li>
+<li>MEC中基于深度学习的缓存和转码</li>
+<li>基于NFV、SDN和网络切片等新型技术的资源分配问题</li>
 </ul>
 
     </div>
@@ -405,14 +394,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="边缘计算架构（二）">
-                  <i class="fa fa-chevron-left"></i> 边缘计算架构（二）
+                <a href="/2020/12/07/%E3%80%8A%E9%9D%92%E6%98%A5%E7%8C%AA%E5%A4%B4%E3%80%8B%E5%BD%B1%E5%B0%84%E7%9A%84%E9%9D%92%E6%98%A5%E6%9C%9F%E7%83%A6%E6%81%BC/" rel="prev" title="《青春猪头》影射的青春期烦恼">
+                  <i class="fa fa-chevron-left"></i> 《青春猪头》影射的青春期烦恼
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/11/27/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="next" title="边缘计算架构（四）">
-                  边缘计算架构（四） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
