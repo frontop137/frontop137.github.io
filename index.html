@@ -195,7 +195,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -266,6 +266,92 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Sweet but Psycho">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">边缘计算移动性管理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-12-10 12:27:33 / 修改时间：23:11:25" itemprop="dateCreated datePublished" datetime="2020-12-10T12:27:33+08:00">2020-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。<br>边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH均能和UE通信，并能够为其提供连续而又高质量的移动边缘服务能力。<br>在无线环境中，移动性是移动边缘计算的一个重要特征，这是因为底层网络中的UE不断移动，会导致UE进入与当前提供服务的MEH不同的主机范围，从而需要移动边缘系统做出相应的服务调整。<br>宏观来讲，边缘计算移动性管理需要支持以下几点：</p>
+<ul>
+<li>服务的连续性</li>
+<li>应用程序的移动性，即支持应用程序迁移</li>
+<li>应用程序中与UE相关的信心的移动性，即支持UE状态信息的迁移</li>
+</ul>
+<p>为UE提供服务的是MEH中的虚拟机上的特定应用程序，因此，每当一个UE进入一个MEH的服务区域，MEH（新的主机记作T-MEH）若要为UE提供边缘服务，就需要新建虚拟机并安装当前服务对应的特定的应用程序，然后获得UE运行在原来MEH上应用程序的状态信息。<br>在移动性管理的过程中有许多步骤，其中服务迁移是最为关键的步骤流程之一。整个移动性管理就是围绕着服务迁移展开的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1008,95 +1094,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Fangtong Zhou">
-      <meta itemprop="description" content="Sweet but Psycho">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="frontop137's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">边缘计算架构（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-11-25 11:04:19" itemprop="dateCreated datePublished" datetime="2020-11-25T11:04:19+08:00">2020-11-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-27 09:22:09" itemprop="dateModified" datetime="2020-11-27T09:22:09+08:00">2020-11-27</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这一篇重点介绍<strong>微云（CloudNet）</strong>。</p>
-<hr>
-<h3 id="微云综述"><a href="#微云综述" class="headerlink" title="微云综述"></a>微云综述</h3><p>微云的目的是将移动计算和云计算结合起来，它代表“移动终端-微云-云”三层架构的中间层，微云旨在将云部署到里用户终端更近的地方。可以为视为“盒子里的数据中心”。微云是开放边缘计算（OEC）项目的研究成果，最初由卡耐基梅隆大学发起，OEC主要致力于对边缘计算应用场景、关键技术和统一API进行研究。</p>
-<p>微云和MEC同属于边缘计算的架构，MEC更强调“边缘”，微云更强调“移动”，微云主要用于类似车联网应用场景下的移动性增强，为移动设备提供丰富的计算资源。微云可以理解成<strong>MEC一个灵活的轻量级的具体实现。</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

@@ -22,26 +22,22 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="边缘计算中的计算卸载技术主要涉及执行框架、卸载决策、资源分配等方面。执行框架主要包括计算卸载流程及卸载方式；卸载决策即UE决定是否卸载以及卸载多少计算任务；UE决定卸载之后要考虑计算资源的分配问题。">
+  <meta name="description" content="概述移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH">
 <meta property="og:type" content="article">
-<meta property="og:title" content="边缘计算卸载技术（二）">
-<meta property="og:url" content="http://frontop137.github.io/2020/12/04/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:title" content="边缘计算移动性管理">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="边缘计算中的计算卸载技术主要涉及执行框架、卸载决策、资源分配等方面。执行框架主要包括计算卸载流程及卸载方式；卸载决策即UE决定是否卸载以及卸载多少计算任务；UE决定卸载之后要考虑计算资源的分配问题。">
+<meta property="og:description" content="概述移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic3.zhimg.com/80/v2-d7c8adf69a3efcfeff7565405079a86a_720w.jpg">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200617115941163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY19jaGFv,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200617120507761.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY19jaGFv,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-12-04T02:46:36.000Z">
-<meta property="article:modified_time" content="2020-12-04T03:58:14.818Z">
+<meta property="article:published_time" content="2020-12-10T04:27:33.000Z">
+<meta property="article:modified_time" content="2020-12-10T15:11:25.547Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="边缘计算">
 <meta property="article:tag" content="物联网">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-d7c8adf69a3efcfeff7565405079a86a_720w.jpg">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/12/04/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%BA%8C%EF%BC%89/">
+<link rel="canonical" href="http://frontop137.github.io/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/">
 
 
 <script class="page-configurations">
@@ -54,7 +50,7 @@
   };
 </script>
 
-  <title>边缘计算卸载技术（二） | frontop137's blog</title>
+  <title>边缘计算移动性管理 | frontop137's blog</title>
   
 
 
@@ -187,7 +183,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%89%A7%E8%A1%8C%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">计算卸载执行框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E5%86%B3%E7%AD%96"><span class="nav-number">2.</span> <span class="nav-text">计算卸载决策</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D"><span class="nav-number">3.</span> <span class="nav-text">计算卸载资源分配</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">2.</span> <span class="nav-text">关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E5%86%B3%E7%AD%96"><span class="nav-number">2.1.</span> <span class="nav-text">迁移决策</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E6%89%A7%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">迁移执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%B5%81%E9%87%8F%E8%A7%84%E5%88%99"><span class="nav-number">2.3.</span> <span class="nav-text">更新流量规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%88%E6%AD%A2%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.4.</span> <span class="nav-text">终止应用程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">主要挑战</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -279,7 +275,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/04/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%BA%8C%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -295,7 +291,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          边缘计算卸载技术（二）
+          边缘计算移动性管理
         </h1>
 
         <div class="post-meta-container">
@@ -307,7 +303,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2020-12-04 10:46:36 / 修改时间：11:58:14" itemprop="dateCreated datePublished" datetime="2020-12-04T10:46:36+08:00">2020-12-04</time>
+      <time title="创建时间：2020-12-10 12:27:33 / 修改时间：23:11:25" itemprop="dateCreated datePublished" datetime="2020-12-10T12:27:33+08:00">2020-12-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -329,34 +325,42 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>边缘计算中的计算卸载技术主要涉及<strong>执行框架、卸载决策、资源分配</strong>等方面。执行框架主要包括计算卸载流程及卸载方式；卸载决策即UE决定是否卸载以及卸载多少计算任务；UE决定卸载之后要考虑计算资源的分配问题。</p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。<br>边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH均能和UE通信，并能够为其提供连续而又高质量的移动边缘服务能力。<br>在无线环境中，移动性是移动边缘计算的一个重要特征，这是因为底层网络中的UE不断移动，会导致UE进入与当前提供服务的MEH不同的主机范围，从而需要移动边缘系统做出相应的服务调整。<br>宏观来讲，边缘计算移动性管理需要支持以下几点：</p>
+<ul>
+<li>服务的连续性</li>
+<li>应用程序的移动性，即支持应用程序迁移</li>
+<li>应用程序中与UE相关的信心的移动性，即支持UE状态信息的迁移</li>
+</ul>
+<p>为UE提供服务的是MEH中的虚拟机上的特定应用程序，因此，每当一个UE进入一个MEH的服务区域，MEH（新的主机记作T-MEH）若要为UE提供边缘服务，就需要新建虚拟机并安装当前服务对应的特定的应用程序，然后获得UE运行在原来MEH上应用程序的状态信息。<br>在移动性管理的过程中有许多步骤，其中服务迁移是最为关键的步骤流程之一。整个移动性管理就是围绕着服务迁移展开的。</p>
 <a id="more"></a>
 <hr>
-<h3 id="计算卸载执行框架"><a href="#计算卸载执行框架" class="headerlink" title="计算卸载执行框架"></a>计算卸载执行框架</h3><p>计算卸载做为边缘计算的核心技术，主要针对计算或存储等资源受限的移动终端，将计算量大的计算任务根据一定的卸载策略合理地分配给资源充足的边缘网络处理。例如当终端在处理人脸识别、视频优化等需要复杂计算能力的任务时，终端的计算性能难以满足需求，这时边缘计算就可以利用无线网络和互联网将计算任务卸载到远端服务器，从而提供计算效率，节省终端的资源和功耗。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-d7c8adf69a3efcfeff7565405079a86a_720w.jpg" alt=""></p>
-<p>当终端发起计算卸载请求时，终端上的资源监测器检测云端的资源信息，计算出可用云端服务器网络的资源情况（运算能力、负载、通信成本），根据收到的服务网络信息，计算卸载决策引擎决定哪些任务为本地指行而哪些任务为云端执行（程序分割）。<br>移动用户通过计算卸载可以在性能受限的移动设备上使用复杂的应用；应用开发人员通过计算卸载可以集中精力在应用开发本身，而无需考虑硬件资源问题；运营商可以扩展新的业务渠道。</p>
+<h3 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h3><p>移动性管理过程中的各个模块主要有以下几个部分组成：</p>
+<ol>
+<li>用户设备承载变化的检测：存在下述两种情况：(1)用户设备仍位于原先MEH（S-MEH）中，但是发生了基站的迁移，即两个基站都是同属于一个MEH范围内；(2)MEH迁移。</li>
+<li>服务迁移管理</li>
+<li>应用程序迁移</li>
+<li>规则更新：这一步骤更新针对此用户设备的流量规则。</li>
+<li>终止源主机的相关服务</li>
+</ol>
+<h4 id="迁移决策"><a href="#迁移决策" class="headerlink" title="迁移决策"></a>迁移决策</h4><p>迁移决策是根据UE的需求和移动边缘系统的整体状况，判断是否需要进行服务迁移。迁移决策与以下几个因素有关：</p>
 <ul>
-<li><p>计算卸载执行框架按照粒度分类</p>
-<p>计算卸载的执行框架可分为<strong>基于进程或功能函数划分的细粒度计算卸载和基于应用程序和虚拟机划分的粗粒度计算卸载</strong>。细粒度计算卸载依赖程序员修改程序来处理分区和状态迁移，并适应网络状况的各种变化，应用可以只卸载部分程序（即部分卸载），粗粒度的计算卸载会将整个过程、程序或虚拟机迁移到基础设备上（即完全卸载）。常见的计算卸载系统例如MAUI就是基于细粒度的任务卸载系统，而例如Cloudlet，是基于粗粒度的计算卸载系统。</p>
-</li>
+<li>底层网络的拓扑结构</li>
+<li>服务于UE的应用程序类型</li>
+<li>应用程序是否有状态</li>
 </ul>
-<hr>
-<h3 id="计算卸载决策"><a href="#计算卸载决策" class="headerlink" title="计算卸载决策"></a>计算卸载决策</h3><p>卸载决策即UE决定是否卸载及卸载多少。UE执行决策需要三个步骤：首先，代码解析器根据应用程序类型和代码/数据来确定哪些任务可以卸载；然后，系统解析器负责监控各种参数（可用带宽、要卸载的数据大小、执行本地应用程序所耗费的能量等）；最后，决策引擎决定是否卸载。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200617115941163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY19jaGFv,size_16,color_FFFFFF,t_70" alt=""></p>
-<p>UE的决策分为三个结果：本地执行、部分卸载和全部卸载。做出这三种决策的影响因素主要是UE能量消耗和完成计算任务的延时。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200617120507761.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phY19jaGFv,size_16,color_FFFFFF,t_70" alt=""></p>
-<p>下面从联合优化的角度介绍卸载决策：</p>
+<p>底层网络的拓扑结构主要指基站类得无线接入点和MEH的连接情况。应用程序按照服务对象可分为<strong>专用应用程序</strong>（为特定的用户设备提供服务的移动边缘应用程序）和共享用用程序（其提供的服务并不仅仅针对特定的用户设备，相反，它可能服务于多个用户设备或者此移动边缘主机范围内的所有程序），若为共享应用程序，当用户设备移动到一个新的移动边缘主机范围时并不需要进行应用程序的迁移，但需要迁移UE得状态信息。移动性管理同样要考虑应用程序是否有状态，无状态得应用程序不需要记住服务状态，也不需要记录用户设备的数据；有状态的应用程序可以在绘会话转换期间保证服务的连续性。</p>
+<h4 id="迁移执行"><a href="#迁移执行" class="headerlink" title="迁移执行"></a>迁移执行</h4><p>当迁移决策完成后，需解决的另一个关键技术问题是移动边缘系统如何执行迁移过程。具体的执行方式有两种思路：</p>
 <ul>
-<li>以降低时延为目的的卸载决策：将任务卸载至云端会大大影响用户的QoS（服务质量），因此出现了大量的以降低时延为目的的计算卸载决策研究。若在本地指行任务，所花费的时间即为任务的执行时间；若将任务卸载至MEC，所花费的时间涉及：传送数据时间、处理数据时间、接收数据时间。</li>
-<li>以降低能耗为目标的卸载决策：UE所消耗的能量主要由传送能耗和接受能耗组成。</li>
-<li>以权衡能耗和时延为目的的卸载决策</li>
+<li>信息的迁移主要依靠迁移前后边缘主机的通信（MEH主导的迁移）：MEP需要利用UE的上一次服务位置来得到源移动边缘主机的IP地址和身份（前提是保证两个MEH都连进了互联网）。</li>
+<li>利用用户设备进行信息迁移：利用UE的储存能力传送服务迁移所需的信息。当UE离开主机范围时，MEH会将应用程序信息和UE状态信息打包发送给UE的应用程序上并由其储存，当UE进入新的MEH时再完成交付。</li>
 </ul>
+<h4 id="更新流量规则"><a href="#更新流量规则" class="headerlink" title="更新流量规则"></a>更新流量规则</h4><p>当移动边缘主机可能连接多个无线访问节点，当用户设备从一个无线访问节点移动到另一个或在用户设备状态改变之后，移动边缘主机应该能够通过正确的无线访问节点和正确的通道将流量路由到用户设备。</p>
+<h4 id="终止应用程序"><a href="#终止应用程序" class="headerlink" title="终止应用程序"></a>终止应用程序</h4><p>指的是在服务迁移结束后，把S-MEH上运行的移动边缘应用程序的虚拟机关闭并删除，同时把平台中与UE相关的数据进行清理，这一过程根据应用程序的不同而不同（即专用应用程序还是共享应用程序）。</p>
 <hr>
-<h3 id="计算卸载资源分配"><a href="#计算卸载资源分配" class="headerlink" title="计算卸载资源分配"></a>计算卸载资源分配</h3><p>计算卸载的资源分配，即讨论将资源卸载在哪里的问题。</p>
-<p>如果UE的计算任务是不可分割的，或计算任务可分割但是分割的部分有联系，则需要卸载到一个计算节点。如果可以分割的任务卸载到多个MEC服务器，则需要根据网络状况、时延和能耗合理选择MEC服务器进行卸载。</p>
-<ul>
-<li>单一节点的计算资源分配：在MEC具有足够计算存储资源的前提下，VM迁移成本高，故VM优先在离用户近的正在服务的MEC中进行部署。</li>
-<li>多个节点的计算资源分配：计算节点的选择不仅对时延有显著的影响，对计算节点的功耗也有很大的影响。分析结果标明，全网型拓扑结合光纤或微波连接在减少执行任务时延方面是最有优势的，而光纤连接的环型拓扑产生最低能耗。</li>
+<h3 id="主要挑战"><a href="#主要挑战" class="headerlink" title="主要挑战"></a>主要挑战</h3><ul>
+<li>迁移决定策略</li>
+<li>预迁移：提前对用户将要进入的移动边缘主机区域进行预测。</li>
+<li>预移组：预先的配置一组移动边缘主机，当用户在这些主机中移动时，允许应用程序在这些主机上同时运行。</li>
 </ul>
 
     </div>
@@ -393,14 +397,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/12/01/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E8%B6%85%E7%BA%A7%E8%8B%B1%E9%9B%84/" rel="prev" title="一拳超人是怎样的超级英雄">
-                  <i class="fa fa-chevron-left"></i> 一拳超人是怎样的超级英雄
+                <a href="/2020/12/08/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF/" rel="prev" title="边缘计算资源管理技术">
+                  <i class="fa fa-chevron-left"></i> 边缘计算资源管理技术
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/12/05/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%89%EF%BC%89/" rel="next" title="边缘计算卸载技术（三）">
-                  边缘计算卸载技术（三） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
