@@ -22,24 +22,22 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="这一篇重点介绍微云（CloudNet）。  微云综述微云的目的是将移动计算和云计算结合起来，它代表“移动终端-微云-云”三层架构的中间层，微云旨在将云部署到里用户终端更近的地方。可以为视为“盒子里的数据中心”。微云是开放边缘计算（OEC）项目的研究成果，最初由卡耐基梅隆大学发起，OEC主要致力于对边缘计算应用场景、关键技术和统一API进行研究。 微云和MEC同属于边缘计算的架构，MEC更强调“边缘">
+  <meta name="description" content="概述安全与隐私的保护问题一直是所有网络技术面临的重要挑战之一。传统网络中，存在防火墙、数据加密、病毒防御与清除技术等等与安全隐私保护有关的技术，但在MEC中，由于任务不只限于在数据中心这种具有安全措施的场所中运行，同时由于移动网络终端的高移动性，使原本用于云计算的许多安全解决方案也很难应用于MEC。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="边缘计算架构（二）">
-<meta property="og:url" content="http://frontop137.github.io/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:title" content="边缘计算安全与隐私保护技术">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/11/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="这一篇重点介绍微云（CloudNet）。  微云综述微云的目的是将移动计算和云计算结合起来，它代表“移动终端-微云-云”三层架构的中间层，微云旨在将云部署到里用户终端更近的地方。可以为视为“盒子里的数据中心”。微云是开放边缘计算（OEC）项目的研究成果，最初由卡耐基梅隆大学发起，OEC主要致力于对边缘计算应用场景、关键技术和统一API进行研究。 微云和MEC同属于边缘计算的架构，MEC更强调“边缘">
+<meta property="og:description" content="概述安全与隐私的保护问题一直是所有网络技术面临的重要挑战之一。传统网络中，存在防火墙、数据加密、病毒防御与清除技术等等与安全隐私保护有关的技术，但在MEC中，由于任务不只限于在数据中心这种具有安全措施的场所中运行，同时由于移动网络终端的高移动性，使原本用于云计算的许多安全解决方案也很难应用于MEC。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/11/25/PmKVACBc1YI2qk8.png">
-<meta property="article:published_time" content="2020-11-25T03:04:19.000Z">
-<meta property="article:modified_time" content="2020-11-27T01:22:09.272Z">
+<meta property="article:published_time" content="2020-12-11T02:04:59.000Z">
+<meta property="article:modified_time" content="2020-12-11T03:45:12.813Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="边缘计算">
 <meta property="article:tag" content="物联网">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/25/PmKVACBc1YI2qk8.png">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/">
+<link rel="canonical" href="http://frontop137.github.io/2020/12/11/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/">
 
 
 <script class="page-configurations">
@@ -52,7 +50,7 @@
   };
 </script>
 
-  <title>边缘计算架构（二） | frontop137's blog</title>
+  <title>边缘计算安全与隐私保护技术 | frontop137's blog</title>
   
 
 
@@ -185,7 +183,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E4%BA%91%E7%BB%BC%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">微云综述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E4%BA%91%E4%B8%AD%E7%9A%84%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">微云中的重要概念</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">2.</span> <span class="nav-text">关键技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">主要挑战</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -277,7 +275,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/25/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%BA%8C%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/11/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -293,7 +291,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          边缘计算架构（二）
+          边缘计算安全与隐私保护技术
         </h1>
 
         <div class="post-meta-container">
@@ -303,16 +301,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-11-25 11:04:19" itemprop="dateCreated datePublished" datetime="2020-11-25T11:04:19+08:00">2020-11-25</time>
+      <time title="创建时间：2020-12-11 10:04:59 / 修改时间：11:45:12" itemprop="dateCreated datePublished" datetime="2020-12-11T10:04:59+08:00">2020-12-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-27 09:22:09" itemprop="dateModified" datetime="2020-11-27T09:22:09+08:00">2020-11-27</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -333,44 +325,64 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这一篇重点介绍<strong>微云（CloudNet）</strong>。</p>
-<hr>
-<h3 id="微云综述"><a href="#微云综述" class="headerlink" title="微云综述"></a>微云综述</h3><p>微云的目的是将移动计算和云计算结合起来，它代表“移动终端-微云-云”三层架构的中间层，微云旨在将云部署到里用户终端更近的地方。可以为视为“盒子里的数据中心”。微云是开放边缘计算（OEC）项目的研究成果，最初由卡耐基梅隆大学发起，OEC主要致力于对边缘计算应用场景、关键技术和统一API进行研究。</p>
-<p>微云和MEC同属于边缘计算的架构，MEC更强调“边缘”，微云更强调“移动”，微云主要用于类似车联网应用场景下的移动性增强，为移动设备提供丰富的计算资源。微云可以理解成<strong>MEC一个灵活的轻量级的具体实现。</strong></p>
-<a id="more"></a>
-
-<hr>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>微云主要有以下四个属性：</p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>安全与隐私的保护问题一直是所有网络技术面临的重要挑战之一。传统网络中，存在防火墙、数据加密、病毒防御与清除技术等等与安全隐私保护有关的技术，但在MEC中，由于任务不只限于在数据中心这种具有安全措施的场所中运行，同时由于移动网络终端的高移动性，使原本用于云计算的许多安全解决方案也很难应用于MEC。<br><a id="more"></a></p>
+<p>MEC带来了全新的安全问题：</p>
 <ul>
-<li>软状态</li>
+<li>MEC先天的异构特性使传统的鉴权和认证机制不再适用。</li>
+<li>MEC所支持的多种通信方式以及其网络管理上的软件性带来全新的安全挑战。</li>
+<li>未来MEC必然会成为网络攻击者的重点关注对象。</li>
 </ul>
-<p>指服务器在一定时间内会主动维护服务状态，超过时间限制后才进行删除和更新。这一特点不仅利于微云服务器和移动设备之间进行数据的缓存和传输，还为服务的错误恢复提供了前提。</p>
+<p>有关MEC的具体攻击途径如下：</p>
 <ul>
-<li>高效、可靠连接、安全</li>
+<li>网络设施的攻击：MEC的接入和传输具有多样性，从无线接入网到移动核心网再到因特网都有涉及，因此针对网络的攻击主要有以下几种：<ul>
+<li>拒绝服务（Denial of Service,DoS）攻击：对MEC节点的攻击仅仅能影响该节点所服务的区域，而对核心网的攻击或许不会影响到MEC节点的功能（节点的协议和服务可被设计为自治或半自治系统）。</li>
+<li>中间人（Man in the Middle）攻击：攻击者首先控制网络的一部分，然后对这一部分两侧的部分进行窃听或流量注入等攻击。这种攻击威胁极大，因为它可以影响到连接在中间人上的所有网络节点。</li>
+<li>恶意网关（Rogue Gateway）攻击：MEC的开放性使用户设备也能成为整个系统的参与者，因此攻击者可以将自己的恶意网关加入系统中对网络节点发起攻击。</li>
 </ul>
-<p>微云实现采用高性能的处理器和随机存储器，微云与服务器采用有线连接，这都使微云更加可靠和高效。</p>
-<ul>
-<li>临近性</li>
-</ul>
-<p>微云位于中间层，将云下沉至距离用户更近的地方，甚至可以直接运行在飞机、汽车上。</p>
-<ul>
-<li>可扩展性</li>
-</ul>
-<p>微云具有很好的可扩展性。</p>
-<p><strong>微云本质上是云。</strong>以下列举一些微云和云的不同点，也是实现过程中需要解决的关键问题：</p>
-<ul>
-<li><p>快速配置：微云要重点解决用户终端移动性带来的连接高度动态化的问题（类似于在高铁上基站之间的切换）。</p>
 </li>
-<li><p>不同微云之间的虚拟机切换：在切换中微云必须具有支持服务无缝切换的能力。</p>
+<li>服务设施攻击：MEC中，服务设施主要是部署在网络边缘的MEC节点，节点中通常管理着虚拟化服务等多种相关的服务。主要攻击类型有以下几种：<ul>
+<li>隐私泄露：攻击者可以对在节点间传输的数据流进行截获，从而造成用户隐私的泄露。</li>
+<li>权限升级：攻击者试着通过提升自己的权限控制整个服务的节点。</li>
+<li>服务复制：一旦攻击者通过权限升级的方式获得节点某项服务的控制权，就可以对节点的服务进行复制并制造出虚假的服务。</li>
+<li>恶意节点：攻击者一旦获得了节点的控制权，该节点就变成了恶意节点他就可以对所有传入节点和传出节点的信息进行截获，复制节点与外界系统的所有交互操作或部署自己的恶意服务。</li>
+</ul>
 </li>
-<li><p>微云发现：在微云开始配置之前，移动终端需要发现其地理周围可连接的微云。</p>
+<li>虚拟化设施攻击：MEC节点中，虚拟化设施负责网络边缘云服务的部署，针对虚拟化设施的攻击主要有：<ul>
+<li>拒绝服务攻击：一个恶意的虚拟机会设法消耗整个节点的资源（计算、存储和网络）</li>
+<li>资源的错误使用：一个恶意的虚拟机可以执行多种针对远端节点而不是本地节点的恶意程序。</li>
+<li>隐私泄露：恶意虚拟机可能得到有关其执行环境和节点周围环境的敏感信息，从而造成隐私泄露。</li>
+<li>权限升级：恶意的虚拟机会试着寻找物理主机的弱点。</li>
+<li>虚拟机复制：一个被攻击者控制的主机能够对运行于其中的虚拟机发动从信息抽取到复制运算密集型任务等多种形式的攻击。</li>
+</ul>
+</li>
+<li>用户终端攻击：终端不仅消费服务，同时也在各个层级上参与系统架构的构建并提供相关的数据。具体的攻击方式如下：<ul>
+<li>信息注入：任何被攻击者控制的终端都能够用来散布虚假数据。</li>
+<li>服务复制：攻击者控制了一台参与服务的终端，服务产生的结果就能被复制。</li>
+</ul>
 </li>
 </ul>
 <hr>
-<h3 id="微云中的重要概念"><a href="#微云中的重要概念" class="headerlink" title="微云中的重要概念"></a>微云中的重要概念</h3><p><strong><em>叠加层（Overlay）</em></strong></p>
-<p>一个虚拟机的镜像绝大部分是客户操作系统、软件库和软件支持包构成，而与具体应用服务相关的数据只占小部分。微云将与具体应用服务相关的数据部分从通用部分中抽离出来，形成了VM Overlay和Base VM的概念，其中与具体应用服务相关的数据部分是VM Overlay，剩下的是通用部分，实际运行的应用程序称为Launch VM。将VM Overlay与Base VM合成的过程称为<strong>虚拟机合成</strong>。</p>
-<p><img src="https://i.loli.net/2020/11/25/PmKVACBc1YI2qk8.png" alt="1.png"></p>
-<p>简单来描述一下微云的工作过程：<br>想要进行计算卸载的移动终端首先需要发现周围可供连接的微云，并选择最合适的微云（类似Wi-Fi连接），连接之后，用户向微云提供私有的VM Overlay，微云将预加载的Base VM与用户提供的VM Overlay进行虚拟机合成，形成Launch VM，此时微云配置完成，可为用户服务。接下来用户使用微云进行计算卸载，卸载完成之后，用户与微云断开连接，微云将用户使用过程中产生的数据丢弃。至此，全部的卸载过程结束。</p>
+<h3 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h3><ul>
+<li><p>身份验证与鉴权技术<br>MEC是一个由包括终端用户、服务提供商、设备提供商在内的多种参与者，包括虚拟机、容器在内的多种服务，以及包括用户终端、边缘数据中心、核心架构在内的多种模式共同存在的交互式系统。这种复杂的异构需要对每一个实体进行身份认证，也需要实现不同实体之间的身份互相认证。<br>因此，开发一种联合的身份认证机制和鉴权系统是十分必要的，设击一种无需中心服务器验证的去中心化身份验证方法十分重要。</p>
+</li>
+<li><p>协议与网络安全技术<br>需要对MEC的种种通信技术和协议进行有效防护。需要对网络架构中的其他部分（因特网、移动核心网等）进行安全防护配置和部署。在虚拟化设施中还需要对不同租户之间进行网络隔离，针对不同租户的需求配置不同的网络安全方案。</p>
+</li>
+<li><p>信任管理技术<br>可以提高实体之间的交互成功率和准确率，可提高对个人数据的管理。</p>
+</li>
+<li><p>入侵检测技术<br>由于MEC节点主要为本地提供服务的特性，绝大多数攻击的危害都被限制在节点附近的区域内，因此，MEC节点能够对其中的网络连接、虚拟机连接等节点所拥有的部分进行监控。</p>
+</li>
+<li><p>隐私保护技术<br>这个领域存在很多挑战，首先，个人数据在用户控制范围之外的实体中处理和储存，因此，提供给用户多种能够保护他们的信息并允许用户进行查询和处理的机制是基本要求。其次，需要在匿名和责任之间寻找一个平衡点。最后，需要考虑人的移动特性，即用户通常会反复使用一个MEC节点为自己服务，这就使保护用户的常用服务  及位置信息变得更加重要。</p>
+</li>
+<li><p>错误容忍与恢复技术</p>
+</li>
+</ul>
+<hr>
+<h3 id="主要挑战"><a href="#主要挑战" class="headerlink" title="主要挑战"></a>主要挑战</h3><ul>
+<li>身份鉴权</li>
+<li>协议与网络的安全：主要的挑战是如何使属于不同的通信技术的安全保护机制协同工作。</li>
+<li>安全态势感知、安全管理与编排：网络边缘接入的终端类型广泛、数量巨大、承载的业务繁杂，被动的安全防御往往不能起到良好的效果。</li>
+<li>数据安全：MEC需要对数据的访问控制进行加强，用户使用数据需要进行严格的授权，数据存储也需要严格检查。数据安全包括数据加密、数据隔断和销毁、数据防篡改、隐私保护（数据脱敏）、数据访问控制和数据防泄漏等。</li>
+</ul>
 
     </div>
 
@@ -406,14 +418,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/11/24/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="边缘计算架构（一）">
-                  <i class="fa fa-chevron-left"></i> 边缘计算架构（一）
+                <a href="/2020/12/10/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/" rel="prev" title="边缘计算移动性管理">
+                  <i class="fa fa-chevron-left"></i> 边缘计算移动性管理
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/11/26/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%EF%BC%88%E4%B8%89%EF%BC%89/" rel="next" title="边缘计算架构（三）">
-                  边缘计算架构（三） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
