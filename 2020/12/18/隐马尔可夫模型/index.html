@@ -22,26 +22,32 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="前段时间阅读了李航老师《统计机器学习》第9章“EM算法及其推广”，对EM算法有了初步的了解，对于EM迭代的思想有了初步的认识。这段时间又观看了徐亦达老师的“机器学习课程”视频中的“Expectation Maximization”，将EM框架和高斯混合模型做了更好地结合，这篇文章旨在做一个简单的总结，复习和巩固自己所学习的知识。">
+  <meta name="description" content="背景隐马尔可夫模型（Hidden Markov Model, HMM）是可用于标注问题的统计学习模型，描述由隐藏的马尔可夫链随机生成观测序列的过程，属于生成模型。在统计学的贝叶斯学派衍生的概率图模型中，在模型中加上时间这一测度，就产生了动态模型（Dynamic Model），动态模型又根据隐变量的离散与否和状态和输出是否满足高斯分布而分为隐马尔可夫模型、卡曼滤波和粒子滤波，其中马尔可夫模型的隐变量">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EM算法">
-<meta property="og:url" content="http://frontop137.github.io/2020/11/28/EM%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="隐马尔可夫模型">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/18/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="前段时间阅读了李航老师《统计机器学习》第9章“EM算法及其推广”，对EM算法有了初步的了解，对于EM迭代的思想有了初步的认识。这段时间又观看了徐亦达老师的“机器学习课程”视频中的“Expectation Maximization”，将EM框架和高斯混合模型做了更好地结合，这篇文章旨在做一个简单的总结，复习和巩固自己所学习的知识。">
+<meta property="og:description" content="背景隐马尔可夫模型（Hidden Markov Model, HMM）是可用于标注问题的统计学习模型，描述由隐藏的马尔可夫链随机生成观测序列的过程，属于生成模型。在统计学的贝叶斯学派衍生的概率图模型中，在模型中加上时间这一测度，就产生了动态模型（Dynamic Model），动态模型又根据隐变量的离散与否和状态和输出是否满足高斯分布而分为隐马尔可夫模型、卡曼滤波和粒子滤波，其中马尔可夫模型的隐变量">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/11/28/zXZ23u5kvHmS6bB.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/29/tWbYEJOIA8prhTf.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/29/YnGdEDs4W6mzlJO.png">
-<meta property="article:published_time" content="2020-11-28T09:13:17.000Z">
-<meta property="article:modified_time" content="2020-12-11T00:48:37.978Z">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/ElQ2z6PUIkhTgyq.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/oiNVRxXdn3SWYK1.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/NBKVd6LQU53XSqu.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/daB3zC1XeGqpHTc.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/SePg94smDyAxwab.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/RhHbOLokiKJEuAm.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/9UyRji5MJ8NphaQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png">
+<meta property="article:published_time" content="2020-12-18T10:35:32.087Z">
+<meta property="article:modified_time" content="2020-12-18T13:12:37.208Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="EM算法">
+<meta property="article:tag" content="HMM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/28/zXZ23u5kvHmS6bB.png">
+<meta name="twitter:image" content="https://i.loli.net/2020/12/18/ElQ2z6PUIkhTgyq.png">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/11/28/EM%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="http://frontop137.github.io/2020/12/18/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">
 
 
 <script class="page-configurations">
@@ -54,7 +60,7 @@
   };
 </script>
 
-  <title>EM算法 | frontop137's blog</title>
+  <title>隐马尔可夫模型 | frontop137's blog</title>
   
 
 
@@ -187,7 +193,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#EM%E5%88%9D%E6%8E%A2"><span class="nav-number">1.</span> <span class="nav-text">EM初探</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EM%E7%AE%97%E6%B3%95%E6%8E%A8%E5%AF%BC"><span class="nav-number">2.</span> <span class="nav-text">EM算法推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EM%E6%A1%86%E6%9E%B6%E4%B8%8B%E7%9A%84%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">EM框架下的高斯混合模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">模型简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluation%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">Evaluation问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">Learning问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decoding%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">Decoding问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -279,7 +285,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/28/EM%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/18/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -295,7 +301,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          EM算法
+          隐马尔可夫模型
         </h1>
 
         <div class="post-meta-container">
@@ -305,16 +311,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-11-28 17:13:17" itemprop="dateCreated datePublished" datetime="2020-11-28T17:13:17+08:00">2020-11-28</time>
+      <time title="创建时间：2020-12-18 18:35:32 / 修改时间：21:12:37" itemprop="dateCreated datePublished" datetime="2020-12-18T18:35:32+08:00">2020-12-18</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-11 08:48:37" itemprop="dateModified" datetime="2020-12-11T08:48:37+08:00">2020-12-11</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -335,64 +335,58 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>前段时间阅读了李航老师《统计机器学习》第9章“EM算法及其推广”，对EM算法有了初步的了解，对于EM迭代的思想有了初步的认识。这段时间又观看了徐亦达老师的“机器学习课程”视频中的“Expectation Maximization”，将EM框架和高斯混合模型做了更好地结合，这篇文章旨在做一个简单的总结，复习和巩固自己所学习的知识。</p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>隐马尔可夫模型（Hidden Markov Model, HMM）是可用于标注问题的统计学习模型，描述由隐藏的马尔可夫链随机生成观测序列的过程，属于<strong>生成模型</strong>。<br>在统计学的贝叶斯学派衍生的概率图模型中，在模型中加上时间这一测度，就产生了动态模型（Dynamic Model），动态模型又根据隐变量的离散与否和状态和输出是否满足高斯分布而分为<strong>隐马尔可夫模型、卡曼滤波和粒子滤波</strong>，其中马尔可夫模型的隐变量（隐状态）是离散的：</p>
+<p><img src="https://i.loli.net/2020/12/18/ElQ2z6PUIkhTgyq.png" alt="1.png"></p>
 <a id="more"></a>
 <hr>
-<h3 id="EM初探"><a href="#EM初探" class="headerlink" title="EM初探"></a>EM初探</h3><p>EM算法，名称取自期望（Expectation）和最大值（Maximization）的首字母，是一种迭代算法，用于含有隐变量的概率模型的极大似然估计（或最大后验估计），我们在了解EM算法的流程之后，更重要的是验证其收敛性以及将EM算法与高斯混合模型结合（最常见）。在引入《统计学习方法》中经典的“三硬币模型”之前，我想换一个角度，来解释为什么我们需要使用EM算法：</p>
-<p><img src="https://i.loli.net/2020/11/28/zXZ23u5kvHmS6bB.png" alt="EM算法 P1.png" style="zoom:50%;" /></p>
-<p>以高斯模型为例，由上图可见，我们处理的数据往往不是一个高斯模型可以拟合的，这时我们需要多个高斯模型来拟合数据，假设有K个模型，每个高斯模型需要确定2个参数（$\mu, \sigma$），每个模型前还需要有一个权重（$\alpha$），故描述这些数据共需要（K+K+K-1=3K-1）个参数（$\alpha$参数存在约束，故只需要K-1个）：</p>
-<script type="math/tex; mode=display">
-\bar\theta = \{\mu_1,\mu_2,\ldots,\mu_k,\sigma_1,\sigma_2,\ldots,\sigma_k,\alpha_1,\alpha_2,\ldots,\alpha_{K-1}\}</script><p>我们只需要对这3K-1个参数分别求偏导，并令偏导数等于零，就可以确定模型参数，但是首先，求导很复杂，其次令偏导数等于零，求解这个方程组更加复杂。于是我们想到了要用迭代的方法，一次一次的逼近，每次迭代求出的$\theta$代入似然函数都比之前的增大，这样最终得到的$\theta$即为我们的估计参数。这也就是EM算法。</p>
-<hr>
-<h3 id="EM算法推导"><a href="#EM算法推导" class="headerlink" title="EM算法推导"></a>EM算法推导</h3><p>既然是迭代算法，就首先需要建立迭代前后的关系式：</p>
-<script type="math/tex; mode=display">
-\theta^{g+1} = f(\theta^g)</script><p>在EM算法中，我们定义的迭代关系式为：</p>
-<script type="math/tex; mode=display">
-\theta^{g+1}=\mathop{\arg\max}\limits_{\theta}\int_zlog(P(X,Z|\theta))P(Z|X,\theta^g)dz</script><p>Z即为我们引入的隐变量（辅助变量），Z取值为1~K，分别对应K个高斯分布模型，这样实际我们只需要用到一个高斯分布，大大简化了计算量。之前也讲过，迭代的目的是生成使似然函数不断增大的$\theta$ ，即必须保证：</p>
-<script type="math/tex; mode=display">
-log(P(X|\theta^{g+1}))\geq log(P(X|\theta^g))</script><p>接下来我们来证明我们所确定的迭代关系式如何能完成迭代的功能：</p>
-<script type="math/tex; mode=display">
-log(P(X|\theta))=log(P(X,Z|\theta))-log(P(Z|X,\theta))</script><p>对两边同时求期望：</p>
-<script type="math/tex; mode=display">
-E(log(P(X|\theta)))=E(log(P(X,Z|\theta))-log(P(Z|X,\theta))),其中概率密度函数为P(Z|X,\theta^g)</script><p>等式左边等于：</p>
-<script type="math/tex; mode=display">
-\int_zlog(P(X|\theta))P(Z|X,\theta^g)dz</script><p>等式右边等于：</p>
-<script type="math/tex; mode=display">
-\int_zlog(P(X,Z|\theta))P(Z|X,\theta^g)dz-\int_zlog(P(Z|X,\theta))P(Z|X,\theta^g)dz</script><p>令右边的式子等于：</p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^g)-H(\theta,\theta^g)</script><p>可以清楚地看出，Q函数为我们迭代的一项，即迭代过后：$Q(\theta^{g+1},\theta^g)&gt;Q(\theta,\theta^g)$；故此时我们只需要证明H函数在迭代之后变小，就可以证明右边的式子在迭代后整体变大了（被减数增大，减数减小），从而证明左式在迭代后增大。我们应用Jenson不等式来证明H减小：</p>
-<script type="math/tex; mode=display">
-Jenson不等式:log\sum_{j}\lambda_jy_j \geq \sum_{j}\lambda_jlogy_j,其中\lambda_j\geq 0,\sum_{j}\lambda_j=1</script><p><img src="https://i.loli.net/2020/11/29/tWbYEJOIA8prhTf.png" alt="EM算法 P3.png" style="zoom: 50%;" /></p>
-<p><img src="https://i.loli.net/2020/11/29/YnGdEDs4W6mzlJO.png" alt="EM算法 P4.png" style="zoom:50%;" /></p>
-<hr>
-<h3 id="EM框架下的高斯混合模型"><a href="#EM框架下的高斯混合模型" class="headerlink" title="EM框架下的高斯混合模型"></a>EM框架下的高斯混合模型</h3><p>N为样本总数，K为模型总数。</p>
-<script type="math/tex; mode=display">
-P(Z|X,\theta^g)=\prod_{i=1}^NP(z_i|x_i,\theta^g)=\frac{P(x_i|z_i)P(z_i)}{\sum_{z_i=1}^KP(x_i|z_i)P(z_i)}</script><script type="math/tex; mode=display">
-P(Z,X|\theta)=\prod_{i=1}^NP(x_i,z_i|\theta)=\prod_{i=1}^NP(x_i|z_i,\theta)P(z_i|\theta)</script><p>其中$P(z_i|\theta)$为每个模型的权重$\alpha_z$，$P(x_i|z_i,\theta)$为高斯分布的概率密度函数$N(\mu_{zi},\sigma_{zi})$。</p>
+<h3 id="模型简介"><a href="#模型简介" class="headerlink" title="模型简介"></a>模型简介</h3><script type="math/tex; mode=display">
+模型参数：
+\lambda=\{\pi,A,B\}</script><p>其中，$\pi$表示初始状态概率，A表示状态转移矩阵，B表示发射矩阵（固定状态后观测值的概率）。</p>
 <ul>
-<li><strong>E-STEP</strong></li>
+<li>模型的基本符号表达与定义：</li>
 </ul>
 <script type="math/tex; mode=display">
-\sum_{z_1=1}^K\ldots\sum_{z_N=1}^K(log\alpha_z+logN(\mu_{z_i},\sigma_{z_i}))\prod_{i=1}^NP(z_i|x_i,\theta^g)</script><script type="math/tex; mode=display">
-=\sum_{z_1=1}^K\ldots\sum_{z_N=1}^K(f_1(z_1)+f_2(z_2)+\ldots+f_N(z_N))P(z_1z_2\ldots z_N)</script><p>其中，$f_1(z_1)=log\alpha_z+logN(\mu_{z_1},\sigma_{z_1})$</p>
+记观测变量：
+O=\{o_1,o_2,\ldots,o_t,\ldots\};观测变量取值：V=\{v_1,v_2,\ldots,v_M\}\\
+记状态变量：
+I=\{i_1,i_2,\ldots,i_t,\ldots\};状态变量取值：Q=\{q_1,q_2,\ldots,q_N\}\\
+A=[a_{ij}];a_{ij}=P(i_{t+1}=q_j|i_t=q_i)\\
+B=[b_j(k)];b_j(k)=P(o_t=v_k|i_t=q_j)</script><ul>
+<li><p>关键的两个假设：<br>隐马尔可夫模型满足两个很关键的假设，第一是模型满足<strong>齐次马尔可夫性</strong>（Markov Property），即当前时刻的状态只跟上一时刻的状态有关：</p>
 <script type="math/tex; mode=display">
-上式=\sum_{z_1=1}^K\ldots\sum_{z_N=1}^Kf_1(z_1)P(z_1\ldots z_N)+\ldots(后面格式一样，省略)</script><script type="math/tex; mode=display">
-=\sum_{z_1=1}^{K}f_1(z_1)\sum_{z_2}^{K}\ldots \sum_{z_N}^{K}P(z_1\ldots z_N)+\ldots(后面格式一样，省略)</script><script type="math/tex; mode=display">
-=\sum_{z_1=1}^{K}f_1(z_1)P(z_1)+\ldots(后面格式一样，省略)</script><script type="math/tex; mode=display">
-=\sum_{i=1}^{N}\sum_{l=1}^{K}log[\alpha_l+logN(x_i|\mu_l,\sigma_l)]P(l|xi,\theta^g)</script><p>上式即为似然函数求完期望的结果，接下来只需要最大化（argmax），分别求出三个参数$\alpha,\mu,\sigma$</p>
+P(i_{t+1}|i_t,t_{t-1},\ldots,i_1)=P(i_{t+1}|i_t)</script><p>第二个假设是模型满足<strong>观测独立性</strong>，即当前时刻的输出只和当前时刻的状态有关，与之前时刻的状态无关：</p>
+<script type="math/tex; mode=display">
+P(o_t|i_t,i_{t-1},\ldots,i_1,o_t,o_{t-1},\ldots,o_1)=P(o_t|i_t)</script><p>以上两个假设是在整个HMM推导中要反复用到的关键条件。</p>
+</li>
+<li><p>HMM要解决的三个主要问题：</p>
 <ul>
-<li><strong>M-STEP</strong></li>
+<li>概率计算问题（Evaluation）：<br>计算$P(O|\lambda)$，我们采用前向算法(Foward Algorithm)和后向算法(Backward Algorithm)。</li>
+<li>学习问题（Learning）：<br>求$\lambda$，我们采用Baum-Welch算法（即EM算法）。</li>
+<li>预测问题（又称编码问题，Decoding）：<br>计算$I=\mathop{\arg\max}_iP(I|O)$，我们采用维特比算法（Viterbi Algorithm）。</li>
 </ul>
-<p>以求$\alpha$为例：</p>
+</li>
+</ul>
+<hr>
+<h3 id="Evaluation问题"><a href="#Evaluation问题" class="headerlink" title="Evaluation问题"></a>Evaluation问题</h3><p>首先，通过添加随机变量然后再求积分消去（很常规的方法），构造联合条件概率$P(O,I|\lambda)$:</p>
 <script type="math/tex; mode=display">
-\frac{\partial \sum_{i=1}^{N}\sum_{l=1}^{K}log(\alpha_l)P(l|x_i,\theta^g)}{\partial\alpha} = 0</script><script type="math/tex; mode=display">
-s.t. \sum \alpha = 1</script><p>$\mu和\sigma$以相同的方式求出。</p>
+P(O|\lambda)=\Sigma_IP(O,I|\lambda)=\Sigma_IP(O|I,\lambda)P(I/\lambda)</script><p>分别利用之前提到的两个假设求出$P(O|I,\lambda)$和$P(I|\lambda)$，但是这样会造成很大的计算复杂度（唯独诅咒），于是我们只能联想用递推的方式求解：</p>
+<p><img src="https://i.loli.net/2020/12/18/oiNVRxXdn3SWYK1.png" alt="14隐马尔可夫模型（HMM） P3.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/NBKVd6LQU53XSqu.png" alt="14隐马尔可夫模型（HMM） P4.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/daB3zC1XeGqpHTc.png" alt="14隐马尔可夫模型（HMM） P5.png" style="zoom:50%;" /></p>
+<p>利用前向算法和后向算法，成功构造出了递推关系，可以较为方便地求解观测序列的输出概率。</p>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>EM算法为我们求解似然函数最值提供了一种有效的简便的算法，主要应用在含有隐变量的概率模型的学习。构建具体的EM算法时，最重要的是确定Q函数，每次迭代过程，EM算法通过最大化Q函数的值来增大对数似然函数。</p>
-<p>由于本篇博文是第一次在hexo上面用latex写公式，hexo对于markdown和latex的渲染有很多冲突和问题，到现在我还没有完全解决，所以本文公式基本都是最简的，省去了很多的化简部分以及说明，并且主要是基于徐亦达老师的视频推导，而《统计学习方法》从“三硬币模型”入手，同时伴有大量的数学推导，可以帮助大家更加全面和严谨地了解EM算法，大家如果想更加详细的了解EM算法及其衍生算法，推荐还是先研读李航老师的《统计机器学习》。</p>
+<h3 id="Learning问题"><a href="#Learning问题" class="headerlink" title="Learning问题"></a>Learning问题</h3><p>已知观测序列的值，求解模型的参数，这就很自然的令我们想到了EM算法：</p>
+<p><img src="https://i.loli.net/2020/12/18/SePg94smDyAxwab.png" alt="14隐马尔可夫模型（HMM） P6.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/RhHbOLokiKJEuAm.png" alt="14隐马尔可夫模型（HMM） P7.png" style="zoom:50%;" /></p>
+<p>这里只求出了$\pi$（在目标函数中只要取第一项即可，因此计算比较简便），A和B的计算过程太过复杂，这里不予展示，但是思路相同。</p>
 <hr>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>[1].李航，《统计机器学习》</p>
-<p>[2].<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qx411W7mf">b站徐亦达机器学习课程</a></p>
+<h3 id="Decoding问题"><a href="#Decoding问题" class="headerlink" title="Decoding问题"></a>Decoding问题</h3><p>若时间序列长度为T，共有N种状态，则全部的马尔科夫链的状态序列有$N^T$种，我们的目的就是从这么多种序列中挑出一个，使得后验概率达到最大（即一个路径动态规划问题）。<br>我们首先要明确的一点是，假设在时间t时我们已经确定了一个能使之前所有状态序列的后验概率达到最大的状态，那么t时刻之后的所有的部分路径必须达到最大（可采用反证法轻易证明）。那么我们定义到达某个特定状态$q_i$的概率为$\delta_t(i)$，取最大即为在t时刻状态出现在$q_i$的概率最大（i的取值即为t时刻的最佳状态），t时刻之前的可以忽略。接下来我们只需要找到递推式$\delta_{t+1}(j)$与$\delta_t(i)$之间的关系即可。</p>
+<p><img src="https://i.loli.net/2020/12/18/9UyRji5MJ8NphaQ.png" alt="1.png" style="zoom:50%;" /><img src="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png" alt="2.png"></p>
+<p><img src="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png" alt="2.png" style="zoom:50%;" /></p>
+<p>因此我们只需要从t=1开始，递推的计算在时刻t状态为i的各条部分路径的最大概率，直至得到时刻t=T状态为i的各条路径的最大概率，此时的概率即为最优路径的概率，T时刻最优的状态也就可以确定。然后再从后向前不断地找到每个时间点的最优状态。这就是维特比算法。</p>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>[1].李航《统计机器学习》</p>
+<p>[2].<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aE411o7qd?p=82">bilibili白板推导系列14</a></p>
 
     </div>
 
@@ -421,21 +415,18 @@ s.t. \sum \alpha = 1</script><p>$\mu和\sigma$以相同的方式求出。</p>
 
           <div class="post-tags">
               <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
-              <a href="/tags/EM%E7%AE%97%E6%B3%95/" rel="tag"># EM算法</a>
+              <a href="/tags/HMM/" rel="tag"># HMM</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/11/28/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="边缘计算卸载技术（一）">
-                  <i class="fa fa-chevron-left"></i> 边缘计算卸载技术（一）
+                <a href="/2020/12/11/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/" rel="prev" title="边缘计算安全与隐私保护技术">
+                  <i class="fa fa-chevron-left"></i> 边缘计算安全与隐私保护技术
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/12/01/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E8%B6%85%E7%BA%A7%E8%8B%B1%E9%9B%84/" rel="next" title="一拳超人是怎样的超级英雄">
-                  一拳超人是怎样的超级英雄 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
