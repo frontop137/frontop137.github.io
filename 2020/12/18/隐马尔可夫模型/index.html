@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/12/18/9UyRji5MJ8NphaQ.png">
 <meta property="og:image" content="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png">
 <meta property="article:published_time" content="2020-12-18T10:35:32.087Z">
-<meta property="article:modified_time" content="2020-12-18T17:46:25.164Z">
+<meta property="article:modified_time" content="2020-12-19T04:12:03.502Z">
 <meta property="article:author" content="Fangtong Zhou">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="HMM">
@@ -318,7 +318,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-19 01:46:25" itemprop="dateModified" datetime="2020-12-19T01:46:25+08:00">2020-12-19</time>
+        <time title="修改时间：2020-12-19 12:12:03" itemprop="dateModified" datetime="2020-12-19T12:12:03+08:00">2020-12-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -379,7 +379,9 @@ P(O|\lambda)=\Sigma_IP(O,I|\lambda)=\Sigma_IP(O|I,\lambda)P(I/\lambda)</script><
 <p><img src="https://i.loli.net/2020/12/18/daB3zC1XeGqpHTc.png" alt="14隐马尔可夫模型（HMM） P5.png" style="zoom:50%;" /></p>
 <p>利用前向算法和后向算法，成功构造出了递推关系，可以较为方便地求解观测序列的输出概率。</p>
 <hr>
-<h3 id="Learning问题"><a href="#Learning问题" class="headerlink" title="Learning问题"></a>Learning问题</h3><p>已知观测序列的值，求解模型的参数，这就很自然的令我们想到了EM算法：</p>
+<h3 id="Learning问题"><a href="#Learning问题" class="headerlink" title="Learning问题"></a>Learning问题</h3><p>已知观测序列O，求解模型的参数$\lambda$。因为状态序列是潜在的（隐藏的），是不可以观测到的，所以就很自然的令我们想到了EM算法（实际上为了解决HMM中的Learning问题而提出Baum-Welch算法时还没有EM算法，EM算法是后期对这一类算法做了归纳和整理）：<br>即我们只需要构造等式：</p>
+<script type="math/tex; mode=display">
+\theta^{t+1}=\mathop{arg\max}_\theta \int_z \log P(x,z|\theta)P(z|x,\theta^t)\mathrm{d}z</script><p>在HMM中，$\theta$为$\lambda$（参数），$z$为$I$（隐变量），$x$为$O$（观测变量）：</p>
 <p><img src="https://i.loli.net/2020/12/18/SePg94smDyAxwab.png" alt="14隐马尔可夫模型（HMM） P6.png" style="zoom:50%;" /></p>
 <p><img src="https://i.loli.net/2020/12/18/RhHbOLokiKJEuAm.png" alt="14隐马尔可夫模型（HMM） P7.png" style="zoom:50%;" /></p>
 <p>这里只求出了$\pi$（在目标函数中只要取第一项即可，因此计算比较简便），A和B的计算过程太过复杂，这里不予展示，但是思路相同。</p>
