@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://frontop137.github.io/2020/12/19/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/</loc>
+    
+    <lastmod>2020-12-19</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://frontop137.github.io/2020/12/18/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/</loc>
     
     <lastmod>2020-12-19</lastmod>
@@ -285,6 +292,13 @@
   
   <url>
     <loc>http://frontop137.github.io/tags/HMM/</loc>
+    <lastmod>2020-12-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://frontop137.github.io/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2020-12-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
