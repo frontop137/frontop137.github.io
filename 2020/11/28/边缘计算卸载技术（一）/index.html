@@ -199,7 +199,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -212,7 +212,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -330,17 +330,16 @@
 <li>研究重点：如何权衡本地执行的计算成本和迁移到边缘网络的通信成本，对计算任务进行卸载决策和任务分割。</li>
 </ul>
 <a id="more"></a>
-
 <hr>
 <h3 id="计算卸载类型"><a href="#计算卸载类型" class="headerlink" title="计算卸载类型"></a>计算卸载类型</h3><ol>
 <li><strong>静态卸载和动态卸载</strong>：按照卸载决策的时间划分</li>
 </ol>
 <p>静态卸载指卸载决策在程序的开发过程中就被设定，采用静态卸载用户可以采用更加复杂的启发式算法制定任务分割决策和卸载机制，但是未考虑终端和网络的变化信息，会影响最终的卸载性能。动态卸载是根据任务交付的实时情况进行卸载决策。</p>
-<ol start="2">
+<ol>
 <li><strong>全部卸载和部分卸载</strong>：按照卸载程度划分</li>
 </ol>
 <p>全部卸载即UE将全部的任务卸载到边缘网络中；部分卸载相对则复杂很多，受到<strong>用户偏好、网络质量、UE功能和可用性等因素</strong>影响，还需要考虑到卸载的计算任务之间的关系以及执行顺序。同时，应用程序的类型也是一个决定卸载程度的重要因素，例如人脸识别和病毒扫描系统，待处理的数据量是可以预知的，故可以随意选择是全部卸载还是部分卸载，但例如在线交互的游戏等应用，无法预知待处理的数据量，则无法进行全部卸载。还要考虑计算顺序的先后问题，在计算任务相互独立时，所有任务可以同时卸载并并行处理。</p>
-<ol start="3">
+<ol>
 <li><strong>单节点卸载和多节点卸载</strong>：按照卸载任务的云端代理个数划分</li>
 </ol>
 <p>目前多用单节点卸载技术，即将任务分成两部分，分别在终端和云端执行；在多节点卸载中，任务分割和卸载算法需要考虑不同节点的负载情况，4、运算能力以及与终端的通信能力。</p>

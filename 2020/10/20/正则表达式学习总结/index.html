@@ -202,7 +202,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -215,7 +215,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -336,57 +336,48 @@
     <div class="post-body" itemprop="articleBody">
         <h3 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h3><p>正则表达式（Regular Expression），我一直觉得将regular译成“正则”是一件很荒唐的是，不仅体现在正则表达式，包括初接触神经网络时的概念<strong>正则化</strong>也是如此，其实就是标准化。regular expression就是标准表达式，目的就是提出一套标准规则，用来匹配字符串，以达到提取或过滤某种特定形式的字符串的作用。</p>
 <a id="more"></a> 
-
 <hr>
 <h3 id="正则表达式的作用"><a href="#正则表达式的作用" class="headerlink" title="正则表达式的作用"></a>正则表达式的作用</h3><p>正则表达式十分强大，可以匹配任意的字符串。可以应用在各个方面，例如想提取一大段话中的邮箱地址，提取IP地址，提取电话号码，提取年月日等等，换言之，这些具有一定规律的字符串格式都可以用正则表达式来批量化提取。</p>
 <ul>
 <li>邮箱地址</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">email1 = <span class="string">&#x27;eric6465@163.com&#x27;</span></span><br><span class="line">email2 = <span class="string">&#x27;1135310887@qq.com&#x27;</span></span><br><span class="line">email3 = <span class="string">&#x27;frontop137@gmail.com&#x27;</span></span><br><span class="line">email4 = <span class="string">&#x27;201730055081@scut.edu.cn&#x27;</span></span><br><span class="line"></span><br><span class="line">email__pattern = <span class="string">r&#x27;[a-zA-Z0-9_\-\.]+@[a-zA-Z0-9\-\.]+\.[a-z]+&#x27;</span></span><br><span class="line"></span><br><span class="line">print(re.match(email__pattern, email1))</span><br><span class="line">print(re.match(email__pattern, email2))</span><br><span class="line">print(re.match(email__pattern, email3))</span><br><span class="line">print(re.match(email__pattern, email4))</span><br></pre></td></tr></table></figure>
-
 <p><strong>运行结果</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">16</span>), match=<span class="string">&#x27;eric6465@163.com&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">17</span>), match=<span class="string">&#x27;1135310887@qq.com&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">20</span>), match=<span class="string">&#x27;frontop137@gmail.com&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">24</span>), match=<span class="string">&#x27;201730055081@scut.edu.cn&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
-
 <p>以上是我的四个邮箱，全部匹配正确。匹配的邮箱的关键在于@和顶级域名。</p>
 <ul>
 <li>IP地址</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">ip_pattern = <span class="string">r&#x27;^((\d|[1-9]\d|1[0-9]&#123;2&#125;|2[0-4]\d|25[0-5])\.)&#123;3&#125;(\d|[1-9]\d|1[0-9]&#123;2&#125;|2[0-4]\d|25[0-5])$&#x27;</span></span><br><span class="line"></span><br><span class="line">ip1 = <span class="string">&#x27;192.168.0.1&#x27;</span></span><br><span class="line">ip2 = <span class="string">&#x27;255.255.255.0&#x27;</span></span><br><span class="line">ip3 = <span class="string">&#x27;1.1.1.256&#x27;</span></span><br><span class="line">ip4 = <span class="string">&#x27;1.1.1.01&#x27;</span></span><br><span class="line">ip5 = <span class="string">&#x27;1.1.1.00&#x27;</span></span><br><span class="line">ip6 = <span class="string">&#x27;1.1.1.1111&#x27;</span></span><br><span class="line">print(re.match(ip_pattern, ip1))</span><br><span class="line">print(re.match(ip_pattern, ip2))</span><br><span class="line">print(re.match(ip_pattern, ip3))</span><br><span class="line">print(re.match(ip_pattern, ip4))</span><br><span class="line">print(re.match(ip_pattern, ip5))</span><br><span class="line">print(re.match(ip_pattern, ip6))</span><br></pre></td></tr></table></figure>
-
 <p><strong>运行结果</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">11</span>), match=<span class="string">&#x27;192.168.0.1&#x27;</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">13</span>), match=<span class="string">&#x27;255.255.255.0&#x27;</span>&gt;</span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="literal">None</span></span><br></pre></td></tr></table></figure>
-
 <p>前两个都是我们常见的合法的IP地址，后四个分别出现了一些错误，全部无法匹配。匹配IP地址的关键在于，IP地址由4个8位二进制码组成，其间用‘.’隔开，转换为十进制后，范围在0-255。若是1位，则0-9均可；若2位，则十位不能为0，个位任意；若3位，则百位为1-2，当百位为1时，剩余两位任意，当百位为2时，后两位最大值为55，即十位为0-4时个位任意，十位为5时个位只能为0-5。</p>
 <ul>
 <li>电话号码</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">phone_pattern = <span class="string">r&#x27;^[0-9]&#123;3,4&#125;\-[0-9]&#123;7,8&#125;$&#x27;</span></span><br><span class="line"></span><br><span class="line">ph1 = <span class="string">&#x27;020-87114442&#x27;</span></span><br><span class="line">ph2 = <span class="string">&#x27;0351-1234567&#x27;</span></span><br><span class="line">ph3 = <span class="string">&#x27;6666666&#x27;</span></span><br><span class="line"></span><br><span class="line">print(re.match(phone_pattern, ph1))</span><br><span class="line">print(re.match(phone_pattern, ph2))</span><br><span class="line">print(re.match(phone_pattern, ph3))</span><br></pre></td></tr></table></figure>
-
 <p><strong>运行结果</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span&#x3D;(0, 12), match&#x3D;&#39;020-87114442&#39;&gt;</span><br><span class="line">&lt;re.Match object; span&#x3D;(0, 12), match&#x3D;&#39;0351-1234567&#39;&gt;</span><br><span class="line">None</span><br></pre></td></tr></table></figure>
-
 <p>匹配电话号码相对简单，只要注意是否有连字符‘-’，并且两边各有几位数字即可。</p>
 <ul>
 <li>日期</li>
 </ul>
 <p>这里我们尝试抓取某个网页内的日期信息</p>
-<p>网页链接: <a target="_blank" rel="noopener" href="http://jw.scut.edu.cn/zhinan/cms/article/view.do?type=posts&id=ff8080817443bcba0174bf0232b500ec">关于2020-2021学年度第一学期部分通选课停开的通知</a></p>
+<p>网页链接: <a target="_blank" rel="noopener" href="http://jw.scut.edu.cn/zhinan/cms/article/view.do?type=posts&amp;id=ff8080817443bcba0174bf0232b500ec">关于2020-2021学年度第一学期部分通选课停开的通知</a></p>
 <p>网页截图：</p>
 <p><img src="https://i.loli.net/2020/10/26/jsG1wncQePA2DL6.png" alt="网页截图"></p>
 <p>代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://jw.scut.edu.cn/zhinan/cms/article/view.do?type=posts&amp;id=ff8080817443bcba0174bf0232b500ec&#x27;</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (&#x27;</span></span><br><span class="line">                         <span class="string">&#x27;KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">response = requests.get(url, headers=headers)</span><br><span class="line">response.encoding = response.apparent_encoding</span><br><span class="line"><span class="comment"># content为此静态网页的代码</span></span><br><span class="line">content = response.text</span><br><span class="line">date_pattern = <span class="string">r&#x27;((19|20)\d&#123;2&#125;\-)(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])&#x27;</span></span><br><span class="line">print(re.search(date_pattern, content))</span><br></pre></td></tr></table></figure>
-
 <p><strong>运行结果</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;re.Match object; span=(<span class="number">7049</span>, <span class="number">7059</span>), match=<span class="string">&#x27;2020-09-24&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
-
 <p>由于是从网页中提取日期，而非判断是否是合法日期，所以我们只需要匹配“yyyy-mm-dd”即可，而不需要判断是否是闰年，是大月还是小月。</p>
-</br>
-
+<p>&lt;/br&gt;</p>
 <p>通过上述四个例子，想必我们已经知道了正则表达式的最大的作用，即可以<strong>提取我们所需的特定格式的字符串</strong>。下面我们来具体说说正则表达式的语法。</p>
 <hr>
 <h3 id="正则表达式的语法"><a href="#正则表达式的语法" class="headerlink" title="正则表达式的语法"></a>正则表达式的语法</h3><ul>
 <li><strong>普通字符</strong></li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -394,12 +385,13 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>[ABC]</td>
 <td>匹配包含ABC任意一个的单个字符</td>
 </tr>
 <tr>
-<td>[^ABC]</td>
+<td><sup><a href="#fn_ABC" id="reffn_ABC">ABC</a></sup></td>
 <td>匹配任意不包含ABC的单个字符</td>
 </tr>
 <tr>
@@ -410,12 +402,14 @@
 <td>\w</td>
 <td>匹配A-Z，a-z，0-9和下划线中任意一个的单个字符</td>
 </tr>
-</tbody></table>
-</br>
-
+</tbody>
+</table>
+</div>
+<p>&lt;/br&gt;</p>
 <ul>
 <li><strong>非打印字符（常用）</strong></li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -423,7 +417,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>\n</td>
 <td>匹配一个换行符</td>
 </tr>
@@ -435,12 +430,14 @@
 <td>\s</td>
 <td>匹配任意空格字符</td>
 </tr>
-</tbody></table>
-</br>
-
+</tbody>
+</table>
+</div>
+<p>&lt;/br&gt;</p>
 <ul>
 <li><strong>特殊字符</strong></li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -448,7 +445,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>$</td>
 <td>匹配结尾</td>
 </tr>
@@ -468,12 +466,14 @@
 <td>^</td>
 <td>匹配开始，若放在[]中使用则代表非运算</td>
 </tr>
-</tbody></table>
-</br>
-
+</tbody>
+</table>
+</div>
+<p>&lt;/br&gt;</p>
 <ul>
 <li><strong>限定符</strong></li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -481,7 +481,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>*</td>
 <td>匹配前一个字符0次或无穷次，等价于{0,}</td>
 </tr>
@@ -497,7 +498,9 @@
 <td>{}</td>
 <td>{n,m}代表匹配前一个字符不少于n次，不多于m次</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>注意</strong>：*和+都是贪婪的，?是非贪婪的。通过在*和+后添加?，达到最小长度匹配的效果。*?表示匹配前面的字符任意次，但是越少越好；+?表示匹配前面的字符1次或1次以上，但是越少越好。</p>
 <hr>
 <h3 id="Python中的re模块"><a href="#Python中的re模块" class="headerlink" title="Python中的re模块"></a>Python中的re模块</h3><p>许多编程语言都支持用正则表达式的操作，以Python为例，其中的re模块功能十分强大，为Python语言提供了正则表达式的全部功能。下面着重介绍几个比较常用的函数。</p>
@@ -507,33 +510,30 @@
 <p>用法：</p>
 <p>尝试搜索整个字符串，直到找到第一个符合的匹配，停止匹配。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.search(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个匹配的对象，否则返回None</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>match()</strong></li>
 </ul>
 <p>用法：</p>
 <p>尝试从字符串的起始位置匹配。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.match(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个匹配的对象，否则返回None</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>findall()</strong></li>
 </ul>
 <p>用法：</p>
 <p>在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.findall(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个包含所有匹配到的字符串的列表，否则返回空列表</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>finditer()</strong></li>
 </ul>
 <p>用法：</p>
 <p>和findall() 类似，在字符串中找到正则表达式所匹配的所有子串，并把它们作为一个迭代器返回。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re.finditer(pattern, string, flags=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># string: 待匹配的字符串</span></span><br><span class="line"><span class="comment"># return: 若匹配成功则返回一个包含所有匹配到的字符串的迭代器</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>group() &amp; groups()</strong></li>
 </ul>
 <p>用法：</p>
 <p>是<strong>匹配对象</strong>的函数，用于获取匹配到的表达式</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -541,7 +541,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>group()</td>
 <td>匹配的整个表达式的字符串，group() 可以一次输入多个组号，在这种情况下它将返回一个包含那些组所对应值的元组</td>
 </tr>
@@ -549,16 +550,16 @@
 <td>groups()</td>
 <td>返回一个包含所有小组字符串的元组，从 1 到 所含的小组号</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li><strong>compile()</strong></li>
 </ul>
 <p>用法：</p>
 <p>用于编译正则表达式，当我们要重复多次匹配某一固定的正则表达式的时候，我们可以在一开始就进行re.compile()的操作，然后直接对返回结果应用search()，match()，findall()等方法，这样可以省略调用这些函数时重复编译正则表达式的时间。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">re.compile(pattern[, flags])</span><br><span class="line"><span class="comment"># pattern: 匹配的正则表达式</span></span><br><span class="line"><span class="comment"># flag: 匹配模式</span></span><br></pre></td></tr></table></figure>
-
-</br>
-
+<p>&lt;/br&gt;</p>
 <p>其实掌握了最基本的正则表达式语法，就可以很轻松的应用到不同的编程语言中，具体的针对不同语言的函数可以在做的时候再去查找。</p>
 <hr>
 <h3 id="关于爬虫"><a href="#关于爬虫" class="headerlink" title="关于爬虫"></a>关于爬虫</h3><p>众所周知，最基本的网络爬虫就是从网络页面中爬取信息，同样以Python语言为例，我们常用的解析网页的工具有BeautifulSoup模块和lxml模块中的xpath()。这些的原理都是解析网页中的html标签。我比较常用xpath去解析，所以就拿xpath来举个例子：当网页源代码和浏览器渲染出来的代码不一样的时候，我们可能无法直接在浏览器定位我们要查找的标签或者直接copy xpath，同时由于没有缩进，我们也很难直接从源代码中看出某个标签的具体索引，这时我们就可以采用简单粗暴的正则表达式，直接去匹配。另一种情况，就是动态网页加载出来的页面的内容，可能不是完全的json格式，前面可能附带着一段参数，这时我们无法采用json.loads()去编译，我们去要将其中的json格式的数据抓取出来，这时我们也可以用正则表达式直接去抓取。</p>
