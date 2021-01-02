@@ -22,26 +22,30 @@
     var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="前段时间阅读了李航老师《统计机器学习》第9章“EM算法及其推广”，对EM算法有了初步的了解，对于EM迭代的思想有了初步的认识。这段时间又观看了徐亦达老师的“机器学习课程”视频中的“Expectation Maximization”，将EM框架和高斯混合模型做了更好地结合，这篇文章旨在做一个简单的总结，复习和巩固自己所学习的知识。">
+  <meta name="description" content="动态规划方法用来解决强化学习中的规划问题（planning）。规划是指已知状态空间、行为空间、奖励函数与状态转移矩阵（即已知MDP模型）的情况下，判断一个给定策略的价值函数，或判断一个策略的优劣，并找到最优的策略和最优的价值函数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EM算法">
-<meta property="og:url" content="http://frontop137.github.io/2020/11/28/EM%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="基于模型的动态规划方法">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/29/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="frontop137&#39;s blog">
-<meta property="og:description" content="前段时间阅读了李航老师《统计机器学习》第9章“EM算法及其推广”，对EM算法有了初步的了解，对于EM迭代的思想有了初步的认识。这段时间又观看了徐亦达老师的“机器学习课程”视频中的“Expectation Maximization”，将EM框架和高斯混合模型做了更好地结合，这篇文章旨在做一个简单的总结，复习和巩固自己所学习的知识。">
+<meta property="og:description" content="动态规划方法用来解决强化学习中的规划问题（planning）。规划是指已知状态空间、行为空间、奖励函数与状态转移矩阵（即已知MDP模型）的情况下，判断一个给定策略的价值函数，或判断一个策略的优劣，并找到最优的策略和最优的价值函数。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/11/28/zXZ23u5kvHmS6bB.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/29/tWbYEJOIA8prhTf.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/29/YnGdEDs4W6mzlJO.png">
-<meta property="article:published_time" content="2020-11-28T09:13:17.000Z">
-<meta property="article:modified_time" content="2020-12-11T00:48:37.978Z">
+<meta property="og:image" content="https://i.loli.net/2020/12/29/oy16WDJSZkwNOdm.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/29/l9As7kfcB2nwDUd.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/30/xH5I1ePSZlfTozC.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/30/MwqNCPHpB6muFcv.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/30/7E23dySfXjVpNKH.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/02/DEatOnfK7CczHvp.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/02/n2GTvzyXD7ZRfk9.png">
+<meta property="article:published_time" content="2020-12-29T07:03:21.000Z">
+<meta property="article:modified_time" content="2021-01-02T15:23:48.301Z">
 <meta property="article:author" content="Fangtong Zhou">
-<meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="EM算法">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/28/zXZ23u5kvHmS6bB.png">
+<meta name="twitter:image" content="https://i.loli.net/2020/12/29/oy16WDJSZkwNOdm.png">
 
 
-<link rel="canonical" href="http://frontop137.github.io/2020/11/28/EM%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="http://frontop137.github.io/2020/12/29/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/">
 
 
 <script class="page-configurations">
@@ -54,7 +58,7 @@
   };
 </script>
 
-  <title>EM算法 | frontop137's blog</title>
+  <title>基于模型的动态规划方法 | frontop137's blog</title>
   
 
 
@@ -187,7 +191,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#EM%E5%88%9D%E6%8E%A2"><span class="nav-number">1.</span> <span class="nav-text">EM初探</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EM%E7%AE%97%E6%B3%95%E6%8E%A8%E5%AF%BC"><span class="nav-number">2.</span> <span class="nav-text">EM算法推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EM%E6%A1%86%E6%9E%B6%E4%B8%8B%E7%9A%84%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">EM框架下的高斯混合模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0"><span class="nav-number">1.</span> <span class="nav-text">策略评估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">策略优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3"><span class="nav-number">3.</span> <span class="nav-text">价值迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -279,7 +283,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/11/28/EM%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/29/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -295,7 +299,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          EM算法
+          基于模型的动态规划方法
         </h1>
 
         <div class="post-meta-container">
@@ -306,14 +310,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-11-28 17:13:17" itemprop="dateCreated datePublished" datetime="2020-11-28T17:13:17+08:00">2020-11-28</time>
+      <time title="创建时间：2020-12-29 15:03:21" itemprop="dateCreated datePublished" datetime="2020-12-29T15:03:21+08:00">2020-12-29</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-11 08:48:37" itemprop="dateModified" datetime="2020-12-11T08:48:37+08:00">2020-12-11</time>
+        <time title="修改时间：2021-01-02 23:23:48" itemprop="dateModified" datetime="2021-01-02T23:23:48+08:00">2021-01-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,64 +339,49 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>前段时间阅读了李航老师《统计机器学习》第9章“EM算法及其推广”，对EM算法有了初步的了解，对于EM迭代的思想有了初步的认识。这段时间又观看了徐亦达老师的“机器学习课程”视频中的“Expectation Maximization”，将EM框架和高斯混合模型做了更好地结合，这篇文章旨在做一个简单的总结，复习和巩固自己所学习的知识。</p>
+        <p>动态规划方法用来解决强化学习中的规划问题（planning）。规划是指已知状态空间、行为空间、奖励函数与状态转移矩阵（即已知MDP模型）的情况下，判断一个给定策略的价值函数，或判断一个策略的优劣，并找到最优的策略和最优的价值函数。</p>
 <a id="more"></a>
-<hr>
-<h3 id="EM初探"><a href="#EM初探" class="headerlink" title="EM初探"></a>EM初探</h3><p>EM算法，名称取自期望（Expectation）和最大值（Maximization）的首字母，是一种迭代算法，用于含有隐变量的概率模型的极大似然估计（或最大后验估计），我们在了解EM算法的流程之后，更重要的是验证其收敛性以及将EM算法与高斯混合模型结合（最常见）。在引入《统计学习方法》中经典的“三硬币模型”之前，我想换一个角度，来解释为什么我们需要使用EM算法：</p>
-<p><img src="https://i.loli.net/2020/11/28/zXZ23u5kvHmS6bB.png" alt="EM算法 P1.png" style="zoom:50%;" /></p>
-<p>以高斯模型为例，由上图可见，我们处理的数据往往不是一个高斯模型可以拟合的，这时我们需要多个高斯模型来拟合数据，假设有K个模型，每个高斯模型需要确定2个参数（$\mu, \sigma$），每个模型前还需要有一个权重（$\alpha$），故描述这些数据共需要（K+K+K-1=3K-1）个参数（$\alpha$参数存在约束，故只需要K-1个）：</p>
-<script type="math/tex; mode=display">
-\bar\theta = \{\mu_1,\mu_2,\ldots,\mu_k,\sigma_1,\sigma_2,\ldots,\sigma_k,\alpha_1,\alpha_2,\ldots,\alpha_{K-1}\}</script><p>我们只需要对这3K-1个参数分别求偏导，并令偏导数等于零，就可以确定模型参数，但是首先，求导很复杂，其次令偏导数等于零，求解这个方程组更加复杂。于是我们想到了要用迭代的方法，一次一次的逼近，每次迭代求出的$\theta$代入似然函数都比之前的增大，这样最终得到的$\theta$即为我们的估计参数。这也就是EM算法。</p>
-<hr>
-<h3 id="EM算法推导"><a href="#EM算法推导" class="headerlink" title="EM算法推导"></a>EM算法推导</h3><p>既然是迭代算法，就首先需要建立迭代前后的关系式：</p>
-<script type="math/tex; mode=display">
-\theta^{g+1} = f(\theta^g)</script><p>在EM算法中，我们定义的迭代关系式为：</p>
-<script type="math/tex; mode=display">
-\theta^{g+1}=\mathop{\arg\max}\limits_{\theta}\int_zlog(P(X,Z|\theta))P(Z|X,\theta^g)dz</script><p>Z即为我们引入的隐变量（辅助变量），Z取值为1~K，分别对应K个高斯分布模型，这样实际我们只需要用到一个高斯分布，大大简化了计算量。之前也讲过，迭代的目的是生成使似然函数不断增大的$\theta$ ，即必须保证：</p>
-<script type="math/tex; mode=display">
-log(P(X|\theta^{g+1}))\geq log(P(X|\theta^g))</script><p>接下来我们来证明我们所确定的迭代关系式如何能完成迭代的功能：</p>
-<script type="math/tex; mode=display">
-log(P(X|\theta))=log(P(X,Z|\theta))-log(P(Z|X,\theta))</script><p>对两边同时求期望：</p>
-<script type="math/tex; mode=display">
-E(log(P(X|\theta)))=E(log(P(X,Z|\theta))-log(P(Z|X,\theta))),其中概率密度函数为P(Z|X,\theta^g)</script><p>等式左边等于：</p>
-<script type="math/tex; mode=display">
-\int_zlog(P(X|\theta))P(Z|X,\theta^g)dz</script><p>等式右边等于：</p>
-<script type="math/tex; mode=display">
-\int_zlog(P(X,Z|\theta))P(Z|X,\theta^g)dz-\int_zlog(P(Z|X,\theta))P(Z|X,\theta^g)dz</script><p>令右边的式子等于：</p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^g)-H(\theta,\theta^g)</script><p>可以清楚地看出，Q函数为我们迭代的一项，即迭代过后：$Q(\theta^{g+1},\theta^g)&gt;Q(\theta,\theta^g)$；故此时我们只需要证明H函数在迭代之后变小，就可以证明右边的式子在迭代后整体变大了（被减数增大，减数减小），从而证明左式在迭代后增大。我们应用Jenson不等式来证明H减小：</p>
-<script type="math/tex; mode=display">
-Jenson不等式:log\sum_{j}\lambda_jy_j \geq \sum_{j}\lambda_jlogy_j,其中\lambda_j\geq 0,\sum_{j}\lambda_j=1</script><p><img src="https://i.loli.net/2020/11/29/tWbYEJOIA8prhTf.png" alt="EM算法 P3.png" style="zoom: 50%;" /></p>
-<p><img src="https://i.loli.net/2020/11/29/YnGdEDs4W6mzlJO.png" alt="EM算法 P4.png" style="zoom:50%;" /></p>
-<hr>
-<h3 id="EM框架下的高斯混合模型"><a href="#EM框架下的高斯混合模型" class="headerlink" title="EM框架下的高斯混合模型"></a>EM框架下的高斯混合模型</h3><p>N为样本总数，K为模型总数。</p>
-<script type="math/tex; mode=display">
-P(Z|X,\theta^g)=\prod_{i=1}^NP(z_i|x_i,\theta^g)=\frac{P(x_i|z_i)P(z_i)}{\sum_{z_i=1}^KP(x_i|z_i)P(z_i)}</script><script type="math/tex; mode=display">
-P(Z,X|\theta)=\prod_{i=1}^NP(x_i,z_i|\theta)=\prod_{i=1}^NP(x_i|z_i,\theta)P(z_i|\theta)</script><p>其中$P(z_i|\theta)$为每个模型的权重$\alpha_z$，$P(x_i|z_i,\theta)$为高斯分布的概率密度函数$N(\mu_{zi},\sigma_{zi})$。</p>
+<p>动态规划方法将一个复杂的问题拆分为若干个子问题，通过求解子问题得到整个问题的解。当问题具有如下的两个性质时，可以采用动态规划的方法：</p>
 <ul>
-<li><strong>E-STEP</strong></li>
+<li>一个复杂问题的最优解由数个小问题的最优解构成，可以通过寻找子问题的最优解来得到复杂问题的最优解。</li>
+<li>子问题在复杂问题内重复出现，使得子问题的解可以被存储起来重复利用。</li>
 </ul>
+<p>MDP满足上述两个性质，贝尔曼方程把问题递归为求解子问题，价值函数相当于存储了一些子问题的解，可以复用。因此可以使用动态规划来求解马尔科夫决策过程。</p>
 <script type="math/tex; mode=display">
-\sum_{z_1=1}^K\ldots\sum_{z_N=1}^K(log\alpha_z+logN(\mu_{z_i},\sigma_{z_i}))\prod_{i=1}^NP(z_i|x_i,\theta^g)</script><script type="math/tex; mode=display">
-=\sum_{z_1=1}^K\ldots\sum_{z_N=1}^K(f_1(z_1)+f_2(z_2)+\ldots+f_N(z_N))P(z_1z_2\ldots z_N)</script><p>其中，$f_1(z_1)=log\alpha_z+logN(\mu_{z_1},\sigma_{z_1})$</p>
-<script type="math/tex; mode=display">
-上式=\sum_{z_1=1}^K\ldots\sum_{z_N=1}^Kf_1(z_1)P(z_1\ldots z_N)+\ldots(后面格式一样，省略)</script><script type="math/tex; mode=display">
-=\sum_{z_1=1}^{K}f_1(z_1)\sum_{z_2}^{K}\ldots \sum_{z_N}^{K}P(z_1\ldots z_N)+\ldots(后面格式一样，省略)</script><script type="math/tex; mode=display">
-=\sum_{z_1=1}^{K}f_1(z_1)P(z_1)+\ldots(后面格式一样，省略)</script><script type="math/tex; mode=display">
-=\sum_{i=1}^{N}\sum_{l=1}^{K}log[\alpha_l+logN(x_i|\mu_l,\sigma_l)]P(l|xi,\theta^g)</script><p>上式即为似然函数求完期望的结果，接下来只需要最大化（argmax），分别求出三个参数$\alpha,\mu,\sigma$</p>
-<ul>
-<li><strong>M-STEP</strong></li>
-</ul>
-<p>以求$\alpha$为例：</p>
-<script type="math/tex; mode=display">
-\frac{\partial \sum_{i=1}^{N}\sum_{l=1}^{K}log(\alpha_l)P(l|x_i,\theta^g)}{\partial\alpha} = 0</script><script type="math/tex; mode=display">
-s.t. \sum \alpha = 1</script><p>$\mu和\sigma$以相同的方式求出。</p>
+v_*(s)= \max \limits_a (R_s^a+\gamma\sum\limits_{s^\prime \in S}P_{ss^\prime}^av_*(s^\prime))</script><script type="math/tex; mode=display">
+q_*(s,a)=R_s^a+\gamma\sum\limits_{s^\prime \in S}P_{ss^\prime}^a\max_a q_*(s,a)</script><p><strong>预测</strong>和<strong>控制</strong>是规划的两个重要内容。预测是对给定策略的评估过程，控制是寻找一个最优策略的过程。</p>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>EM算法为我们求解似然函数最值提供了一种有效的简便的算法，主要应用在含有隐变量的概率模型的学习。构建具体的EM算法时，最重要的是确定Q函数，每次迭代过程，EM算法通过最大化Q函数的值来增大对数似然函数。</p>
-<p>由于本篇博文是第一次在hexo上面用latex写公式，hexo对于markdown和latex的渲染有很多冲突和问题，到现在我还没有完全解决，所以本文公式基本都是最简的，省去了很多的化简部分以及说明，并且主要是基于徐亦达老师的视频推导，而《统计学习方法》从“三硬币模型”入手，同时伴有大量的数学推导，可以帮助大家更加全面和严谨地了解EM算法，大家如果想更加详细的了解EM算法及其衍生算法，推荐还是先研读李航老师的《统计机器学习》。</p>
+<h3 id="策略评估"><a href="#策略评估" class="headerlink" title="策略评估"></a>策略评估</h3><p>策略评估（Policy Evaluation），是指给定一个策略，计算其价值函数。<br><img src="https://i.loli.net/2020/12/29/oy16WDJSZkwNOdm.png" alt="1.png" style="zoom:67%;" /></p>
+<p>由之前所推导的贝尔曼期望方程可知：</p>
+<script type="math/tex; mode=display">
+v_\pi(s)=\sum_{a \in A}\pi(a|s)(R_s^a+\gamma\sum_{s^\prime \in S}P_{ss^\prime}^av_\pi (s^\prime))</script><p>在已知MDP模型的情况下，上式中只有价值函数的值是未知的，因此可以采用自举的方式（bootstrapping），从一个任意一个状态价值函数开始，迭代更新，得到新的状态价值函数，最终收敛。在同步迭代法中，我们使用上一个迭代周期k内的后续状态价值来计算更新当前迭代周期k+1内某状态s的价值：</p>
+<script type="math/tex; mode=display">
+v_{k+1}(s)=\sum_{a \in A}\pi(a|s)(R_s^a+\gamma\sum_{s^\prime \in S}P_{ss^\prime}^av_k (s^\prime))</script><p>不断迭代至最终状态函数收敛（即变化的大小低于某个阈值）。<br>这里举一个简单的例子来看看什么是策略评估：<br><img src="https://i.loli.net/2020/12/29/l9As7kfcB2nwDUd.png" alt="2.png" style="zoom:67%;" /></p>
+<p>上面这个方格，灰色部分是起点和终点，其他有1-14共14个状态，在这14个状态每走一步会带来-1的即时奖励，若碰壁则保留在原地不动（仍有-1的即时奖励）。行为集合为上下左右（不能斜着走），每次只能移动一个单位的步长，设折扣因子为（discount factor）为1（即考虑当前和未来的奖励影响权重相同），采取均一概率的随即策略（即上下左右方向概率相同，均为0.25）。策略评估的目的在于，在若干次迭代后，评估这个策略在每个状态下的价值：<br><img src="https://i.loli.net/2020/12/30/xH5I1ePSZlfTozC.png" alt="3.png" style="zoom: 67%;" /></p>
+<p>可以看到，在没有迭代时，每个状态的价值都是0，代表着agent对这个环境没有任何的认知，在第一次迭代过后（k=1），因为采取均一随机策略，agent对于每个状态的评估都是相同的（以1号方格为例）：</p>
+<script type="math/tex; mode=display">
+v_\pi(1)=0.25\times(-1)\times4=-1</script><p>在第二次迭代时（k=2），同样以1号方格为例子：</p>
+<script type="math/tex; mode=display">
+v_\pi(2)=0.25\times(-1-1)\times3+0.25\times(-1)=-1.75,保留两位有效数字为-1.7</script><p>通过上述的方法不断地进行策略迭代中的策略评估，直至最终价值函数收敛，停止迭代：<br><img src="https://i.loli.net/2020/12/30/MwqNCPHpB6muFcv.png" alt="4.png" style="zoom:67%;" /></p>
 <hr>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>[1].李航，《统计机器学习》</p>
-<p>[2].<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qx411W7mf">b站徐亦达机器学习课程</a></p>
+<h3 id="策略优化"><a href="#策略优化" class="headerlink" title="策略优化"></a>策略优化</h3><p>当给定一个策略$\pi$时，可以得到基于该策略的价值函数$v_\pi$，基于产生的价值函数可以得到一个贪婪策略：</p>
+<script type="math/tex; mode=display">
+\pi^\prime=greedy(v_\pi)</script><p>依据新的策略$\pi^\prime$往往会产生一个新的价值函数并随之有新的贪婪策略，如此重复循环迭代将最终得到最有价值函数$v_<em>$和最优策略$\pi^</em>$，策略评估和策略优化共同构成了策略迭代（policy iteration），如下图：<br><img src="https://i.loli.net/2020/12/30/7E23dySfXjVpNKH.png" alt="5.png" style="zoom:67%;" /></p>
+<p>总的来说，从一个初始策略$\pi$和初始价值函数$v$开始，基于该策略进行完整的价值评估过程得到一个新的价值函数，随后依据新的价值函数得到新的贪婪策略，随后计算新的贪婪策略下的价值函数，整个过程反复进行，在这个循环过程中策略和价值函数均得到迭代更新，并最终收敛值最优价值函数和最优策略。除初始策略外，迭代中的策略均是依据价值函数的<strong>贪婪策略</strong>。</p>
+<hr>
+<h3 id="价值迭代"><a href="#价值迭代" class="headerlink" title="价值迭代"></a>价值迭代</h3><p>任何一个最优策略可以分为两个阶段，首先该策略要能产生当前状态下的最优行为，其次对于该最优行为到达的后续状态时该策略仍然是一个最优策略。相反的，如果一个策略不能在当前状态下产生一个最优行为，或者这个策略在针对当前状态的后续状态时不能产生一个最优行为，那么这个策略就不是最优策略。联系价值函数可知，一个策略能够获得某状态$s$的最优价值当且仅当该策略也同时获得状态$s$所有可能的后续状态$s^\prime$的最优价值。<br>一个状态的最有价值，可由其后续状态的最有价值通过贝尔曼最优化方程求解：</p>
+<script type="math/tex; mode=display">
+v_*(s)=\max\limits_a(R_s^a+\gamma \sum_\limits{s^\prime \in S}P_{ss^\prime}^av_*(s^\prime))</script><p>这个公式带给我们的直觉是如果我们能知道最终状态的价值和相关奖励，可以直接计算得到最终状态的前一个所有可能状态的最优价值。下面来举一个例子：<br><img src="https://i.loli.net/2021/01/02/DEatOnfK7CczHvp.png" alt="1.png" style="zoom:67%;" /></p>
+<p>该例为在一个4x4的方格世界寻找最短路径，规则与之前相同，但此时只有左上角是终止状态，假设agent一开始并不知道终点的具体位置，所以需要对所有的状态进行价值迭代。在最初（k=1时），设全部状态的价值都是0，在k=2时，除了左上角的状态，其余都不在终止状态，所以移步后即时奖励均为-1，再加上之前的0价值，所以全部更新为了-1；k=3时，除了与终止状态相邻的两个状态，其余均不能在移步后到达终止状态，所以价值更新结果是$\max(-1,-1)-1=-2$，而对于与终止状态相邻的两个状态来讲，他们的移步后的价值均为0，所以价值更新结果为$\max(-1,0)-1=-1$。以此类推一直迭代，到k=7时得到了全部状态的价值。<br>价值迭代的目标仍然是寻找到一个最优策略，它通过贝尔曼最优方程从前次迭代的价值函数中计算得到当次迭代的价值函数，在这个反复迭代的过程中，并没有一个明确的策略参与，由于使用贝尔曼最优方程进行价值迭代时类似于贪婪地选择了最有行为对应的后续状态的价值，因而价值迭代其实等效于策略迭代中每迭代一次价值函数就更新一次策略的过程。在纯粹的价值迭代寻找最优策略的过程中，迭代过程中产生的状态价值函数不一定对应一个策略。迭代过程中价值函数更新的公式为：</p>
+<script type="math/tex; mode=display">
+v_{k+1}(s)=\max\limits_a(R_s^a+\gamma \sum_\limits{s^\prime \in S}P_{ss^\prime}^av_k(s^\prime))</script><hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://i.loli.net/2021/01/02/n2GTvzyXD7ZRfk9.png" alt="2.png" style="zoom:67%;" /></p>
+<p>策略迭代分为策略评估加策略更新，其中策略评估是预测问题，采用的是贝尔曼期望方程，策略更新是控制问题，采用的是贝尔曼期望方程和贪心策略；价值迭代是控制问题，采用的是贝尔曼优化方程。</p>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kb411i7KG?p=3">DavidSilver深度强化学习算法第三讲</a></li>
+<li>《深入浅出强化学习：原理入门》</li>
+</ol>
 
     </div>
 
@@ -420,22 +409,19 @@ s.t. \sum \alpha = 1</script><p>$\mu和\sigma$以相同的方式求出。</p>
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
-              <a href="/tags/EM%E7%AE%97%E6%B3%95/" rel="tag"># EM算法</a>
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"># 强化学习</a>
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/11/28/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="边缘计算卸载技术（一）">
-                  <i class="fa fa-chevron-left"></i> 边缘计算卸载技术（一）
+                <a href="/2020/12/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/" rel="prev" title="马尔可夫决策过程">
+                  <i class="fa fa-chevron-left"></i> 马尔可夫决策过程
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/12/01/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%E8%B6%85%E7%BA%A7%E8%8B%B1%E9%9B%84/" rel="next" title="一拳超人是怎样的超级英雄">
-                  一拳超人是怎样的超级英雄 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
