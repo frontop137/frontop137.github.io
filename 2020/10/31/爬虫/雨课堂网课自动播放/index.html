@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="最近又到了一年一度看《形势与政策》网课的时候了，全国高校，每个专业，无一例外。我校本年度（2020年）选用的是雨课堂的平台。大概有15个视频，每个视频时间20-40分钟不等，观看视频占总分的90%，这些视频全部看一遍，就算开二倍速也要很久，于是自然想到了用自动化脚本自动播放。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雨课堂网课自动播放">
+<meta property="og:url" content="http://frontop137.github.io/2020/10/31/%E7%88%AC%E8%99%AB/%E9%9B%A8%E8%AF%BE%E5%A0%82%E7%BD%91%E8%AF%BE%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE/index.html">
+<meta property="og:site_name" content="frontop137&#39;s blog">
+<meta property="og:description" content="最近又到了一年一度看《形势与政策》网课的时候了，全国高校，每个专业，无一例外。我校本年度（2020年）选用的是雨课堂的平台。大概有15个视频，每个视频时间20-40分钟不等，观看视频占总分的90%，这些视频全部看一遍，就算开二倍速也要很久，于是自然想到了用自动化脚本自动播放。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/uf3AvcrG8NztxkW.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/FEU9tYzC1H5rwMX.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/lqsXAKEUfndOJTQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/a3AM2OrSsIKQE5g.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/2w1T83areKBvjXx.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/PYQ5GspAwhEjKVy.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/cJT1R4YgvBLmonx.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/01/VRYrxyXWOELhpiS.png">
+<meta property="article:published_time" content="2020-10-31T08:59:49.000Z">
+<meta property="article:modified_time" content="2020-11-02T13:28:33.947Z">
+<meta property="article:author" content="Fangtong Zhou">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/01/uf3AvcrG8NztxkW.png">
+
+
+<link rel="canonical" href="http://frontop137.github.io/2020/10/31/%E7%88%AC%E8%99%AB/%E9%9B%A8%E8%AF%BE%E5%A0%82%E7%BD%91%E8%AF%BE%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>雨课堂网课自动播放 | frontop137's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">frontop137's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">网站架构分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E9%A2%91id%E5%92%8C%E7%94%A8%E6%88%B7id%E6%8A%93%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text">视频id和用户id抓取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E8%A7%82%E7%9C%8B"><span class="nav-number">3.</span> <span class="nav-text">模拟观看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">一些问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="nav-number">5.</span> <span class="nav-text">写在最后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fangtong Zhou"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Fangtong Zhou</p>
+  <div class="site-description" itemprop="description">Sweet but Psycho</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:eric6465@163.com" title="E-Mail → mailto:eric6465@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/frontop137" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;frontop137" rel="noopener" target="_blank"><i class="fa fa-bug fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/82926049/" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;82926049&#x2F;" rel="noopener" target="_blank"><i class="fa fa-binoculars fa-fw"></i>豆瓣</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/259349443" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;259349443" rel="noopener" target="_blank"><i class="fa fa-film fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www2.scut.edu.cn/ee/" title="http:&#x2F;&#x2F;www2.scut.edu.cn&#x2F;ee&#x2F;" rel="noopener" target="_blank">华南理工大学电信学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sist.shanghaitech.edu.cn/" title="https:&#x2F;&#x2F;sist.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海科技大学信息学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://shift.shanghaitech.edu.cn/" title="http:&#x2F;&#x2F;shift.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海雾计算实验室</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/10/31/%E7%88%AC%E8%99%AB/%E9%9B%A8%E8%AF%BE%E5%A0%82%E7%BD%91%E8%AF%BE%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Sweet but Psycho">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          雨课堂网课自动播放
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-31 16:59:49" itemprop="dateCreated datePublished" datetime="2020-10-31T16:59:49+08:00">2020-10-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-02 21:28:33" itemprop="dateModified" datetime="2020-11-02T21:28:33+08:00">2020-11-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">爬虫</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最近又到了一年一度看《形势与政策》网课的时候了，全国高校，每个专业，无一例外。我校本年度（2020年）选用的是雨课堂的平台。大概有15个视频，每个视频时间20-40分钟不等，观看视频占总分的90%，这些视频全部看一遍，就算开二倍速也要很久，于是自然想到了用自动化脚本自动播放。</p>
+<a id="more"></a>
+<hr>
+<h3 id="网站架构分析"><a href="#网站架构分析" class="headerlink" title="网站架构分析"></a>网站架构分析</h3><p>课程地址：<a target="_blank" rel="noopener" href="https://scut.yuketang.cn/pro/courselist">https://scut.yuketang.cn/pro/courselist</a></p>
+<p><img src="https://i.loli.net/2020/11/01/uf3AvcrG8NztxkW.png" alt="雨课堂"></p>
+<center style="font-size:14px;color:#C0C0C0">界面</center>
+
+<p>其中第一排第一列的课程就是本学期的《形势与政策》课程。因为我只有这一门课程需要观看，所以我直接点进去，不需要在这个页面获取其他视频的信息。</p>
+<p>点击进入《形势与政策》之后：</p>
+<p>网址：<a target="_blank" rel="noopener" href="https://scut.yuketang.cn/pro/lms/7GmGPsM8ci5/4449749/studycontent">https://scut.yuketang.cn/pro/lms/7GmGPsM8ci5/4449749/studycontent</a></p>
+<p><img src="https://i.loli.net/2020/11/01/FEU9tYzC1H5rwMX.png" alt="课程内容"></p>
+<center style="font-size:14px;color:#C0C0C0">课程内容</center>
+
+<p>这里的url很明显，“7GmGPsM8ci5”和“4449749”都是一些比较明显的参数，但是目前还不知道代表着什么。<br>这时我们进入控制台，试图寻找一些有关每个需要观看的视频的参数和规律等等（其实也没有套路，就是经验，具体要找什么也只有试过才知道）。</p>
+<p>经过在Network中加载的页面的寻找，我们很容易的能够发现这些信息：</p>
+<ul>
+<li><p>用户id</p>
+<p><img src="https://i.loli.net/2020/11/01/lqsXAKEUfndOJTQ.png" alt="屏幕截图1"></p>
+<p><a target="_blank" rel="noopener" href="https://scut.yuketang.cn/edu_admin/get_user_basic_info/?term=latest&amp;uv_id=2627">https://scut.yuketang.cn/edu_admin/get_user_basic_info/?term=latest&amp;uv_id=2627</a></p>
+</li>
+<li><p>章节id</p>
+<p>在后期模拟播放时没有用到，所以就不展示了。</p>
+</li>
+<li><p>学校id</p>
+<p>学校id会在用户登陆后清晰的显示在url参数上，用户可以直接获取，所以也不需要抓取。</p>
+</li>
+<li><p>教室id</p>
+<p>教室id会在用户登陆并选择课程后清晰的显示在url参数上，用户也可以直接获取，故也不需要特意去抓取。</p>
+</li>
+<li><p>视频id</p>
+<p><img src="https://i.loli.net/2020/11/01/a3AM2OrSsIKQE5g.png" alt="屏幕截图2"></p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://scut.yuketang.cn/mooc-api/v1/lms/learn/course/chapter?cid=4449749&amp;sign=7GmGPsM8ci5&amp;term=latest&amp;uv_id=2627">https://scut.yuketang.cn/mooc-api/v1/lms/learn/course/chapter?cid=4449749&amp;sign=7GmGPsM8ci5&amp;term=latest&amp;uv_id=2627</a></p>
+<p>在上面这个网址保存了所有的视频信息，视频名称，视频编号等，具体如下：</p>
+<p><img src="https://i.loli.net/2020/11/01/2w1T83areKBvjXx.png" alt="屏幕截图3.png"></p>
+<p>最主要的信息就是id，我是通过率先点开每个视频观察了url的变化，然后再对比发现的，例如我点开第一个视频，网址变为：<br><a target="_blank" rel="noopener" href="https://scut.yuketang.cn/pro/lms/7GmGPsM8ci5/4449749/video/4061816">https://scut.yuketang.cn/pro/lms/7GmGPsM8ci5/4449749/video/4061816</a>，这里面的参数为教室id+视频id，这样我们就可以将每个视频的id爬取，为了之后的模拟播放做准备。</p>
+<hr>
+<h3 id="视频id和用户id抓取"><a href="#视频id和用户id抓取" class="headerlink" title="视频id和用户id抓取"></a>视频id和用户id抓取</h3><p>下面给出爬取视频id、用户id等信息的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">classroomid = <span class="string">&#x27;4449749&#x27;</span>  <span class="comment"># 教室id</span></span><br><span class="line">sign = <span class="string">&#x27;7GmGPsM8ci5&#x27;</span>     </span><br><span class="line">term = <span class="string">&#x27;latest&#x27;</span>  </span><br><span class="line">universityid = <span class="string">&#x27;2627&#x27;</span>    <span class="comment"># 学校id</span></span><br><span class="line"></span><br><span class="line">headers1 = &#123;<span class="string">&#x27;user-agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) 					  Chrome/86.0.4240.111 Safari/537.36&#x27;</span>,</span><br><span class="line">           <span class="string">&#x27;cookie&#x27;</span>: <span class="string">&#x27;&#x27;</span>,             <span class="comment"># 安全起见我就不给出我的cookie了</span></span><br><span class="line">           <span class="string">&#x27;referer&#x27;</span>: <span class="string">&#x27;https://scut.yuketang.cn/pro/lms/7GmGPsM8ci5/%s/studycontent&#x27;</span> % classroomid,</span><br><span class="line">           <span class="string">&#x27;university-id&#x27;</span>: universityid,</span><br><span class="line">           <span class="string">&#x27;xtbz&#x27;</span>: <span class="string">&#x27;cloud&#x27;</span></span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_videoid</span>(<span class="params">crid</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取需要观看视频的编号</span></span><br><span class="line"><span class="string">    :param crid: 教室id</span></span><br><span class="line"><span class="string">    :return: 储存着需要观看视频编号的列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    chap_url = <span class="string">&#x27;https://scut.yuketang.cn/mooc-api/v1/lms/learn/course/&#x27;</span> \</span><br><span class="line">               <span class="string">&#x27;chapter?cid=%s&amp;sign=%s&amp;term=%s&amp;uv_id=%s&#x27;</span> % (crid, sign, term, universityid)</span><br><span class="line">    response = requests.get(chap_url, headers=headers1)</span><br><span class="line">    response.encoding = response.apparent_encoding</span><br><span class="line">    jsdata = json.loads(response.text)</span><br><span class="line">    cid = jsdata[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;course_id&#x27;</span>]</span><br><span class="line">    course_chapters = jsdata[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;course_chapter&#x27;</span>]</span><br><span class="line">    vid = []</span><br><span class="line">    <span class="keyword">for</span> chap <span class="keyword">in</span> course_chapters:</span><br><span class="line">        <span class="keyword">for</span> sec <span class="keyword">in</span> chap[<span class="string">&#x27;section_leaf_list&#x27;</span>]:</span><br><span class="line">            <span class="keyword">if</span> sec[<span class="string">&#x27;name&#x27;</span>] != <span class="string">&#x27;章节测试题&#x27;</span>:</span><br><span class="line">                vid.append(sec[<span class="string">&#x27;id&#x27;</span>])</span><br><span class="line">    <span class="keyword">return</span> list(map(<span class="keyword">lambda</span> x: str(x), vid)), cid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_videourl</span>(<span class="params">vid</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取视频url函数</span></span><br><span class="line"><span class="string">    :param vid: 视频id列表</span></span><br><span class="line"><span class="string">    :return: 视频url列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    url_head = <span class="string">&#x27;https://scut.yuketang.cn/pro/lms/%s/%s/video/&#x27;</span> % (sign, classroomid)</span><br><span class="line">    vurl = list(map(<span class="keyword">lambda</span> x: url_head+x, vid))</span><br><span class="line">    <span class="keyword">return</span> vurl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_userinfo</span>():</span></span><br><span class="line">    user_url = <span class="string">&#x27;https://scut.yuketang.cn/edu_admin/get_user_basic_info/?term=latest&amp;uv_id=%s&#x27;</span> % universityid</span><br><span class="line">    response = requests.get(user_url, headers=headers1)</span><br><span class="line">    print(<span class="string">&#x27;用户姓名：&#x27;</span>, json.loads(response.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;user_info&#x27;</span>][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">    userid = json.loads(response.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;user_info&#x27;</span>][<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> userid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">userid = get_userinfo()</span><br><span class="line">courseid = get_videoid(classroomid)[<span class="number">1</span>]</span><br><span class="line">video_id = get_videoid(classroomid)[<span class="number">0</span>]</span><br><span class="line">video_url = get_videourl(video_id)</span><br></pre></td></tr></table></figure>
+<p>写get_videourl()这个函数主要是因为，访问具体的视频页面在请求头部的referer参数需要对应这个视频网页地址的值。</p>
+<p>那么我现在就可以<strong>模拟访问</strong>每一个视频了。</p>
+<hr>
+<h3 id="模拟观看"><a href="#模拟观看" class="headerlink" title="模拟观看"></a>模拟观看</h3><p>接下来就是重点了，我现在只是模拟地拿到了每个视频的入口，但是我该如何才能使我的程序自动地播放视频呢？其实熟悉爬虫的朋友们一定对selenium不陌生，这是一个实现网络测试自动化的工具，可以轻松地模拟鼠标的点击，那么自然得也就可以模拟点击播放按钮，然后播放视频，如果能做成多线程，然后再模拟点击二倍速播放，那么就可以在20分钟左右看完所有视频（最长视频时长的1/2）。但是，selenium也有一些不足的地方：</p>
+<ol>
+<li>容易被识别，很多网站都针对selenium做了<strong>反爬虫措施</strong>，所以在使用过程中会出现很多小问题（例如前几年常见的自动清空购物车脚本，自动抢货脚本等，现在基本已经被淘宝京东等网站检测到了）。</li>
+<li>需要安装特定的浏览器驱动，且爬虫速度极慢。</li>
+<li>缺乏技术含量（😜）。</li>
+</ol>
+<p>基于<del><strong>最后一点</strong></del>（以上三点），我基本不使用selenium来进行爬虫。</p>
+<p>那么我就要仔细思考一下，服务器到底是如何知道浏览器看了多少进度的视频的（计算机网络知识在脑中打转）。基于经验和资料查找（咨询苏森），以及我人工手动播放了一个视频，并进行了一些操作，如暂停，开始，刷新页面，观看结束等等，我大致有了如下的总结：</p>
+<p>浏览器通过POST请求给服务器发送心跳包（heartbeat/），心跳包有对应的类型（‘pause’，‘loadstart’，‘heartbeat’，‘videoend’等等），每个心跳又包含了很多参数，其中便有代表着视频已经播放时间的参数，浏览器不断地给服务器发送心跳包，这就对应着播放视频时进度条的移动，那么我可以模仿整个心跳包的发送过程，以此来”<strong>欺骗</strong>“服务器我是一个普通浏览器，并且真正地看了视频。</p>
+<p>那么先来看看心跳包长什么样：</p>
+<p>网址：<a target="_blank" rel="noopener" href="https://scut.yuketang.cn/video-log/heartbeat/">https://scut.yuketang.cn/video-log/heartbeat/</a></p>
+<p><img src="https://i.loli.net/2020/11/01/PYQ5GspAwhEjKVy.png" alt="心跳包1"></p>
+<p>这个需要传给POST请求的data参数的部分是常见的json格式，键为”heart_data“，值为一个列表，列表里面有若干个字典形式的心跳包（上图一个列表里有7个心跳包）。</p>
+<p>那么接下来看一下每个心跳包具体有哪些内容：</p>
+<p><img src="https://i.loli.net/2020/11/01/cJT1R4YgvBLmonx.png" alt="心跳包2"></p>
+<p>接下来我来介绍一下经过观察和实验，每个参数的含义：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c</td>
+<td>课程id（course id）</td>
+</tr>
+<tr>
+<td><strong>cc</strong></td>
+<td>每个视频的特定参数，在我之前的get_videoid()函数中返回的第二个值即为每个视频的cc值</td>
+</tr>
+<tr>
+<td>classroomid</td>
+<td>顾名思义，教室id</td>
+</tr>
+<tr>
+<td><strong>cp</strong></td>
+<td><strong>视频进度</strong>，这是最关键的参数</td>
+</tr>
+<tr>
+<td><strong>d</strong></td>
+<td><strong>总时长</strong>，也是极其关键的参数</td>
+</tr>
+<tr>
+<td><strong>et</strong></td>
+<td><strong>心跳包类型</strong>，指明这个心跳包的作用</td>
+</tr>
+<tr>
+<td>fp</td>
+<td>不太清楚，固定设为0</td>
+</tr>
+<tr>
+<td>i</td>
+<td>固定设置为5</td>
+</tr>
+<tr>
+<td>lob</td>
+<td>固定设置为”cloud4“</td>
+</tr>
+<tr>
+<td>n</td>
+<td>固定设置为”cc“</td>
+</tr>
+<tr>
+<td>p</td>
+<td>固定设置为”web“</td>
+</tr>
+<tr>
+<td>pg</td>
+<td>前半段为视频id，后半段为一个下划线+随机字符串（可以只采用一种）</td>
+</tr>
+<tr>
+<td>skuid</td>
+<td>get_videoinfo()函数返回的第一个值即为skuid，每个视频相同</td>
+</tr>
+<tr>
+<td>sp</td>
+<td>控制倍速，可选0.5，1， 1.25，1.5，1.75，2等值，不重要，设置为1</td>
+</tr>
+<tr>
+<td><strong>sq</strong></td>
+<td>心跳包的序号，顺序加1</td>
+</tr>
+<tr>
+<td>t</td>
+<td>固定设置为”video“</td>
+</tr>
+<tr>
+<td>tp</td>
+<td>缓存你上一次看的视频进度，不重要，可以每次都设置为0</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>1000倍的时间戳，用python的time.time()获取然后乘1000即可</td>
+</tr>
+<tr>
+<td><strong>u</strong></td>
+<td>用户id（user_id）</td>
+</tr>
+<tr>
+<td>uip</td>
+<td>固定设置为”“</td>
+</tr>
+<tr>
+<td><strong>v</strong></td>
+<td>视频id（video_id）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>粗体的参数是比较重要的，需要我们调整。这样下来，即使没用完全清楚每一个参数的含义（比如为什么要设为固定的某个值），依然不影响我模拟浏览器观看视频时的发包。接下来就要观察观看视频发送心跳包的流程了。</p>
+<p><img src="https://i.loli.net/2020/11/01/VRYrxyXWOELhpiS.png" alt="心跳包3"></p>
+<center style="font-size:14px;color:#C0C0C0">发包流程</center>
+
+<p>这是我观看视频一段时间的Network发包结果，可以看到，名字为heartbeat/的包就是心跳包，而紧接着的请求是用来查询观看进度，服务器的响应包含了观看进度、观看历史、总时长等信息。而经过观察，每隔30s发送一个heartbeat/请求，而且heartbeat的请求类别从点进视频到播放结束分别为：</p>
+<ol>
+<li><p>空包</p>
+</li>
+<li><p>loadstart</p>
+</li>
+<li><p>seeking</p>
+</li>
+<li><p>loadeddata</p>
+</li>
+<li><p>play</p>
+</li>
+<li><p>playing</p>
+</li>
+<li><p>heartbeat</p>
+<p>这时心跳包里的cp参数开始增加，间隔为5s（即每过5s增加一个heartbeat类型的字典，加进列表中），当列表中的元素达到某个阈值，POST发送请求（阈值没有规律，我这里设置为10）。</p>
+</li>
+<li><p>pause</p>
+</li>
+<li><p>videoend</p>
+</li>
+</ol>
+<p>下面是描述发包流程的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 心跳包post请求网址</span></span><br><span class="line">    heartbeat_url = <span class="string">&#x27;https://scut.yuketang.cn/video-log/heartbeat/&#x27;</span></span><br><span class="line"></span><br><span class="line">    length = get_videolen(id)</span><br><span class="line">    sku_id = get_videoinfo(id)[<span class="number">0</span>]</span><br><span class="line">    cc = get_videoinfo(id)[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    hb_list = []</span><br><span class="line">    <span class="comment"># 心跳包模板</span></span><br><span class="line">    template = &#123;</span><br><span class="line">        <span class="string">&#x27;i&#x27;</span>: <span class="number">5</span>,</span><br><span class="line">        <span class="string">&#x27;et&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;p&#x27;</span>: <span class="string">&#x27;web&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;n&#x27;</span>: <span class="string">&#x27;cc&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;lob&#x27;</span>: <span class="string">&#x27;cloud4&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;cp&#x27;</span>: <span class="number">0</span>,  <span class="comment"># 观看进度</span></span><br><span class="line">        <span class="string">&#x27;fp&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;tp&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;sp&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;ts&#x27;</span>: int(time.time() * <span class="number">1000</span>),</span><br><span class="line">        <span class="string">&#x27;u&#x27;</span>: userid,  <span class="comment"># 用户id</span></span><br><span class="line">        <span class="string">&#x27;uip&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;c&#x27;</span>: courseid,   <span class="comment"># 课程id</span></span><br><span class="line">        <span class="string">&#x27;v&#x27;</span>: id,       <span class="comment"># 视频id</span></span><br><span class="line">        <span class="string">&#x27;skuid&#x27;</span>: sku_id,   <span class="comment"># skuid</span></span><br><span class="line">        <span class="string">&#x27;classroomid&#x27;</span>: classroomid,   <span class="comment"># 教室id</span></span><br><span class="line">        <span class="string">&#x27;cc&#x27;</span>: cc,</span><br><span class="line">        <span class="string">&#x27;d&#x27;</span>: length,          <span class="comment"># 视频时长</span></span><br><span class="line">        <span class="string">&#x27;pg&#x27;</span>: id + <span class="string">&#x27;_12bvp&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;sq&#x27;</span>: <span class="number">0</span>,   <span class="comment"># 心跳包序列</span></span><br><span class="line">        <span class="string">&#x27;t&#x27;</span>: <span class="string">&#x27;video&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 先发送一次空包</span></span><br><span class="line">    requests.post(heartbeat_url, headers=headers2, data=json.dumps(&#123;<span class="string">&quot;heart_data&quot;</span>: []&#125;))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># loadstart</span></span><br><span class="line">    ls = template.copy()</span><br><span class="line">    ls[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;loadstart&#x27;</span></span><br><span class="line">    ls[<span class="string">&#x27;d&#x27;</span>] = <span class="number">0</span></span><br><span class="line">    ls[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">1</span></span><br><span class="line">    hb_list.append(ls)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># seeking</span></span><br><span class="line">    sk = template.copy()</span><br><span class="line">    sk[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;seeking&#x27;</span></span><br><span class="line">    sk[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">2</span></span><br><span class="line">    hb_list.append(sk)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># loadeddata</span></span><br><span class="line">    ld = template.copy()</span><br><span class="line">    ld[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;loadeddata&#x27;</span></span><br><span class="line">    ld[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">3</span></span><br><span class="line">    hb_list.append(ld)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># play</span></span><br><span class="line">    play = template.copy()</span><br><span class="line">    play[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;play&#x27;</span></span><br><span class="line">    play[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">4</span></span><br><span class="line">    hb_list.append(play)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># playing</span></span><br><span class="line">    playing = template.copy()</span><br><span class="line">    playing[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;playing&#x27;</span></span><br><span class="line">    playing[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">5</span></span><br><span class="line">    hb_list.append(playing)</span><br><span class="line"></span><br><span class="line">    sq = <span class="number">6</span></span><br><span class="line">    <span class="comment"># heartbeat</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, length, <span class="number">5</span>):</span><br><span class="line">        hb = template.copy()</span><br><span class="line">        hb[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;heartbeat&#x27;</span></span><br><span class="line">        hb[<span class="string">&#x27;cp&#x27;</span>] = i</span><br><span class="line">        hb[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">        hb_list.append(hb)</span><br><span class="line">        sq += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> len(hb_list) == <span class="number">10</span>:</span><br><span class="line">            hb_data = &#123;<span class="string">&#x27;heart_data&#x27;</span>: hb_list&#125;</span><br><span class="line">            send = requests.post(heartbeat_url, headers=headers2, data=json.dumps(hb_data))</span><br><span class="line">            <span class="comment"># print(send.status_code)</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                rate = requests.get(<span class="string">&#x27;https://scut.yuketang.cn/&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;video-log/get_video_watch&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;_progress/?cid=%s&amp;&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;user_id=%s&amp;classroom_id=%s&amp;&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;video_type=video&amp;vtype=rate&amp;&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;video_id=%s&amp;snapshot=1&amp;term=latest&amp;uv_id=%s&#x27;</span></span><br><span class="line">                                    % (str(courseid), str(userid), classroomid, id, universityid), headers=headers2)</span><br><span class="line">                rate = json.loads(rate.text)</span><br><span class="line">                print(<span class="string">&#x27;观看进度：&#x27;</span>, rate[id][<span class="string">&#x27;rate&#x27;</span>])</span><br><span class="line">            <span class="comment"># print(hb_list)</span></span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            hb_list.clear()</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 再发最后一个heartbeat</span></span><br><span class="line">    hb = template.copy()</span><br><span class="line">    sq += <span class="number">1</span></span><br><span class="line">    hb[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;heartbeat&#x27;</span></span><br><span class="line">    hb[<span class="string">&#x27;cp&#x27;</span>] = length</span><br><span class="line">    hb[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">    hb_list.append(hb)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># pause</span></span><br><span class="line">    pause = template.copy()</span><br><span class="line">    sq += <span class="number">1</span></span><br><span class="line">    pause[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;pause&#x27;</span></span><br><span class="line">    pause[<span class="string">&#x27;cp&#x27;</span>] = length</span><br><span class="line">    pause[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">    hb_list.append(pause)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># videoend</span></span><br><span class="line">    ve = template.copy()</span><br><span class="line">    sq += <span class="number">1</span></span><br><span class="line">    ve[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;videoend&#x27;</span></span><br><span class="line">    ve[<span class="string">&#x27;cp&#x27;</span>] = length</span><br><span class="line">    ve[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">    hb_list.append(ve)</span><br><span class="line"></span><br><span class="line">    requests.post(heartbeat_url, headers=headers2, data=json.dumps(&#123;<span class="string">&#x27;heart_data&#x27;</span>: hb_list&#125;))</span><br><span class="line"></span><br><span class="line">    rate = requests.get(<span class="string">&#x27;https://scut.yuketang.cn/video-log/get_video_watch_progress&#x27;</span></span><br><span class="line">                        <span class="string">&#x27;/?cid=%s&amp;user_id=%s&amp;classroom_id=%s&amp;video_typ&#x27;</span></span><br><span class="line">                        <span class="string">&#x27;e=video&amp;vtype=rate&amp;video_id=%s&amp;snapshot=1&amp;term=latest&amp;uv_id=%s&#x27;</span></span><br><span class="line">                        % (str(courseid), str(userid), classroomid, id, universityid),</span><br><span class="line">                        headers=headers2)</span><br><span class="line">    rate.encoding = rate.apparent_encoding</span><br><span class="line">    print(<span class="string">&#x27;是否完成观看：&#x27;</span>, json.loads(rate.text)[id][<span class="string">&#x27;completed&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>这时发包流程结束，视频看完。</p>
+<hr>
+<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><ul>
+<li><strong>发包间隔时间</strong></li>
+</ul>
+<p>因为正常观看是30s发送一次heartbeat请求，但是这样也很耗费时间，我尝试着不停歇，不断地发送，会出现一些丢包的现象，但是整体没有问题，可以适当停顿1s-5s，以提高发包的成功率。</p>
+<ul>
+<li><strong>视频总时长</strong></li>
+</ul>
+<p>前面提到过，在每个heartbeat/请求后回立刻有一个请求进度的GET请求，这个请求的响应中服务器会返回观看的进度和视频的总时长等信息，一开始我是直接发送这个请求来获得每个视频的时长，但是发现必须是已经有观看记录的视频才可以请求成功，若是未观看的视频则无法请求，除此之外，并没有包含着视频时长的信息。所以这里只能借助cv2模块中的VideoCapture类中的get函数的提取帧速率和帧数的功能，通过请求视频的原始地址结合length = FrameNumber / FramePerSecond来计算视频的时长。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取视频时长</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_videolen</span>(<span class="params">vid</span>):</span></span><br><span class="line">    ask_video_url = <span class="string">&#x27;https://scut.yuketang.cn/api/open/audiovideo/&#x27;</span> \</span><br><span class="line">                    <span class="string">&#x27;playurl?_date=%s&amp;term=latest&amp;video_id=%s&amp;&#x27;</span> \</span><br><span class="line">                    <span class="string">&#x27;provider=cc&amp;file_type=1&amp;&#x27;</span> \</span><br><span class="line">                    <span class="string">&#x27;is_single=0&#x27;</span> % (str(int(time.time()*<span class="number">1000</span>)), get_videoinfo(vid)[<span class="number">1</span>])</span><br><span class="line">    origin_url = requests.get(ask_video_url, headers=headers2)</span><br><span class="line">    origin_url.encoding = origin_url.apparent_encoding</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        origin_url = json.loads(origin_url.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;playurl&#x27;</span>][<span class="string">&#x27;sources&#x27;</span>][<span class="string">&#x27;quality10&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        origin_url = json.loads(origin_url.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;playurl&#x27;</span>][<span class="string">&#x27;sources&#x27;</span>][<span class="string">&#x27;quality20&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 计算时长</span></span><br><span class="line">    cap = cv2.VideoCapture(origin_url)</span><br><span class="line">    <span class="keyword">if</span> cap.isOpened():</span><br><span class="line">        fps = cap.get(<span class="number">5</span>)</span><br><span class="line">        framenum = cap.get(<span class="number">7</span>)</span><br><span class="line">        duration = int(framenum / fps)</span><br><span class="line">        <span class="keyword">return</span> duration</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>多线程</strong></li>
+</ul>
+<p>本次并未采用多线程，之后会相应的做一些优化。</p>
+<ul>
+<li><strong>心跳包的请求头</strong></li>
+</ul>
+<p>一开始心跳包的POST请求不起作用，经过反复debug，检查到返回的请求状态码为400多，故猜想是请求头的问题，果然是需要在请求头部加上<code>&#39;content-type&#39;: &#39;application/json‘</code>的键值对。</p>
+<ul>
+<li><strong>答题</strong></li>
+</ul>
+<p>刚刚说了，90%的成绩由播放视频产生，还有剩下的10%是由答题产生的，其实和播放视频同理，只要有标准答案，答题也可以以相同的方式发送请求，完成自动答题，这也是以后要完善的一个部分。</p>
+<hr>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>其实github上有一个郑州大学的师兄写了有关雨课堂的视频自动播放，但是用的是selenium模块，在网上和github上还未找见直接用requests模拟发送请求的自动观看雨课堂的项目。所以这个项目做出来还算有一些成就，然后也给几个同学用了（当然主要是<del>帮美丽可爱的小姐姐😋</del>锻炼自己）。希望自己可以继续完善，做成体系。</p>
+<hr>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">classroomid = <span class="string">&#x27;4449749&#x27;</span></span><br><span class="line">sign = <span class="string">&#x27;7GmGPsM8ci5&#x27;</span></span><br><span class="line">term = <span class="string">&#x27;latest&#x27;</span></span><br><span class="line">universityid = <span class="string">&#x27;2627&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">headers1 = &#123;<span class="string">&#x27;user-agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.&#x27;</span></span><br><span class="line">                         <span class="string">&#x27;0.4240.111 Safari/537.36&#x27;</span>,</span><br><span class="line">           <span class="string">&#x27;cookie&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">           <span class="string">&#x27;referer&#x27;</span>: <span class="string">&#x27;https://scut.yuketang.cn/pro/lms/7GmGPsM8ci5/%s/studycontent&#x27;</span> % classroomid,</span><br><span class="line">           <span class="string">&#x27;university-id&#x27;</span>: universityid,</span><br><span class="line">           <span class="string">&#x27;xtbz&#x27;</span>: <span class="string">&#x27;cloud&#x27;</span></span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_videoid</span>(<span class="params">crid</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取需要观看视频的编号</span></span><br><span class="line"><span class="string">    :param crid: 教室id</span></span><br><span class="line"><span class="string">    :return: 储存着需要观看视频编号的列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    chap_url = <span class="string">&#x27;https://scut.yuketang.cn/mooc-api/v1/lms/learn/course/&#x27;</span> \</span><br><span class="line">               <span class="string">&#x27;chapter?cid=%s&amp;sign=%s&amp;term=%s&amp;uv_id=%s&#x27;</span> % (crid, sign, term, universityid)</span><br><span class="line">    response = requests.get(chap_url, headers=headers1)</span><br><span class="line">    response.encoding = response.apparent_encoding</span><br><span class="line">    jsdata = json.loads(response.text)</span><br><span class="line">    cid = jsdata[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;course_id&#x27;</span>]</span><br><span class="line">    course_chapters = jsdata[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;course_chapter&#x27;</span>]</span><br><span class="line">    vid = []</span><br><span class="line">    <span class="keyword">for</span> chap <span class="keyword">in</span> course_chapters:</span><br><span class="line">        <span class="keyword">for</span> sec <span class="keyword">in</span> chap[<span class="string">&#x27;section_leaf_list&#x27;</span>]:</span><br><span class="line">            <span class="keyword">if</span> sec[<span class="string">&#x27;name&#x27;</span>] != <span class="string">&#x27;章节测试题&#x27;</span>:</span><br><span class="line">                vid.append(sec[<span class="string">&#x27;id&#x27;</span>])</span><br><span class="line">    <span class="keyword">return</span> list(map(<span class="keyword">lambda</span> x: str(x), vid)), cid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_videourl</span>(<span class="params">vid</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取视频url函数</span></span><br><span class="line"><span class="string">    :param vid: 视频id列表</span></span><br><span class="line"><span class="string">    :return: 视频url列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    url_head = <span class="string">&#x27;https://scut.yuketang.cn/pro/lms/%s/%s/video/&#x27;</span> % (sign, classroomid)</span><br><span class="line">    vurl = list(map(<span class="keyword">lambda</span> x: url_head+x, vid))</span><br><span class="line">    <span class="keyword">return</span> vurl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_userinfo</span>():</span></span><br><span class="line">    user_url = <span class="string">&#x27;https://scut.yuketang.cn/edu_admin/get_user_basic_info/?term=latest&amp;uv_id=%s&#x27;</span> % universityid</span><br><span class="line">    response = requests.get(user_url, headers=headers1)</span><br><span class="line">    print(<span class="string">&#x27;用户姓名：&#x27;</span>, json.loads(response.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;user_info&#x27;</span>][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">    userid = json.loads(response.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;user_info&#x27;</span>][<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> userid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">userid = get_userinfo()</span><br><span class="line">courseid = get_videoid(classroomid)[<span class="number">1</span>]</span><br><span class="line">video_id = get_videoid(classroomid)[<span class="number">0</span>]</span><br><span class="line">video_url = get_videourl(video_id)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> id <span class="keyword">in</span> video_id:</span><br><span class="line">    print(<span class="string">&#x27;正在观看视频id：&#x27;</span>, id)</span><br><span class="line">    headers2 = &#123;<span class="string">&#x27;user-agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 &#x27;</span></span><br><span class="line">                             <span class="string">&#x27;(KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;cookie&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;origin&#x27;</span>: <span class="string">&#x27;https://scut.yuketang.cn&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;referer&#x27;</span>: video_url[video_id.index(id)],</span><br><span class="line">               <span class="string">&#x27;xtbz&#x27;</span>: <span class="string">&#x27;cloud&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取视频时长</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_videolen</span>(<span class="params">vid</span>):</span></span><br><span class="line">        ask_video_url = <span class="string">&#x27;https://scut.yuketang.cn/api/open/audiovideo/&#x27;</span> \</span><br><span class="line">                        <span class="string">&#x27;playurl?_date=%s&amp;term=latest&amp;video_id=%s&amp;&#x27;</span> \</span><br><span class="line">                        <span class="string">&#x27;provider=cc&amp;file_type=1&amp;&#x27;</span> \</span><br><span class="line">                        <span class="string">&#x27;is_single=0&#x27;</span> % (str(int(time.time()*<span class="number">1000</span>)), get_videoinfo(vid)[<span class="number">1</span>])</span><br><span class="line">        origin_url = requests.get(ask_video_url, headers=headers2)</span><br><span class="line">        origin_url.encoding = origin_url.apparent_encoding</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            origin_url = json.loads(origin_url.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;playurl&#x27;</span>][<span class="string">&#x27;sources&#x27;</span>][<span class="string">&#x27;quality10&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            origin_url = json.loads(origin_url.text)[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;playurl&#x27;</span>][<span class="string">&#x27;sources&#x27;</span>][<span class="string">&#x27;quality20&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># 计算时长</span></span><br><span class="line">        cap = cv2.VideoCapture(origin_url)</span><br><span class="line">        <span class="keyword">if</span> cap.isOpened():</span><br><span class="line">            fps = cap.get(<span class="number">5</span>)</span><br><span class="line">            framenum = cap.get(<span class="number">7</span>)</span><br><span class="line">            duration = int(framenum / fps)</span><br><span class="line">            <span class="keyword">return</span> duration</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取视频信息</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_videoinfo</span>(<span class="params">vid</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        获取视频信息函数</span></span><br><span class="line"><span class="string">        :param vid: 视频id</span></span><br><span class="line"><span class="string">        :return: 第一个参数为sku_id（type-&gt;int）,第二个参数为cc(type-&gt;str)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        info_url = <span class="string">&#x27;https://scut.yuketang.cn/mooc-api/v1/lms/learn/leaf_info/&#x27;</span> \</span><br><span class="line">                   <span class="string">&#x27;%s/%s/?sign=7GmGPsM8ci5&amp;term=latest&amp;uv_id=%s&#x27;</span> % (classroomid, vid, universityid)</span><br><span class="line">        info = requests.get(info_url, headers=headers2)</span><br><span class="line">        info.encoding = info.apparent_encoding</span><br><span class="line">        info = json.loads(info.text)[<span class="string">&#x27;data&#x27;</span>]</span><br><span class="line">        <span class="keyword">return</span> info[<span class="string">&#x27;sku_id&#x27;</span>], info[<span class="string">&#x27;content_info&#x27;</span>][<span class="string">&#x27;media&#x27;</span>][<span class="string">&#x27;ccid&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 心跳包post请求网址</span></span><br><span class="line">    heartbeat_url = <span class="string">&#x27;https://scut.yuketang.cn/video-log/heartbeat/&#x27;</span></span><br><span class="line"></span><br><span class="line">    length = get_videolen(id)</span><br><span class="line">    sku_id = get_videoinfo(id)[<span class="number">0</span>]</span><br><span class="line">    cc = get_videoinfo(id)[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    hb_list = []</span><br><span class="line">    <span class="comment"># 心跳包模板</span></span><br><span class="line">    template = &#123;</span><br><span class="line">        <span class="string">&#x27;i&#x27;</span>: <span class="number">5</span>,</span><br><span class="line">        <span class="string">&#x27;et&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;p&#x27;</span>: <span class="string">&#x27;web&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;n&#x27;</span>: <span class="string">&#x27;cc&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;lob&#x27;</span>: <span class="string">&#x27;cloud4&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;cp&#x27;</span>: <span class="number">0</span>,  <span class="comment"># 观看进度</span></span><br><span class="line">        <span class="string">&#x27;fp&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;tp&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;sp&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;ts&#x27;</span>: int(time.time() * <span class="number">1000</span>),</span><br><span class="line">        <span class="string">&#x27;u&#x27;</span>: userid,  <span class="comment"># 用户id</span></span><br><span class="line">        <span class="string">&#x27;uip&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;c&#x27;</span>: courseid,   <span class="comment"># 课程id</span></span><br><span class="line">        <span class="string">&#x27;v&#x27;</span>: id,       <span class="comment"># 视频id</span></span><br><span class="line">        <span class="string">&#x27;skuid&#x27;</span>: sku_id,   <span class="comment"># skuid</span></span><br><span class="line">        <span class="string">&#x27;classroomid&#x27;</span>: classroomid,   <span class="comment"># 教室id</span></span><br><span class="line">        <span class="string">&#x27;cc&#x27;</span>: cc,</span><br><span class="line">        <span class="string">&#x27;d&#x27;</span>: length,          <span class="comment"># 视频时长</span></span><br><span class="line">        <span class="string">&#x27;pg&#x27;</span>: id + <span class="string">&#x27;_12bvp&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;sq&#x27;</span>: <span class="number">0</span>,   <span class="comment"># 心跳包序列</span></span><br><span class="line">        <span class="string">&#x27;t&#x27;</span>: <span class="string">&#x27;video&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 先发送一次空包</span></span><br><span class="line">    requests.post(heartbeat_url, headers=headers2, data=json.dumps(&#123;<span class="string">&quot;heart_data&quot;</span>: []&#125;))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># loadstart</span></span><br><span class="line">    ls = template.copy()</span><br><span class="line">    ls[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;loadstart&#x27;</span></span><br><span class="line">    ls[<span class="string">&#x27;d&#x27;</span>] = <span class="number">0</span></span><br><span class="line">    ls[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">1</span></span><br><span class="line">    hb_list.append(ls)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># seeking</span></span><br><span class="line">    sk = template.copy()</span><br><span class="line">    sk[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;seeking&#x27;</span></span><br><span class="line">    sk[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">2</span></span><br><span class="line">    hb_list.append(sk)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># loadeddata</span></span><br><span class="line">    ld = template.copy()</span><br><span class="line">    ld[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;loadeddata&#x27;</span></span><br><span class="line">    ld[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">3</span></span><br><span class="line">    hb_list.append(ld)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># play</span></span><br><span class="line">    play = template.copy()</span><br><span class="line">    play[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;play&#x27;</span></span><br><span class="line">    play[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">4</span></span><br><span class="line">    hb_list.append(play)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># playing</span></span><br><span class="line">    playing = template.copy()</span><br><span class="line">    playing[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;playing&#x27;</span></span><br><span class="line">    playing[<span class="string">&#x27;sq&#x27;</span>] = <span class="number">5</span></span><br><span class="line">    hb_list.append(playing)</span><br><span class="line"></span><br><span class="line">    sq = <span class="number">6</span></span><br><span class="line">    <span class="comment"># heartbeat</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, length, <span class="number">5</span>):</span><br><span class="line">        hb = template.copy()</span><br><span class="line">        hb[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;heartbeat&#x27;</span></span><br><span class="line">        hb[<span class="string">&#x27;cp&#x27;</span>] = i</span><br><span class="line">        hb[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">        hb_list.append(hb)</span><br><span class="line">        sq += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> len(hb_list) == <span class="number">10</span>:</span><br><span class="line">            hb_data = &#123;<span class="string">&#x27;heart_data&#x27;</span>: hb_list&#125;</span><br><span class="line">            send = requests.post(heartbeat_url, headers=headers2, data=json.dumps(hb_data))</span><br><span class="line">            <span class="comment"># print(send.status_code)</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                rate = requests.get(<span class="string">&#x27;https://scut.yuketang.cn/&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;video-log/get_video_watch&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;_progress/?cid=%s&amp;&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;user_id=%s&amp;classroom_id=%s&amp;&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;video_type=video&amp;vtype=rate&amp;&#x27;</span></span><br><span class="line">                                    <span class="string">&#x27;video_id=%s&amp;snapshot=1&amp;term=latest&amp;uv_id=%s&#x27;</span></span><br><span class="line">                                    % (str(courseid), str(userid), classroomid, id, universityid), headers=headers2)</span><br><span class="line">                rate = json.loads(rate.text)</span><br><span class="line">                print(<span class="string">&#x27;观看进度：&#x27;</span>, rate[id][<span class="string">&#x27;rate&#x27;</span>])</span><br><span class="line">            <span class="comment"># print(hb_list)</span></span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            hb_list.clear()</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 再发最后一个heartbeat</span></span><br><span class="line">    hb = template.copy()</span><br><span class="line">    sq += <span class="number">1</span></span><br><span class="line">    hb[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;heartbeat&#x27;</span></span><br><span class="line">    hb[<span class="string">&#x27;cp&#x27;</span>] = length</span><br><span class="line">    hb[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">    hb_list.append(hb)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># pause</span></span><br><span class="line">    pause = template.copy()</span><br><span class="line">    sq += <span class="number">1</span></span><br><span class="line">    pause[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;pause&#x27;</span></span><br><span class="line">    pause[<span class="string">&#x27;cp&#x27;</span>] = length</span><br><span class="line">    pause[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">    hb_list.append(pause)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># videoend</span></span><br><span class="line">    ve = template.copy()</span><br><span class="line">    sq += <span class="number">1</span></span><br><span class="line">    ve[<span class="string">&#x27;et&#x27;</span>] = <span class="string">&#x27;videoend&#x27;</span></span><br><span class="line">    ve[<span class="string">&#x27;cp&#x27;</span>] = length</span><br><span class="line">    ve[<span class="string">&#x27;sq&#x27;</span>] = sq</span><br><span class="line">    hb_list.append(ve)</span><br><span class="line"></span><br><span class="line">    requests.post(heartbeat_url, headers=headers2, data=json.dumps(&#123;<span class="string">&#x27;heart_data&#x27;</span>: hb_list&#125;))</span><br><span class="line"></span><br><span class="line">    rate = requests.get(<span class="string">&#x27;https://scut.yuketang.cn/video-log/get_video_watch_progress&#x27;</span></span><br><span class="line">                        <span class="string">&#x27;/?cid=%s&amp;user_id=%s&amp;classroom_id=%s&amp;video_typ&#x27;</span></span><br><span class="line">                        <span class="string">&#x27;e=video&amp;vtype=rate&amp;video_id=%s&amp;snapshot=1&amp;term=latest&amp;uv_id=%s&#x27;</span></span><br><span class="line">                        % (str(courseid), str(userid), classroomid, id, universityid),</span><br><span class="line">                        headers=headers2)</span><br><span class="line">    rate.encoding = rate.apparent_encoding</span><br><span class="line">    print(<span class="string">&#x27;是否完成观看：&#x27;</span>, json.loads(rate.text)[id][<span class="string">&#x27;completed&#x27;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy Me A Coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Fangtong Zhou 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Fangtong Zhou 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/20/%E7%88%AC%E8%99%AB/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="prev" title="正则表达式学习总结">
+                  <i class="fa fa-chevron-left"></i> 正则表达式学习总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/04/%E5%A4%A7%E5%AD%A6/%E5%86%99%E7%BB%9918%E7%BA%A7%E4%BF%A1%E5%85%AD%E5%B8%88%E5%BC%9F%E5%B8%88%E5%A6%B9/" rel="next" title="写给18级信六师弟师妹">
+                  写给18级信六师弟师妹 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fangtong Zhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="200" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":200,"height":350},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

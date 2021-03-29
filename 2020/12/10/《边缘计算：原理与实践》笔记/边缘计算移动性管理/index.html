@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="概述移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="边缘计算移动性管理">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/10/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="frontop137&#39;s blog">
+<meta property="og:description" content="概述移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-10T04:27:33.000Z">
+<meta property="article:modified_time" content="2020-12-11T02:49:53.866Z">
+<meta property="article:author" content="Fangtong Zhou">
+<meta property="article:tag" content="边缘计算">
+<meta property="article:tag" content="物联网">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://frontop137.github.io/2020/12/10/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>边缘计算移动性管理 | frontop137's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">frontop137's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">2.</span> <span class="nav-text">关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E5%86%B3%E7%AD%96"><span class="nav-number">2.1.</span> <span class="nav-text">迁移决策</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E6%89%A7%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">迁移执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%B5%81%E9%87%8F%E8%A7%84%E5%88%99"><span class="nav-number">2.3.</span> <span class="nav-text">更新流量规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%88%E6%AD%A2%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.4.</span> <span class="nav-text">终止应用程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">主要挑战</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fangtong Zhou"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Fangtong Zhou</p>
+  <div class="site-description" itemprop="description">Sweet but Psycho</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:eric6465@163.com" title="E-Mail → mailto:eric6465@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/frontop137" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;frontop137" rel="noopener" target="_blank"><i class="fa fa-bug fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/82926049/" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;82926049&#x2F;" rel="noopener" target="_blank"><i class="fa fa-binoculars fa-fw"></i>豆瓣</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/259349443" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;259349443" rel="noopener" target="_blank"><i class="fa fa-film fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www2.scut.edu.cn/ee/" title="http:&#x2F;&#x2F;www2.scut.edu.cn&#x2F;ee&#x2F;" rel="noopener" target="_blank">华南理工大学电信学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sist.shanghaitech.edu.cn/" title="https:&#x2F;&#x2F;sist.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海科技大学信息学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://shift.shanghaitech.edu.cn/" title="http:&#x2F;&#x2F;shift.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海雾计算实验室</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/10/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Sweet but Psycho">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          边缘计算移动性管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-10 12:27:33" itemprop="dateCreated datePublished" datetime="2020-12-10T12:27:33+08:00">2020-12-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-11 10:49:53" itemprop="dateModified" datetime="2020-12-11T10:49:53+08:00">2020-12-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>移动性管理指的是移动系统跟踪用户设备（User Equipment, UE）并将其与适当的基站（Base Station, BS）关联通信，使移动系统能够交付服务的能力。边缘计算中的移动性管理不同于传统移动通信，因为边缘服务器上的计算资源对于切换策略有影响。<br>边缘计算移动性管理是指随着UE在移动边缘主机（Mobile Edge Host, MEH）的范围内移动或是在不同的MEH之间移动时，MEH均能和UE通信，并能够为其提供连续而又高质量的移动边缘服务能力。</p>
+<a id="more"></a>
+<p>在无线环境中，移动性是移动边缘计算的一个重要特征，这是因为底层网络中的UE不断移动，会导致UE进入与当前提供服务的MEH不同的主机范围，从而需要移动边缘系统做出相应的服务调整。<br>宏观来讲，边缘计算移动性管理需要支持以下几点：</p>
+<ul>
+<li>服务的连续性</li>
+<li>应用程序的移动性，即支持应用程序迁移</li>
+<li>应用程序中与UE相关的信心的移动性，即支持UE状态信息的迁移</li>
+</ul>
+<p>为UE提供服务的是MEH中的虚拟机上的特定应用程序，因此，每当一个UE进入一个MEH的服务区域，MEH（新的主机记作T-MEH）若要为UE提供边缘服务，就需要新建虚拟机并安装当前服务对应的特定的应用程序，然后获得UE运行在原来MEH上应用程序的状态信息。<br>在移动性管理的过程中有许多步骤，其中服务迁移是最为关键的步骤流程之一。整个移动性管理就是围绕着服务迁移展开的。</p>
+<hr>
+<h3 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h3><p>移动性管理过程中的各个模块主要有以下几个部分组成：</p>
+<ol>
+<li>用户设备承载变化的检测：存在下述两种情况：(1)用户设备仍位于原先MEH（S-MEH）中，但是发生了基站的迁移，即两个基站都是同属于一个MEH范围内；(2)MEH迁移。</li>
+<li>服务迁移管理</li>
+<li>应用程序迁移</li>
+<li>规则更新：这一步骤更新针对此用户设备的流量规则。</li>
+<li>终止源主机的相关服务</li>
+</ol>
+<h4 id="迁移决策"><a href="#迁移决策" class="headerlink" title="迁移决策"></a>迁移决策</h4><p>迁移决策是根据UE的需求和移动边缘系统的整体状况，判断是否需要进行服务迁移。迁移决策与以下几个因素有关：</p>
+<ul>
+<li>底层网络的拓扑结构</li>
+<li>服务于UE的应用程序类型</li>
+<li>应用程序是否有状态</li>
+</ul>
+<p>底层网络的拓扑结构主要指基站类得无线接入点和MEH的连接情况。应用程序按照服务对象可分为<strong>专用应用程序</strong>（为特定的用户设备提供服务的移动边缘应用程序）和共享用用程序（其提供的服务并不仅仅针对特定的用户设备，相反，它可能服务于多个用户设备或者此移动边缘主机范围内的所有程序），若为共享应用程序，当用户设备移动到一个新的移动边缘主机范围时并不需要进行应用程序的迁移，但需要迁移UE得状态信息。移动性管理同样要考虑应用程序是否有状态，无状态得应用程序不需要记住服务状态，也不需要记录用户设备的数据；有状态的应用程序可以在绘会话转换期间保证服务的连续性。</p>
+<h4 id="迁移执行"><a href="#迁移执行" class="headerlink" title="迁移执行"></a>迁移执行</h4><p>当迁移决策完成后，需解决的另一个关键技术问题是移动边缘系统如何执行迁移过程。具体的执行方式有两种思路：</p>
+<ul>
+<li>信息的迁移主要依靠迁移前后边缘主机的通信（MEH主导的迁移）：MEP需要利用UE的上一次服务位置来得到源移动边缘主机的IP地址和身份（前提是保证两个MEH都连进了互联网）。</li>
+<li>利用用户设备进行信息迁移：利用UE的储存能力传送服务迁移所需的信息。当UE离开主机范围时，MEH会将应用程序信息和UE状态信息打包发送给UE的应用程序上并由其储存，当UE进入新的MEH时再完成交付。</li>
+</ul>
+<h4 id="更新流量规则"><a href="#更新流量规则" class="headerlink" title="更新流量规则"></a>更新流量规则</h4><p>当移动边缘主机可能连接多个无线访问节点，当用户设备从一个无线访问节点移动到另一个或在用户设备状态改变之后，移动边缘主机应该能够通过正确的无线访问节点和正确的通道将流量路由到用户设备。</p>
+<h4 id="终止应用程序"><a href="#终止应用程序" class="headerlink" title="终止应用程序"></a>终止应用程序</h4><p>指的是在服务迁移结束后，把S-MEH上运行的移动边缘应用程序的虚拟机关闭并删除，同时把平台中与UE相关的数据进行清理，这一过程根据应用程序的不同而不同（即专用应用程序还是共享应用程序）。</p>
+<hr>
+<h3 id="主要挑战"><a href="#主要挑战" class="headerlink" title="主要挑战"></a>主要挑战</h3><ul>
+<li>迁移决定策略</li>
+<li>预迁移：提前对用户将要进入的移动边缘主机区域进行预测。</li>
+<li>预移组：预先的配置一组移动边缘主机，当用户在这些主机中移动时，允许应用程序在这些主机上同时运行。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy Me A Coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Fangtong Zhou 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Fangtong Zhou 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" rel="tag"># 边缘计算</a>
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" rel="tag"># 物联网</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/08/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF/" rel="prev" title="边缘计算资源管理技术">
+                  <i class="fa fa-chevron-left"></i> 边缘计算资源管理技术
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/11/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/" rel="next" title="边缘计算安全与隐私保护技术">
+                  边缘计算安全与隐私保护技术 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fangtong Zhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="200" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":200,"height":350},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

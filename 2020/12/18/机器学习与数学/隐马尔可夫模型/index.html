@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="背景隐马尔可夫模型（Hidden Markov Model, HMM）是可用于标注问题的统计学习模型，描述由隐藏的马尔可夫链随机生成观测序列的过程，属于生成模型。在统计学的贝叶斯学派衍生的概率图模型中，在模型中加上时间这一测度，就产生了动态模型（Dynamic Model），动态模型又根据隐变量的离散与否和状态和输出是否满足高斯分布而分为隐马尔可夫模型、卡曼滤波和粒子滤波，其中马尔可夫模型的隐变量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐马尔可夫模型">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="frontop137&#39;s blog">
+<meta property="og:description" content="背景隐马尔可夫模型（Hidden Markov Model, HMM）是可用于标注问题的统计学习模型，描述由隐藏的马尔可夫链随机生成观测序列的过程，属于生成模型。在统计学的贝叶斯学派衍生的概率图模型中，在模型中加上时间这一测度，就产生了动态模型（Dynamic Model），动态模型又根据隐变量的离散与否和状态和输出是否满足高斯分布而分为隐马尔可夫模型、卡曼滤波和粒子滤波，其中马尔可夫模型的隐变量">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/ElQ2z6PUIkhTgyq.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/oiNVRxXdn3SWYK1.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/NBKVd6LQU53XSqu.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/daB3zC1XeGqpHTc.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/SePg94smDyAxwab.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/RhHbOLokiKJEuAm.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/9UyRji5MJ8NphaQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png">
+<meta property="article:published_time" content="2020-12-18T10:35:32.087Z">
+<meta property="article:modified_time" content="2020-12-19T04:12:03.502Z">
+<meta property="article:author" content="Fangtong Zhou">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="HMM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/12/18/ElQ2z6PUIkhTgyq.png">
+
+
+<link rel="canonical" href="http://frontop137.github.io/2020/12/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>隐马尔可夫模型 | frontop137's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">frontop137's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">模型简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluation%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">Evaluation问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">Learning问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decoding%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">Decoding问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fangtong Zhou"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Fangtong Zhou</p>
+  <div class="site-description" itemprop="description">Sweet but Psycho</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:eric6465@163.com" title="E-Mail → mailto:eric6465@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/frontop137" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;frontop137" rel="noopener" target="_blank"><i class="fa fa-bug fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/82926049/" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;82926049&#x2F;" rel="noopener" target="_blank"><i class="fa fa-binoculars fa-fw"></i>豆瓣</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/259349443" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;259349443" rel="noopener" target="_blank"><i class="fa fa-film fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www2.scut.edu.cn/ee/" title="http:&#x2F;&#x2F;www2.scut.edu.cn&#x2F;ee&#x2F;" rel="noopener" target="_blank">华南理工大学电信学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sist.shanghaitech.edu.cn/" title="https:&#x2F;&#x2F;sist.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海科技大学信息学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://shift.shanghaitech.edu.cn/" title="http:&#x2F;&#x2F;shift.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海雾计算实验室</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Sweet but Psycho">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          隐马尔可夫模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-18 18:35:32" itemprop="dateCreated datePublished" datetime="2020-12-18T18:35:32+08:00">2020-12-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-19 12:12:03" itemprop="dateModified" datetime="2020-12-19T12:12:03+08:00">2020-12-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">机器学习与数学</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>隐马尔可夫模型（Hidden Markov Model, HMM）是可用于标注问题的统计学习模型，描述由隐藏的马尔可夫链随机生成观测序列的过程，属于<strong>生成模型</strong>。<br>在统计学的贝叶斯学派衍生的概率图模型中，在模型中加上时间这一测度，就产生了动态模型（Dynamic Model），动态模型又根据隐变量的离散与否和状态和输出是否满足高斯分布而分为<strong>隐马尔可夫模型、卡曼滤波和粒子滤波</strong>，其中马尔可夫模型的隐变量（隐状态）是离散的：</p>
+<p><img src="https://i.loli.net/2020/12/18/ElQ2z6PUIkhTgyq.png" alt="1.png"></p>
+<a id="more"></a>
+<hr>
+<h3 id="模型简介"><a href="#模型简介" class="headerlink" title="模型简介"></a>模型简介</h3><script type="math/tex; mode=display">
+模型参数：
+\lambda=\{\pi,A,B\}</script><p>其中，$\pi$表示初始状态概率，A表示状态转移矩阵，B表示发射矩阵（固定状态后观测值的概率）。</p>
+<ul>
+<li><p>模型的基本符号表达与定义：</p>
+<script type="math/tex; mode=display">
+记观测变量：O=\{o_1,o_2,\ldots,o_t,\ldots\};</script><script type="math/tex; mode=display">
+观测变量取值：V=\{v_1,v_2,\ldots,v_M\};</script><script type="math/tex; mode=display">
+记状态变量：I=\{i_1,i_2,\ldots,i_t,\ldots\};</script><script type="math/tex; mode=display">
+状态变量取值：Q=\{q_1,q_2,\ldots,q_N\};</script><script type="math/tex; mode=display">
+A=[a_{ij}];a_{ij}=P(i_{t+1}=q_j|i_t=q_i);</script><script type="math/tex; mode=display">
+B=[b_j(k)];b_j(k)=P(o_t=v_k|i_t=q_j);</script></li>
+<li><p>关键的两个假设：<br>隐马尔可夫模型满足两个很关键的假设，第一是模型满足<strong>齐次马尔可夫性</strong>（Markov Property），即当前时刻的状态只跟上一时刻的状态有关：</p>
+<script type="math/tex; mode=display">
+P(i_{t+1}|i_t,t_{t-1},\ldots,i_1)=P(i_{t+1}|i_t)</script><p>第二个假设是模型满足<strong>观测独立性</strong>，即当前时刻的输出只和当前时刻的状态有关，与之前时刻的状态无关：</p>
+<script type="math/tex; mode=display">
+P(o_t|i_t,i_{t-1},\ldots,i_1,o_t,o_{t-1},\ldots,o_1)=P(o_t|i_t)</script><p>以上两个假设是在整个HMM推导中要反复用到的关键条件。</p>
+</li>
+<li><p>HMM要解决的三个主要问题：</p>
+<ul>
+<li>概率计算问题（Evaluation）：<br>计算$P(O|\lambda)$，我们采用前向算法(Foward Algorithm)和后向算法(Backward Algorithm)。</li>
+<li>学习问题（Learning）：<br>求$\lambda$，我们采用Baum-Welch算法（即EM算法）。</li>
+<li>预测问题（又称编码问题，Decoding）：<br>计算$I=\mathop{\arg\max}_iP(I|O)$，我们采用维特比算法（Viterbi Algorithm）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="Evaluation问题"><a href="#Evaluation问题" class="headerlink" title="Evaluation问题"></a>Evaluation问题</h3><p>首先，通过添加随机变量然后再求积分消去（很常规的方法），构造联合条件概率$P(O,I|\lambda)$:</p>
+<script type="math/tex; mode=display">
+P(O|\lambda)=\Sigma_IP(O,I|\lambda)=\Sigma_IP(O|I,\lambda)P(I/\lambda)</script><p>分别利用之前提到的两个假设求出$P(O|I,\lambda)$和$P(I|\lambda)$，但是这样会造成很大的计算复杂度（唯独诅咒），于是我们只能联想用递推的方式求解：</p>
+<p><img src="https://i.loli.net/2020/12/18/oiNVRxXdn3SWYK1.png" alt="14隐马尔可夫模型（HMM） P3.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/NBKVd6LQU53XSqu.png" alt="14隐马尔可夫模型（HMM） P4.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/daB3zC1XeGqpHTc.png" alt="14隐马尔可夫模型（HMM） P5.png" style="zoom:50%;" /></p>
+<p>利用前向算法和后向算法，成功构造出了递推关系，可以较为方便地求解观测序列的输出概率。</p>
+<hr>
+<h3 id="Learning问题"><a href="#Learning问题" class="headerlink" title="Learning问题"></a>Learning问题</h3><p>已知观测序列O，求解模型的参数$\lambda$。因为状态序列是潜在的（隐藏的），是不可以观测到的，所以就很自然的令我们想到了EM算法（实际上为了解决HMM中的Learning问题而提出Baum-Welch算法时还没有EM算法，EM算法是后期对这一类算法做了归纳和整理）：<br>即我们只需要构造等式：</p>
+<script type="math/tex; mode=display">
+\theta^{t+1}=\mathop{arg\max}_\theta \int_z \log P(x,z|\theta)P(z|x,\theta^t)\mathrm{d}z</script><p>在HMM中，$\theta$为$\lambda$（参数），$z$为$I$（隐变量），$x$为$O$（观测变量）：</p>
+<p><img src="https://i.loli.net/2020/12/18/SePg94smDyAxwab.png" alt="14隐马尔可夫模型（HMM） P6.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/RhHbOLokiKJEuAm.png" alt="14隐马尔可夫模型（HMM） P7.png" style="zoom:50%;" /></p>
+<p>这里只求出了$\pi$（在目标函数中只要取第一项即可，因此计算比较简便），A和B的计算过程太过复杂，这里不予展示，但是思路相同。</p>
+<hr>
+<h3 id="Decoding问题"><a href="#Decoding问题" class="headerlink" title="Decoding问题"></a>Decoding问题</h3><p>若时间序列长度为T，共有N种状态，则全部的马尔科夫链的状态序列有$N^T$种，我们的目的就是从这么多种序列中挑出一个，使得后验概率达到最大（即一个路径动态规划问题）。<br>我们首先要明确的一点是，假设在时间t时我们已经确定了一个能使之前所有状态序列的后验概率达到最大的状态，那么t时刻之后的所有的部分路径必须达到最大（可采用反证法轻易证明）。那么我们定义到达某个特定状态$q_i$的概率为$\delta_t(i)$，取最大即为在t时刻状态出现在$q_i$的概率最大（i的取值即为t时刻的最佳状态），t时刻之前的可以忽略。接下来我们只需要找到递推式$\delta_{t+1}(j)$与$\delta_t(i)$之间的关系即可。</p>
+<p><img src="https://i.loli.net/2020/12/18/9UyRji5MJ8NphaQ.png" alt="1.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/12/18/CXshQE1bqayrzJM.png" alt="2.png" style="zoom:50%;" /></p>
+<p>因此我们只需要从t=1开始，递推的计算在时刻t状态为i的各条部分路径的最大概率，直至得到时刻t=T状态为i的各条路径的最大概率，此时的概率即为最优路径的概率，T时刻最优的状态也就可以确定。然后再从后向前不断地找到每个时间点的最优状态。这就是维特比算法。</p>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>[1].李航《统计机器学习》</p>
+<p>[2].<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aE411o7qd?p=82">bilibili白板推导系列14</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy Me A Coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Fangtong Zhou 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Fangtong Zhou 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/HMM/" rel="tag"># HMM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/11/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/" rel="prev" title="边缘计算安全与隐私保护技术">
+                  <i class="fa fa-chevron-left"></i> 边缘计算安全与隐私保护技术
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" rel="next" title="强化学习简介">
+                  强化学习简介 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fangtong Zhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="200" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.0/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":200,"height":350},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

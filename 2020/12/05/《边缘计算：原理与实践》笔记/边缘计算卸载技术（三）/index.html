@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="在边缘计算网络环境中进行计算卸载任务，不仅能减少移动端的计算压力和能耗，也能降低传输时延。尽管目前业界已有不少针对边缘计算卸载的研究成果，但边缘计算卸载在移动性管理、干扰、安全等方面仍然面临着一些亟待解决的问题与挑战。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="边缘计算卸载技术（三）">
+<meta property="og:url" content="http://frontop137.github.io/2020/12/05/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="frontop137&#39;s blog">
+<meta property="og:description" content="在边缘计算网络环境中进行计算卸载任务，不仅能减少移动端的计算压力和能耗，也能降低传输时延。尽管目前业界已有不少针对边缘计算卸载的研究成果，但边缘计算卸载在移动性管理、干扰、安全等方面仍然面临着一些亟待解决的问题与挑战。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-04T17:02:05.000Z">
+<meta property="article:modified_time" content="2020-12-05T07:07:31.380Z">
+<meta property="article:author" content="Fangtong Zhou">
+<meta property="article:tag" content="边缘计算">
+<meta property="article:tag" content="物联网">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://frontop137.github.io/2020/12/05/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>边缘计算卸载技术（三） | frontop137's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">frontop137's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%80%A7%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">移动性管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B2%E6%89%B0%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">干扰管理</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fangtong Zhou"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Fangtong Zhou</p>
+  <div class="site-description" itemprop="description">Sweet but Psycho</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:eric6465@163.com" title="E-Mail → mailto:eric6465@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/frontop137" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;frontop137" rel="noopener" target="_blank"><i class="fa fa-bug fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/82926049/" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;82926049&#x2F;" rel="noopener" target="_blank"><i class="fa fa-binoculars fa-fw"></i>豆瓣</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/259349443" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;259349443" rel="noopener" target="_blank"><i class="fa fa-film fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www2.scut.edu.cn/ee/" title="http:&#x2F;&#x2F;www2.scut.edu.cn&#x2F;ee&#x2F;" rel="noopener" target="_blank">华南理工大学电信学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sist.shanghaitech.edu.cn/" title="https:&#x2F;&#x2F;sist.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海科技大学信息学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://shift.shanghaitech.edu.cn/" title="http:&#x2F;&#x2F;shift.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海雾计算实验室</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/05/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Sweet but Psycho">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          边缘计算卸载技术（三）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-12-05 01:02:05 / 修改时间：15:07:31" itemprop="dateCreated datePublished" datetime="2020-12-05T01:02:05+08:00">2020-12-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在边缘计算网络环境中进行计算卸载任务，不仅能减少移动端的计算压力和能耗，也能降低传输时延。尽管目前业界已有不少针对边缘计算卸载的研究成果，但边缘计算卸载在移动性管理、干扰、安全等方面仍然面临着一些亟待解决的问题与挑战。</p>
+<a id="more"></a>
+<hr>
+<h3 id="移动性管理"><a href="#移动性管理" class="headerlink" title="移动性管理"></a>移动性管理</h3><p>在传统的蜂窝网络中，用户在eNodeB与SCeNB之间移动时，为了保证服务连续性，有严格的切换流程。类似的，将UE的计算任务卸载到MEC，保证服务的连续性是要解决的关键问题。UE的切换可以通过VM迁移来保证服务的连续性。VM迁移的工作大部分只考虑单个计算节点对每个UE进行计算的场景，当应用程序被卸载到多个计算节点时，如何有效处理VM迁移过程成为保证QoS的一大挑战。同时，VM迁移会给回程链路造成很大的负担，并导致很高的时延。此外，由于计算节点之间的通信限制，更现实的挑战是如何实现基于某些预测技术预先迁移计算任务，使用户察觉不到服务的中断，以提升用户体验。<br>在移动性管理中，为了完成相应任务的迁移，并满足相应的时延、安全等各方面的需求，需要对低时延技术、路径预测技术等加以考量，在保持业务连续性的同时实现绿色节能通信。</p>
+<ul>
+<li><strong>低时延的移动性管理</strong>：物联网和车联网等低时延应用需要具有非常高的可靠性和非常低的端到端延迟（毫米级）通信。可以考虑在回程链路中选用时延更小的高速通路，对传输数据进行压缩并简化VM复原流程等。</li>
+<li><strong>路径预测技术对移动性管理技术的支撑</strong>：移动性管理的关键是进行VM和数据的迁移，传统的MEC迁移方案是在用户移动时才将计算进行卸载，这样的弊端是会在短时间内突发地传输大量的数据，从而造成较高的时延。处理该问题的解决方案一个解决方案是，在MEC为用户提供服务期间，利用用户轨迹的统计信息预测用户将要到达的下一个MEC区域（可以利用HMM），从而提前将数据传输。这一技术存在的两个挑战在于：（1）轨迹预测（2）如何选择预先要传输的计算数据（因为预测未必准确，传输过多可能会浪费网络资源）。</li>
+</ul>
+<hr>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>安全性在云计算卸载中是需要重点考虑的技术难点。由于MEC是分布式部署，单点的防护能力较弱（特别是物理安全），单个MEC的安全漏洞可能导致全局的安全问题，多租户的形式会导致恶意用户潜入网内，利用云平台的漏洞攻击网络。卸载到云端的数据也很容易被攻击或篡改。另外，由于计算任务被卸载到网络边缘中，面临更加复杂的网络环境，原本用于云计算的许多安全解决方案不再使用于边缘计算的计算卸载。<br>MEC中计算卸载面临着的安全问题分布在各个层级，主要包括：<strong>边缘节点安全、网络安全、数据安全、应用安全、安全态势感知与编排、身份认证管理等。</strong></p>
+<ul>
+<li>边缘节点安全：在网络边缘提供安全的节点、软件加固和安全可靠的远程升级服务，防止用户的恶意卸载行为，解决最基本的受信问题。</li>
+<li>网络安全：需保证包括防火墙、入侵检测系统、DDoS防护、VPN/TLS等功能，也包括一些传输协议的安全功能复用。</li>
+<li>数据安全：对卸载到边缘网络的数据进行信任处理，同时也需要对数据的访问控制进行加强，也包括数据加密、数据隔离和销毁、数据防篡改、隐私保护、数据访问控制和数据防泄漏等。</li>
+<li>应用安全：需设置白名单、应用安全审计、恶意卸载内容防范等。</li>
+<li>安全态势感知、安全管理与编排：需要采取主动积极的安全防御措施，包括基于大数据的态势感知和高级威胁检测以及统一的全网安全策略执行和主动防护，再结合完善的运维监控和应急响应机制。</li>
+<li>身份认证信任管理：在网络的各个层次中涉及的实体需要身份认证，海量的设备接入使传统的集中式安全认证面临巨大的性能压力，特别是在设备集中上线时系统往往会不堪重负。</li>
+</ul>
+<hr>
+<h3 id="干扰管理"><a href="#干扰管理" class="headerlink" title="干扰管理"></a>干扰管理</h3><p>干扰问题是计算卸载中亟待解决的关键问题之一。如果将很多接入设备的应用同时卸载到MEC服务器，会产生严重的干扰问题。干扰管理有很多实现方式，与资源管理密切相相关（干扰的本质是资源的冲突使用）。将资源管理作为干扰管理的重要手段，一方面可以通过合理利用网络资源增加网络容量；另一方面可以通过干扰管理修正资源分配策略，促进网络容量提升。干扰管理主要面临的挑战如下：</p>
+<ul>
+<li>MEC的部署方式导致干扰调度不均匀：MEC的部署具有随机性，分布与覆盖情况无法预期，这就可能导致MEC服务器分配不均匀，导致网络中不同区域的干扰分布不均。结合位置信息和卸载请求预测来智能处理干扰问题是未来MEC计算卸载干扰管理的重要技术之一。</li>
+<li>计算资源和网络资源的分配方案：如何根据MEC网络环境以及终端卸载请求做出合理的资源分配是解决干扰问题的重要途径之一。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy Me A Coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Fangtong Zhou 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Fangtong Zhou 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" rel="tag"># 边缘计算</a>
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" rel="tag"># 物联网</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/04/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%8D%B8%E8%BD%BD%E6%8A%80%E6%9C%AF%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="边缘计算卸载技术（二）">
+                  <i class="fa fa-chevron-left"></i> 边缘计算卸载技术（二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/07/%E5%89%A7%E8%AF%84%E5%BD%B1%E8%AF%84/%E3%80%8A%E9%9D%92%E6%98%A5%E7%8C%AA%E5%A4%B4%E3%80%8B%E5%BD%B1%E5%B0%84%E7%9A%84%E9%9D%92%E6%98%A5%E6%9C%9F%E7%83%A6%E6%81%BC/" rel="next" title="《青春猪头》影射的青春期烦恼">
+                  《青春猪头》影射的青春期烦恼 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fangtong Zhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="200" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":200,"height":350},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
