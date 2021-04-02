@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"frontop137.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="Logistic回归Logistic回归（Logistic Regression）虽然名字叫“回归”，但实际是一种最经典的二元分类算法。在分类问题中，我们的输出是一个类别，例如收到的邮件是否是垃圾邮件，肿瘤是否是阳性的等等。 Logistic回归最大的特点在于引入了sigmoid函数（又称为logistic函数）：  f(z) &#x3D; \frac{1}{1+e^{-z}} sigmoid函数能将输入变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达机器学习实验（二）">
+<meta property="og:url" content="http://frontop137.github.io/2021/04/02/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="frontop137&#39;s blog">
+<meta property="og:description" content="Logistic回归Logistic回归（Logistic Regression）虽然名字叫“回归”，但实际是一种最经典的二元分类算法。在分类问题中，我们的输出是一个类别，例如收到的邮件是否是垃圾邮件，肿瘤是否是阳性的等等。 Logistic回归最大的特点在于引入了sigmoid函数（又称为logistic函数）：  f(z) &#x3D; \frac{1}{1+e^{-z}} sigmoid函数能将输入变">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/YVwnuoxq8XAMy6c.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/QbYaqF4zR1ftgwN.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/iYzKvUaRy7SchGX.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/tfjxAqF4UpoVd2h.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/tBiNlWOKmYUSvrG.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/ZS8irHXlnNkgL6R.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/HKfnICaQpU8N3Xv.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/gREAvGqk9DJ6oI7.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/01/PNRL28gCcG4nVMo.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/02/MFANE8zcmOdL7te.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/02/nUSmxH7wjlBCWE3.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/02/Xl2538T7QWRBtVs.png">
+<meta property="article:published_time" content="2021-04-02T03:14:07.000Z">
+<meta property="article:modified_time" content="2021-04-02T03:14:07.915Z">
+<meta property="article:author" content="Fangtong Zhou">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="Logistic回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/01/YVwnuoxq8XAMy6c.png">
+
+
+<link rel="canonical" href="http://frontop137.github.io/2021/04/02/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>吴恩达机器学习实验（二） | frontop137's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">frontop137's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic%E5%9B%9E%E5%BD%92"><span class="nav-number">1.</span> <span class="nav-text">Logistic回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%8F%8F%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">实验描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%80"><span class="nav-number">3.1.</span> <span class="nav-text">实验一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%BA%8C"><span class="nav-number">3.2.</span> <span class="nav-text">实验二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">实验问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fangtong Zhou"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Fangtong Zhou</p>
+  <div class="site-description" itemprop="description">Valar Morghulis</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:eric6465@163.com" title="E-Mail → mailto:eric6465@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/frontop137" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;frontop137" rel="noopener" target="_blank"><i class="fa fa-bug fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/82926049/" title="豆瓣 → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;82926049&#x2F;" rel="noopener" target="_blank"><i class="fa fa-binoculars fa-fw"></i>豆瓣</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/259349443" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;259349443" rel="noopener" target="_blank"><i class="fa fa-film fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www2.scut.edu.cn/ee/" title="http:&#x2F;&#x2F;www2.scut.edu.cn&#x2F;ee&#x2F;" rel="noopener" target="_blank">华南理工大学电信学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sist.shanghaitech.edu.cn/" title="https:&#x2F;&#x2F;sist.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海科技大学信息学院</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://shift.shanghaitech.edu.cn/" title="http:&#x2F;&#x2F;shift.shanghaitech.edu.cn&#x2F;" rel="noopener" target="_blank">上海雾计算实验室</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2021/04/02/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Valar Morghulis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          吴恩达机器学习实验（二）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-02 11:14:07" itemprop="dateCreated datePublished" datetime="2021-04-02T11:14:07+08:00">2021-04-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">机器学习与数学</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Logistic回归"><a href="#Logistic回归" class="headerlink" title="Logistic回归"></a>Logistic回归</h3><p><strong>Logistic回归（Logistic Regression）</strong>虽然名字叫“回归”，但实际是一种最经典的二元分类算法。在分类问题中，我们的输出是一个类别，例如收到的邮件是否是垃圾邮件，肿瘤是否是阳性的等等。</p>
+<p>Logistic回归最大的特点在于引入了sigmoid函数（又称为logistic函数）：</p>
+<script type="math/tex; mode=display">
+f(z) = \frac{1}{1+e^{-z}}</script><p><img src="https://i.loli.net/2021/04/01/YVwnuoxq8XAMy6c.png" alt="1.png"></p>
+<p>sigmoid函数能将输入变量展平到（0，1）的区间，我们很容易联想到概率，即划分为两个子类（1和0）的概率可以用sigmoid函数的输出值来表示。因此，我们可以拟合一条分割曲线，将输入数据喂入分割曲线，得到的数值作为sigmoid函数的自变量，即大于0代表分类为1，否则分类为0。我们采用sigmoid函数的另一大优势是sigmoid函数的导数形式很简洁。</p>
+<a id="more"></a>
+<hr>
+<h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><p>我们如果依旧采用平方误差函数作为代价函数，将sigmoid函数代入后发现，我们需要优化的代价函数变成了非凸的，这样不方便我们求解。因此我们选择采用信心论中常用的信息熵的方法来通过概率值（sigmoid函数输出值）衡量信息量的大小。</p>
+<p>我们定义cost function为：</p>
+<p><img src="https://i.loli.net/2021/04/01/QbYaqF4zR1ftgwN.png" alt="2.png"></p>
+<p>这样cost的曲线为：</p>
+<p><img src="https://i.loli.net/2021/04/01/iYzKvUaRy7SchGX.jpg" alt="3.jpg"></p>
+<p>很容易看出，若标签为1，当数据的sigmoid输出越接近1，cost值越小，反之，若标签为0，当数据的sigmoid输出越接近0，cost值同样越小。所以这个cost function很好的反映了数据和标签的关系。</p>
+<p>cost function可以化简如下：</p>
+<script type="math/tex; mode=display">
+Cost\left( h_\theta(x),y \right)=-y\times log\left( {h_\theta}\left( x \right) \right)-(1-y)\times log\left( 1-h_\theta(x) \right)</script><p>代入代价函数为：</p>
+<script type="math/tex; mode=display">
+J(\theta)=\frac{1}{m}\sum\limits_{i=1}^{m}[-y^{(i)}\log \left( h_\theta(x^{(i)})\right)-\left( 1-y^{(i)} \right)\log \left( 1-h_\theta( x^{(i)}) \right)]</script><p>得到了代价函数后，我们采用梯度下降的方法来更新参数，达到最小化代价函数的目的：</p>
+<p><img src="https://i.loli.net/2021/04/01/tfjxAqF4UpoVd2h.png" alt="Logistic回归 P2.png" style="zoom: 50%;" /></p>
+<p><img src="https://i.loli.net/2021/04/01/tBiNlWOKmYUSvrG.png" alt="Logistic回归 P3.png" style="zoom:50%;" /></p>
+<p>求导后得到：</p>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \alpha \frac{1}{m}\sum\limits_{i=1}^m\left(h_\theta\left(x^{\left( i \right)} \right)-y^\left( i \right) \right)x_j^{(i)}</script><p><strong>注意！！！其中的$\theta$更新依然是同时更新所有的值，所以写代码时需要在这里新开辟一个列表或矩阵存储暂时的$\theta_j$</strong></p>
+<hr>
+<h3 id="实验描述"><a href="#实验描述" class="headerlink" title="实验描述"></a>实验描述</h3><h4 id="实验一"><a href="#实验一" class="headerlink" title="实验一"></a>实验一</h4><p>Suppose that you are the administrator of a university department and you want to determine each applicant’s chance of admission based on their results on two exams. You have historical data from previous applicants that you can use as a training set for logistic regression. For each training example, you have the applicant’s scores on two exams and the admissions decision. Your task is to build a classication model that estimates an applicant’s probability of admission based the scores from those two exams.</p>
+<ul>
+<li>首先我们读取数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;ex2data1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.readlines()</span><br><span class="line"></span><br><span class="line">score1 = []</span><br><span class="line">score2 = []</span><br><span class="line">admit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">    tmp = i.split(<span class="string">&#x27;,&#x27;</span>, <span class="number">3</span>)</span><br><span class="line">    score1.append(float(tmp[<span class="number">0</span>]))</span><br><span class="line">    score2.append(float(tmp[<span class="number">1</span>]))</span><br><span class="line">    admit.append(int(tmp[<span class="number">2</span>].replace(<span class="string">&#x27;\n&#x27;</span>, <span class="string">&#x27;&#x27;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># m为样本数量</span></span><br><span class="line">m = len(admit)</span><br></pre></td></tr></table></figure>
+<p>打印出数据散点图：</p>
+<p><img src="https://i.loli.net/2021/04/01/ZS8irHXlnNkgL6R.png" alt="Figure_1.png"></p>
+<p>可以看出，我们大致可以用一条直线来分割数据。</p>
+<ul>
+<li>构造矩阵，初始化参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造数据和标签矩阵</span></span><br><span class="line">X = np.zeros((m, <span class="number">3</span>))</span><br><span class="line">X[:, <span class="number">0</span>] = np.ones(m)</span><br><span class="line">X_1 = np.array(score1)</span><br><span class="line">X_1 = (X_1-np.mean(X_1))/np.std(X_1)  <span class="comment"># 特征缩放</span></span><br><span class="line">X_2 = np.array(score2)</span><br><span class="line">X_2 = (X_2-np.mean(X_2))/np.std(X_2)  <span class="comment"># 特征缩放</span></span><br><span class="line">X[:, <span class="number">1</span>] = X_1</span><br><span class="line">X[:, <span class="number">2</span>] = X_2</span><br><span class="line">y = np.array(admit).reshape((m, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化参数</span></span><br><span class="line">theta = np.zeros((<span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">alpha = <span class="number">0.03</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>编写sigmoid函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span>(<span class="params">X, theta</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    sigmoid函数</span></span><br><span class="line"><span class="string">    :param X: m*3数据矩阵</span></span><br><span class="line"><span class="string">    :param theta: 1*3参数</span></span><br><span class="line"><span class="string">    :return: m*1结果</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>/(<span class="number">1</span> + np.exp(-np.dot(X, theta.T)))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编写cost function</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span>(<span class="params">X, y, theta</span>):</span></span><br><span class="line">    <span class="comment"># 默认以e为底数</span></span><br><span class="line">    <span class="keyword">return</span> np.sum(-y*np.log(sigmoid(X, theta)) - (<span class="number">1</span>-y)*np.log(<span class="number">1</span>-sigmoid(X, theta)))/y.shape[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>其中对数函数默认为自然对数。</p>
+<ul>
+<li>编写梯度下降函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent</span>(<span class="params">X, y, theta, alpha</span>):</span></span><br><span class="line">    tmp = np.zeros((<span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">    cost = [compute_cost(X, y, theta)]</span><br><span class="line">    ite = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        ite += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(theta.shape[<span class="number">1</span>]):</span><br><span class="line">            tmp[<span class="number">0</span>, j] = theta[<span class="number">0</span>, j] - alpha * np.sum((sigmoid(X, theta)-y)*X[:, j].reshape((y.shape[<span class="number">0</span>], <span class="number">1</span>)))/y.shape[<span class="number">0</span>]</span><br><span class="line">        theta = tmp</span><br><span class="line">        cost.append(compute_cost(X, y, theta))</span><br><span class="line">        print(<span class="string">&#x27;第&#123;&#125;次迭代，theta为&#123;&#125;，cost为&#123;&#125;&#x27;</span>.format(ite, theta, cost[<span class="number">-1</span>]))</span><br><span class="line">        <span class="keyword">if</span> abs(cost[<span class="number">-1</span>] - cost[<span class="number">-2</span>]) &lt;= <span class="number">0.0001</span>:</span><br><span class="line">            print(<span class="string">&#x27;共用了%d次迭代收敛&#x27;</span> % ite)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> theta, cost, ite</span><br></pre></td></tr></table></figure>
+<p>这次我规定当cost的变化量小于0.0001时停止迭代。</p>
+<ul>
+<li>打印训练过程，并编写测试器分类准确度函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">theta, cost, ite = gradient_descent(X, y, theta, alpha)</span><br><span class="line">final_cost = compute_cost(X, y, theta)</span><br><span class="line">print(<span class="string">&#x27;final_cost:&#x27;</span>, final_cost)</span><br><span class="line">print(<span class="string">&#x27;theta:&#x27;</span>, theta)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_classifier</span>(<span class="params">X, y, theta</span>):</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    diff = sigmoid(X, theta) - y</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(diff.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">if</span> abs(diff[i, <span class="number">0</span>]) &lt;= <span class="number">0.5</span>:</span><br><span class="line">            correct += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> correct*<span class="number">1.0</span> / diff.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">correct_rate = test_classifier(X, y, theta)</span><br><span class="line">print(<span class="string">&#x27;分类器的分类正确率是%.2f%%&#x27;</span> % (correct_rate*<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/01/HKfnICaQpU8N3Xv.png" alt="1.png"></p>
+<p>可以看到我们分类器的正确率为90%。</p>
+<ul>
+<li>cost训练曲线和分类结果</li>
+</ul>
+<p><img src="https://i.loli.net/2021/04/01/gREAvGqk9DJ6oI7.png" alt="Figure_2.png"></p>
+<p><img src="https://i.loli.net/2021/04/01/PNRL28gCcG4nVMo.png" alt="Figure_3.png"></p>
+<hr>
+<h4 id="实验二"><a href="#实验二" class="headerlink" title="实验二"></a>实验二</h4><p>Suppose you are the product manager of the factory and you have the test results for some microchips on two different tests. From these two tests, you would like to determine whether the microchips should be accepted or rejected.</p>
+<ul>
+<li>首先做出数据的散点图：</li>
+</ul>
+<p><img src="https://i.loli.net/2021/04/02/MFANE8zcmOdL7te.png" alt="Figure_1.png"></p>
+<p>我们可以看出两类数据明显是无法用线性分类器分开的，但是近似可以用一个椭圆来区分，因此我们将$(x_1,x_2,x_1^2,x_2^2)$作为五个特征，这样可以转换非线性分类器为线性分类器。</p>
+<ul>
+<li>为了防止过拟合，我这次采用添加了惩罚项的cost function：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span>(<span class="params">X, y, theta, lam</span>):</span></span><br><span class="line">    <span class="comment"># 默认以e为底数</span></span><br><span class="line">    punish = np.sum(np.power(theta, <span class="number">2</span>))*lam/(<span class="number">2</span>*y.shape[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> np.sum(-y*np.log(sigmoid(X, theta)) - (<span class="number">1</span>-y)*np.log(<span class="number">1</span>-sigmoid(X, theta)))/y.shape[<span class="number">0</span>] + punish</span><br></pre></td></tr></table></figure>
+<p>可以看出我添加了一项惩罚项，目的是防止$\theta$值过大，造成过拟合，现在的cost function变成了：</p>
+<script type="math/tex; mode=display">
+J(\theta)=\frac{1}{2m}\sum\limits_{i=1}^m[(h_\theta(x^{(i)})-y^{(i)})^{2}+\lambda \sum\limits_{j=1}^n\theta _j^2)]</script><ul>
+<li>编写梯度下降函数</li>
+</ul>
+<p>由于添加了正则项，在更新参数的过程中每次还要加上$\frac{\lambda}{m}\theta_j$（除了$\theta_0$，因为我们未对其正则化）。</p>
+<script type="math/tex; mode=display">
+\theta_j:=\theta_j-\alpha[\frac{1}{m}\sum\limits_{i=1}^{m}(({h_\theta}(x^{(i)})-y^{(i)})x_{j}^{(i)}+\frac{\lambda }{m}\theta_j]</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent</span>(<span class="params">X, y, theta, alpha</span>):</span></span><br><span class="line">    tmp = np.zeros((<span class="number">1</span>, <span class="number">5</span>))</span><br><span class="line">    cost = [compute_cost(X, y, theta, lam)]</span><br><span class="line">    ite = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        ite += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(theta.shape[<span class="number">1</span>]):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> j:</span><br><span class="line">                tmp[<span class="number">0</span>, j] = theta[<span class="number">0</span>, j] * (<span class="number">1</span> - lam * alpha / y.shape[<span class="number">0</span>]) - alpha * np.sum(</span><br><span class="line">                    (sigmoid(X, theta) - y) * X[:, j].reshape((y.shape[<span class="number">0</span>], <span class="number">1</span>))) / y.shape[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp[<span class="number">0</span>, j] = theta[<span class="number">0</span>, j]*(<span class="number">1</span>-lam*alpha/y.shape[<span class="number">0</span>]) - alpha*np.sum((sigmoid(X, theta)-y)*X[:, j].reshape((y.shape[<span class="number">0</span>], <span class="number">1</span>)))/y.shape[<span class="number">0</span>]</span><br><span class="line">        theta = tmp</span><br><span class="line">        cost.append(compute_cost(X, y, theta, lam))</span><br><span class="line">        print(<span class="string">&#x27;第&#123;&#125;次迭代，theta为&#123;&#125;，cost为&#123;&#125;&#x27;</span>.format(ite, theta, cost[<span class="number">-1</span>]))</span><br><span class="line">        <span class="keyword">if</span> abs(cost[<span class="number">-1</span>] - cost[<span class="number">-2</span>]) &lt;= <span class="number">0.0001</span>:</span><br><span class="line">            print(<span class="string">&#x27;共用了%d次迭代收敛&#x27;</span> % ite)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> theta, cost, ite</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看结果，做出cost下降曲线</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">theta, cost, ite = gradient_descent(X, y, theta, alpha)</span><br><span class="line">final_cost = compute_cost(X, y, theta, lam)</span><br><span class="line">print(<span class="string">&#x27;final_cost:&#x27;</span>, final_cost)</span><br><span class="line">print(<span class="string">&#x27;theta:&#x27;</span>, theta)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/02/nUSmxH7wjlBCWE3.png" alt="屏幕截图 2021-04-02 110749.png"></p>
+<p>分类器正确率为77.12%。</p>
+<p>cost下降曲线：</p>
+<p><img src="https://i.loli.net/2021/04/02/Xl2538T7QWRBtVs.png" alt="Figure_2.png"></p>
+<hr>
+<h3 id="实验问题"><a href="#实验问题" class="headerlink" title="实验问题"></a>实验问题</h3><p>最大的问题集中在数学推导信息熵的导数以及利用经过特征缩放的数据拟合出的曲线的参数和实际参数的关系。后者还未解决。</p>
+<hr>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;ex2data1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.readlines()</span><br><span class="line"></span><br><span class="line">score1 = []</span><br><span class="line">score2 = []</span><br><span class="line">admit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">    tmp = i.split(<span class="string">&#x27;,&#x27;</span>, <span class="number">3</span>)</span><br><span class="line">    score1.append(float(tmp[<span class="number">0</span>]))</span><br><span class="line">    score2.append(float(tmp[<span class="number">1</span>]))</span><br><span class="line">    admit.append(int(tmp[<span class="number">2</span>].replace(<span class="string">&#x27;\n&#x27;</span>, <span class="string">&#x27;&#x27;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># m为样本数量</span></span><br><span class="line">m = len(admit)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制散点图</span></span><br><span class="line">score1_pos = []</span><br><span class="line">score1_neg = []</span><br><span class="line">score2_pos = []</span><br><span class="line">score2_neg = []</span><br><span class="line"><span class="keyword">for</span> idx, i <span class="keyword">in</span> enumerate(admit):</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        score1_pos.append(score1[idx])</span><br><span class="line">        score2_pos.append(score2[idx])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        score1_neg.append(score1[idx])</span><br><span class="line">        score2_neg.append(score2[idx])</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.scatter(score1_pos, score2_pos, label=<span class="string">&#x27;admitted&#x27;</span>, c=<span class="string">&#x27;r&#x27;</span>, marker=<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.scatter(score1_neg, score2_neg, label=<span class="string">&#x27;rejected&#x27;</span>, c=<span class="string">&#x27;b&#x27;</span>, marker=<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造数据和标签矩阵</span></span><br><span class="line">X = np.zeros((m, <span class="number">3</span>))</span><br><span class="line">X[:, <span class="number">0</span>] = np.ones(m)</span><br><span class="line">X_1 = np.array(score1)</span><br><span class="line">X_1 = (X_1-np.mean(X_1))/np.std(X_1)  <span class="comment"># 特征缩放</span></span><br><span class="line">X_2 = np.array(score2)</span><br><span class="line">X_2 = (X_2-np.mean(X_2))/np.std(X_2)  <span class="comment"># 特征缩放</span></span><br><span class="line">X[:, <span class="number">1</span>] = X_1</span><br><span class="line">X[:, <span class="number">2</span>] = X_2</span><br><span class="line">y = np.array(admit).reshape((m, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化参数</span></span><br><span class="line">theta = np.zeros((<span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">alpha = <span class="number">0.03</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span>(<span class="params">X, theta</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    sigmoid函数</span></span><br><span class="line"><span class="string">    :param X: m*3数据矩阵</span></span><br><span class="line"><span class="string">    :param theta: 1*3参数</span></span><br><span class="line"><span class="string">    :return: m*1结果</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>/(<span class="number">1</span> + np.exp(-np.dot(X, theta.T)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span>(<span class="params">X, y, theta</span>):</span></span><br><span class="line">    <span class="comment"># 默认以e为底数</span></span><br><span class="line">    <span class="keyword">return</span> np.sum(-y*np.log(sigmoid(X, theta)) - (<span class="number">1</span>-y)*np.log(<span class="number">1</span>-sigmoid(X, theta)))/y.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent</span>(<span class="params">X, y, theta, alpha</span>):</span></span><br><span class="line">    tmp = np.zeros((<span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">    cost = [compute_cost(X, y, theta)]</span><br><span class="line">    ite = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        ite += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(theta.shape[<span class="number">1</span>]):</span><br><span class="line">            tmp[<span class="number">0</span>, j] = theta[<span class="number">0</span>, j] - alpha * np.sum((sigmoid(X, theta)-y)*X[:, j].reshape((y.shape[<span class="number">0</span>], <span class="number">1</span>)))/y.shape[<span class="number">0</span>]</span><br><span class="line">        theta = tmp</span><br><span class="line">        cost.append(compute_cost(X, y, theta))</span><br><span class="line">        print(<span class="string">&#x27;第&#123;&#125;次迭代，theta为&#123;&#125;，cost为&#123;&#125;&#x27;</span>.format(ite, theta, cost[<span class="number">-1</span>]))</span><br><span class="line">        <span class="keyword">if</span> abs(cost[<span class="number">-1</span>] - cost[<span class="number">-2</span>]) &lt;= <span class="number">0.0001</span>:</span><br><span class="line">            print(<span class="string">&#x27;共用了%d次迭代收敛&#x27;</span> % ite)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> theta, cost, ite</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">theta, cost, ite = gradient_descent(X, y, theta, alpha)</span><br><span class="line">final_cost = compute_cost(X, y, theta)</span><br><span class="line">print(<span class="string">&#x27;final_cost:&#x27;</span>, final_cost)</span><br><span class="line">print(<span class="string">&#x27;theta:&#x27;</span>, theta)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_classifier</span>(<span class="params">X, y, theta</span>):</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    diff = sigmoid(X, theta) - y</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(diff.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">if</span> abs(diff[i, <span class="number">0</span>]) &lt;= <span class="number">0.5</span>:</span><br><span class="line">            correct += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> correct*<span class="number">1.0</span> / diff.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">correct_rate = test_classifier(X, y, theta)</span><br><span class="line">print(<span class="string">&#x27;分类器的分类正确率是%.2f%%&#x27;</span> % (correct_rate*<span class="number">100</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 作出分类直线</span></span><br><span class="line">xaxis = [i <span class="keyword">for</span> i <span class="keyword">in</span> np.linspace(<span class="number">-2</span>, <span class="number">2</span>, <span class="number">50</span>)]</span><br><span class="line">yaxis = list(map(<span class="keyword">lambda</span> x: (-theta[<span class="number">0</span>, <span class="number">1</span>]*x-theta[<span class="number">0</span>, <span class="number">0</span>])/theta[<span class="number">0</span>, <span class="number">2</span>], xaxis))</span><br><span class="line"></span><br><span class="line">plt.xlim(<span class="number">-2</span>, <span class="number">2</span>)</span><br><span class="line">plt.ylim(<span class="number">-2</span>, <span class="number">2</span>)</span><br><span class="line">plt.plot(xaxis, yaxis, c=<span class="string">&#x27;k&#x27;</span>)</span><br><span class="line"><span class="comment"># plt.show()</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 作出训练损失曲线</span></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot([i <span class="keyword">for</span> i <span class="keyword">in</span> range(ite)], cost[<span class="number">1</span>: ], c=<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">plt.grid()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy Me A Coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Fangtong Zhou 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Fangtong Zhou 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/Logistic%E5%9B%9E%E5%BD%92/" rel="tag"># Logistic回归</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/31/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="吴恩达机器学习实验（一）">
+                  <i class="fa fa-chevron-left"></i> 吴恩达机器学习实验（一）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fangtong Zhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="200" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":200,"height":350},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -195,7 +195,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -208,7 +208,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -269,6 +269,89 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2021/04/02/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Fangtong Zhou">
+      <meta itemprop="description" content="Valar Morghulis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="frontop137's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/02/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">吴恩达机器学习实验（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-02 11:14:07" itemprop="dateCreated datePublished" datetime="2021-04-02T11:14:07+08:00">2021-04-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">机器学习与数学</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Logistic回归"><a href="#Logistic回归" class="headerlink" title="Logistic回归"></a>Logistic回归</h3><p><strong>Logistic回归（Logistic Regression）</strong>虽然名字叫“回归”，但实际是一种最经典的二元分类算法。在分类问题中，我们的输出是一个类别，例如收到的邮件是否是垃圾邮件，肿瘤是否是阳性的等等。</p>
+<p>Logistic回归最大的特点在于引入了sigmoid函数（又称为logistic函数）：</p>
+<script type="math/tex; mode=display">
+f(z) = \frac{1}{1+e^{-z}}</script><p><img src="https://i.loli.net/2021/04/01/YVwnuoxq8XAMy6c.png" alt="1.png"></p>
+<p>sigmoid函数能将输入变量展平到（0，1）的区间，我们很容易联想到概率，即划分为两个子类（1和0）的概率可以用sigmoid函数的输出值来表示。因此，我们可以拟合一条分割曲线，将输入数据喂入分割曲线，得到的数值作为sigmoid函数的自变量，即大于0代表分类为1，否则分类为0。我们采用sigmoid函数的另一大优势是sigmoid函数的导数形式很简洁。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/02/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1007,86 +1090,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/12/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E5%AD%A6/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://frontop137.github.io/2020/12/11/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Fangtong Zhou">
-      <meta itemprop="description" content="Valar Morghulis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="frontop137's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/11/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">边缘计算安全与隐私保护技术</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-12-11 10:04:59 / 修改时间：11:45:12" itemprop="dateCreated datePublished" datetime="2020-12-11T10:04:59+08:00">2020-12-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">《边缘计算：原理与实践》笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>安全与隐私的保护问题一直是所有网络技术面临的重要挑战之一。传统网络中，存在防火墙、数据加密、病毒防御与清除技术等等与安全隐私保护有关的技术，但在MEC中，由于任务不只限于在数据中心这种具有安全措施的场所中运行，同时由于移动网络终端的高移动性，使原本用于云计算的许多安全解决方案也很难应用于MEC。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/11/%E3%80%8A%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
