@@ -1,8 +1,11 @@
+
 ---
 layout: home
 title: "Fangtong Zhou"
-author_profile: true   # 左侧个人卡片
+permalink: /
+author_profile: true
 ---
+
 
 <!-- 1. Intro -->
 ## About {#about}
