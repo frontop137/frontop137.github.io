@@ -32,7 +32,7 @@ My research focuses on wireless federated learning**.
 {% assign pubs = site.publications | sort: "date" | reverse %}
 {% for p in pubs %}
   <li>
-    {{ p.authors }}, “<strong>{{ p.title }}</strong>,”
+    {{ p.authors | markdownify }}, “<strong>{{ p.title }}</strong>,”
     {% if p.journal %}
       <em>{{ p.journal }}</em>{% if p.volume %}, vol. {{ p.volume }}{% endif %}{% if p.number %}, no. {{ p.number }}{% endif %}{% if p.pages %}, pp. {{ p.pages }}{% endif %}{% if p.year %}, {{ p.year }}{% endif %}
     {% else %}
