@@ -34,7 +34,7 @@ My research focuses on wireless federated learning.
   <li>
     {{ p.authors | markdownify | strip_newlines | remove: '<p>' | remove: '</p>' }}, “<strong>{{ p.title }}</strong>,”
     {% if p.journal %}
-      <em>{{ p.journal }}</em>{% if p.volume %}, vol. {{ p.volume }}{% endif %}{% if p.number %}, no. {{ p.number }}{% endif %}{% if p.pages %}, pp. {{ p.pages }}{% endif %}{% if p.month %}{{ p.month }}{% endif %}{% if p.year %}, {{ p.year }}{% endif %}
+      <em>{{ p.journal }}</em>{% if p.volume %}, vol. {{ p.volume }}{% endif %}{% if p.number %}, no. {{ p.number }}{% endif %}{% if p.pages %}, pp. {{ p.pages }}{% endif %}{% if p.month %}, {{ p.month }}{% endif %}{% if p.year %}{{ p.year }}{% endif %}
     {% else %}
       <em>{{ p.venue }}</em>{% if p.address %}, {{ p.address }}{% endif %}{% if p.month %}, {{ p.month }}{% endif %}{% if p.year %}, {{ p.year }}{% endif %}
     {% endif %}.
