@@ -16,7 +16,7 @@ My research focuses on wireless federated learning.
 ## Education :mortar_board: {#education}
 - **Ph.D.** in Computer Engineering, *Virginia Tech*, 2024. Fall--present  
 - **M.S.** in Information Engineering, *ShanghaiTech University*, 2021--2024  
-- **B.S.** in Information Engineerin, *South China University of Technology*, 2017--2024
+- **B.E.** in Information Engineerin, *South China University of Technology*, 2017--2021
 
 ---
 
