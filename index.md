@@ -21,9 +21,9 @@ My research focuses on wireless federated learning**.
 ---
 
 ## News {#news}
-- 2025-08 -- One paper was accepted by IEEE MILCOM. :tada:
-- 2025-07 —- One paper was submitted to IEEE INFOCOM.
-- 2024-08 —- I started my Ph.D. journey in the ECE department at Virginia Tech, Go Hokies!
+- 2025-08 - One paper was accepted by IEEE MILCOM. :tada:
+- 2025-07 — One paper was submitted to IEEE INFOCOM.
+- 2024-08 — I started my Ph.D. journey in the ECE department at Virginia Tech, Go Hokies!
 
 ---
 
