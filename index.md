@@ -28,14 +28,22 @@ My research focuses on wireless federated learning**.
 ---
 
 ## Publications :file_folder: {#publications}
+<ul>
 {% assign pubs = site.publications | sort: "date" | reverse %}
 {% for p in pubs %}
   <li>
-    <strong>{{ p.title }}</strong>{% if p.venue %}, <em>{{ p.venue }}</em>{% endif %}{% if p.date %} ({{ p.date | date: "%Y" }}){% endif %}.
+    {{ p.authors }}, “<strong>{{ p.title }}</strong>,”
+    {% if p.journal %}
+      <em>{{ p.journal }}</em>{% if p.volume %}, vol. {{ p.volume }}{% endif %}{% if p.number %}, no. {{ p.number }}{% endif %}{% if p.pages %}, pp. {{ p.pages }}{% endif %}{% if p.year %}, {{ p.year }}{% endif %}
+    {% else %}
+      <em>{{ p.venue }}</em>{% if p.address %}, {{ p.address }}{% endif %}{% if p.month %}, {{ p.month }}{% endif %}{% if p.year %}, {{ p.year }}{% endif %}
+    {% endif %}.
     {% if p.paperurl %} <a href="{{ p.paperurl }}" target="_blank">paper</a>{% endif %}
+    {% if p.code %} <a href="{{ p.code }}" target="_blank">code</a>{% endif %}
     {% if p.slides %} <a href="{{ p.slides }}" target="_blank">slides</a>{% endif %}
   </li>
 {% endfor %}
+</ul>
 
 
 ---
