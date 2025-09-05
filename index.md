@@ -5,25 +5,27 @@ title: "Fangtong Zhou"
 permalink: /
 author_profile: true
 toc: false
+show_title: false
 ---
 
-## About {#about}
-Hi! I’m **Fangtong Zhou**, a Ph.D. student at **Wireless@VT, Virginia Tech**.  
-My research focuses on **Federated Learning** (semi-asynchronous, split, hybrid) and **wireless/edge AI systems**.  
-I’m broadly interested in efficient distributed optimization and reliable learning over wireless networks.
+## About
+Hello and welcome! I am currently a second-year Ph.D. student at **Virginia Tech**, majoring in Computer Engineering, advised by [Prof. Tom Hou](https://www.cnsr.ictas.vt.edu/THou.html). 
+Previous to that, I obtained my master’s degree in Information Engineering at **ShanghaiTech University** under the supervision of [Prof. Yong Zhou](https://faculty.sist.shanghaitech.edu.cn/faculty/zhouyong/) and [Prof. Yang Yang](https://facultyprofiles.hkust-gz.edu.cn/faculty-personal-page/YANG-Yang/yyiot), and my bachelor's degree in Information Engineering at **South China University of Technology**.
+My research focuses on **Wireless Federated Learning**. I’m broadly interested in efficient distributed optimization and reliable learning over wireless networks.
 
 ---
 
-## Education {#education}
-- **Ph.D.** in Electrical and Computer Engineering, *Virginia Tech*, 20XX–present  
-- **M.S.** in Electrical and Computer Engineering, *ShanghaiTech University*, 20XX  
-- **B.S.** in Electrical Engineering, *Shanghai University*, 20XX
+## Education :mortar_board: {#education}
+- **Ph.D.** in Computer Engineering, *Virginia Tech*, 2024. Fall--present  
+- **M.S.** in Information Engineering, *ShanghaiTech University*, 2021--2024  
+- **B.S.** in Information Engineerin, *South China University of Technology*, 2017--2024
 
 ---
 
 ## News {#news}
-- 2025-09 — Website launched 🎉  
-- 2025-08 — Paper submitted on semi-asynchronous FL over dynamic wireless networks
+- 2025-08 -- One paper was accepted by IEEE MILCOM. :tada:
+- 2025-07 —- One paper was submitted to IEEE INFOCOM.
+- 2024-08 —- I started my Ph.D. journey in the ECE department at Virginia Tech, Go Hokies!
 
 ---
 
@@ -43,17 +45,12 @@ I’m broadly interested in efficient distributed optimization and reliable lear
 ---
 
 ## Review and Service {#service}
-**Conference Reviewer:** NeurIPS, ICML, ICLR, AISTATS, IEEE INFOCOM  
-**Journal Reviewer:** IEEE TCOM, IEEE TWC, TMC, IoT-J, TMLR
+**Conference Reviewer:** IEEE ICC, IEEE GlobeCom, IEEE VTC
+**Journal Reviewer:** IEEE TWC, IEEE TVT, IEEE TGCN
 
 ---
 
 ## Teaching {#teaching}
-<ul>
-{% assign teach = site.teaching | sort: "date" | reverse %}
-{% for t in teach %}
-  <li>
-    <strong>{{ t.title }}</strong> — {{ t.institution }}{% if t.semester %}, {{ t.semester }}{% endif %}{% if t.date %} ({{ t.date | date: "%Y" }}){% endif %}
-  </li>
-{% endfor %}
-</ul>
+- **Graduate Teaching Assistant** —- *ECE 2704 Signals and Systems*, Virginia Tech, Fall 2024 & Spring 2025
+- **Teaching Assistant** — *CS 287 Network Intelligence*, ShanghaiTech University, Fall 2022 
+
