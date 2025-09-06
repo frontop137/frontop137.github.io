@@ -304,7 +304,7 @@ timezone:  America/New_York
 # Plugins
 plugins:
   - jekyll-feed
-# - jekyll-gist
+  - jekyll-gist
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-redirect-from
