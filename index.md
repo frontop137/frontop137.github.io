@@ -24,7 +24,6 @@ My research focuses on wireless federated learning.
 - 2025-11 - I successfully passed my **Qualifying Exam**! Many thanks to Prof. Walid Saad, Prof. Tom Hou, and Dr. Yi Shi. :tada:
 - 2025-10 - One paper was submitted to IEEE Transactions on Wireless Communications.
 - 2025-08 - One paper was accepted by IEEE MILCOM. :tada:
-- 2025-07 - One paper was submitted to IEEE INFOCOM.
 - 2025-11 - One paper was accepted by IEEE Transactions on Vehicular Technology. :tada:
 - 2024-08 - I started my Ph.D. journey in the ECE department at Virginia Tech, Go Hokies!
 
