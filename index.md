@@ -53,7 +53,7 @@ My research focuses on wireless federated learning.
 
 ## Review and Service {#service}
 - **Conference Reviewer:** IEEE ICC, IEEE GlobeCom, IEEE VTC
-- **Journal Reviewer:** IEEE TWC, IEEE TVT, IEEE TGCN
+- **Journal Reviewer:** IEEE TWC, IEEE TVT, IEEE TGCN, IEEE OJCOMS
 
 ---
 
