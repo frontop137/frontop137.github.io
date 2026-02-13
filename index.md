@@ -21,6 +21,7 @@ My research focuses on wireless federated learning.
 ---
 
 ## News {#news}
+- 2026-02 - One poster was accepted by 2026 CCI Symposium.  🎉
 - 2025-12 - One paper was submitted to IEEE Journal on Selected Areas in Communications.
 - 2025-11 - I successfully passed my **Qualifying Exam**! Many thanks to Prof. Tom Hou, Prof. Walid Saad, and Dr. Yi Shi for serving as my committee. :tada:
 - 2025-10 - One paper was submitted to IEEE Transactions on Wireless Communications.
