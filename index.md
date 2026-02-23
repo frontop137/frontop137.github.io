@@ -59,6 +59,6 @@ My research focuses on wireless federated learning.
 ---
 
 ## Teaching {#teaching}
-- **Graduate Teaching Assistant:**  *ECE 2704 Signals and Systems*, Virginia Tech, Fall 2024 & Spring 2025
+- **Graduate Teaching Assistant:**  *ECE 2714 Signals and Systems*, Virginia Tech, Fall 2024 & Spring 2025
 - **Graduate Teaching Assistant:**  *CS 287 Network Intelligence*, ShanghaiTech University, Fall 2022 
 
