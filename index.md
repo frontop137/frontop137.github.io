@@ -21,6 +21,7 @@ My research focuses on wireless federated learning.
 ---
 
 ## News {#news}
+- 2026-03 - One paper was accepted by IEEE/IFIP WiOpt. :tada:
 - 2026-03 - I was awarded the 2026 CCI SWVA Cyber Innovation Scholar Fund. :tada:
 - 2026-02 - One poster was accepted by 2026 CCI Symposium.  :tada:
 - 2025-12 - One paper was submitted to IEEE Journal on Selected Areas in Communications.
