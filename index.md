@@ -55,6 +55,7 @@ My research focuses on wireless federated learning.
 
 ## Awards {#awards}
 - CCI SWVA Cyber Innovation Scholar Fund, Commonwealth Cyber Initiative (CCI), Virginia Tech, 2026
+
 ---
 
 ## Review and Service {#service}
