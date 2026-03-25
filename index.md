@@ -22,7 +22,7 @@ My research focuses on wireless federated learning.
 
 ## News :newspaper: {#news}
 - 2026-03 - One paper was accepted by IEEE/IFIP WiOpt. :tada:
-- 2026-03 - I was awarded the 2026 CCI SWVA Cyber Innovation Scholar Fund. :tada:
+- 2026-03 - I was awarded the 2026 CCI SWVA Cyber Innovation Scholarship. :tada:
 - 2026-02 - One poster was accepted by 2026 CCI Symposium.  :tada:
 - 2025-12 - One paper was submitted to IEEE Journal on Selected Areas in Communications.
 - 2025-11 - I successfully passed my **Qualifying Exam**! Many thanks to Prof. Tom Hou, Prof. Walid Saad, and Dr. Yi Shi for serving as my committee. :tada:
@@ -54,7 +54,7 @@ My research focuses on wireless federated learning.
 ---
 
 ## Awards :trophy: {#awards}
-- CCI SWVA Cyber Innovation Scholar Fund, Commonwealth Cyber Initiative (CCI), Virginia Tech, 2026
+- CCI SWVA Cyber Innovation Scholarship, Commonwealth Cyber Initiative (CCI), Virginia Tech, 2026
 
 ---
 
