@@ -54,6 +54,7 @@ My research focuses on wireless federated learning.
 ---
 
 ## Awards :trophy: {#awards}
+- COMAP’s Interdisciplinary Contest in Modeling (ICM), Honorable Mention (H Award), 2020
 - CCI SWVA Cyber Innovation Scholarship, Commonwealth Cyber Initiative (CCI), Virginia Tech, 2026
 
 ---
