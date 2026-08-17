@@ -21,12 +21,13 @@ My research focuses on wireless federated learning.
 ---
 
 ## News :newspaper: {#news}
+- 2026-08 - One paper was accepted by 2026 IEEE MILCOM. :tada:
 - 2026-04 - I was awarded the IEEE/IFIP WiOpt 2026 Student Travel Grant. :tada:
 - 2026-03 - One paper was accepted by IEEE/IFIP WiOpt. :tada:
 - 2026-03 - I was awarded the 2026 CCI SWVA Cyber Innovation Scholarship. :tada:
 - 2026-02 - One poster was accepted by 2026 CCI Symposium.  :tada:
 - 2025-11 - I successfully passed my **Qualifying Exam**! Many thanks to Prof. Tom Hou, Prof. Walid Saad, and Dr. Yi Shi for serving as my committee. :tada:
-- 2025-08 - One paper was accepted by IEEE MILCOM. :tada:
+- 2025-08 - One paper was accepted by 2026 IEEE MILCOM. :tada:
 - 2024-11 - One paper was accepted by IEEE Transactions on Vehicular Technology. :tada:
 - 2024-08 - I started my Ph.D. journey in the ECE department at Virginia Tech, Go Hokies!
 
