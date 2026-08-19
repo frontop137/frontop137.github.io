@@ -23,7 +23,7 @@ My research focuses on wireless federated learning.
 ## News :newspaper: {#news}
 - 2026-08 - One paper was accepted by 2026 IEEE MILCOM. :tada:
 - 2026-04 - I was awarded the IEEE/IFIP WiOpt 2026 Student Travel Grant. :tada:
-- 2026-03 - One paper was accepted by IEEE/IFIP WiOpt. :tada:
+- 2026-03 - One paper was accepted by 2026 IEEE/IFIP WiOpt. :tada:
 - 2026-03 - I was awarded the 2026 CCI SWVA Cyber Innovation Scholarship. :tada:
 - 2026-02 - One poster was accepted by 2026 CCI Symposium.  :tada:
 - 2025-11 - I successfully passed my **Qualifying Exam**! Many thanks to Prof. Tom Hou, Prof. Walid Saad, and Dr. Yi Shi for serving as my committee. :tada:
@@ -62,7 +62,7 @@ My research focuses on wireless federated learning.
 
 ## Review and Service {#service}
 - **Conference Reviewer:** IEEE ICC, IEEE GlobeCom, IEEE VTC
-- **Journal Reviewer:** IEEE TWC, IEEE TVT, IEEE TGCN, IEEE OJCOMS
+- **Journal Reviewer:** IEEE TWC, IEEE TVT, IEEE TGCN, IEEE OJCOMS, IEEE TMC
 
 ---
 
