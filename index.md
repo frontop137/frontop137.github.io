@@ -7,9 +7,9 @@ toc: false
 ---
 
 ## About :smile:
-Hello and welcome! I am currently a second-year Ph.D. student at [CNSR Lab](https://www.cnsr.ictas.vt.edu/), [the Bradley Department of Electrical and Computer Engineering](https://ece.vt.edu) in **Virginia Tech**, Blacksburg, VA, USA, majoring in Computer Engineering, advised by [Prof. Tom Hou](https://www.cnsr.ictas.vt.edu/THou.html). 
+Hello and welcome! I am currently a 3rd-year Ph.D. student at [CNSR Lab](https://www.cnsr.ictas.vt.edu/), [the Bradley Department of Electrical and Computer Engineering](https://ece.vt.edu) in **Virginia Tech**, Blacksburg, VA, USA, majoring in Computer Engineering, advised by [Prof. Tom Hou](https://www.cnsr.ictas.vt.edu/THou.html). 
 Previous to that, I obtained my master’s degree in Information Engineering at **ShanghaiTech University**, Shanghai, China, under the supervision of [Prof. Yong Zhou](https://faculty.sist.shanghaitech.edu.cn/faculty/zhouyong/) and [Prof. Yang Yang](https://facultyprofiles.hkust-gz.edu.cn/faculty-personal-page/YANG-Yang/yyiot), and my bachelor's degree in Information Engineering at **South China University of Technology**, Guangzhou, Guangdong, China.
-My research focuses on wireless federated learning.
+My research focuses on wireless federated learning and agentic AI.
 
 ---
 
