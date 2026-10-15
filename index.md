@@ -21,6 +21,7 @@ My research focuses on wireless federated learning and agentic AI.
 ---
 
 ## News :newspaper: {#news}
+- 2026-10 - One paper was accepted by IEEE Journal on Selected Areas in Communications. :tada:
 - 2026-08 - One paper was accepted by IEEE MILCOM 2026. :tada:
 - 2026-07 - Two papers were submitted to IEEE INFOCOM 2027.
 - 2026-04 - I was awarded the IEEE/IFIP WiOpt 2026 Student Travel Grant. :tada:
